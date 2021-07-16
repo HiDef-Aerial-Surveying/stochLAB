@@ -6,12 +6,12 @@
 \usage{
 stochasticBand(
   results_folder = NULL,
-  BirdDataFile = "data/BirdData.csv",
-  TurbineDataFile = "data/TurbineData.csv",
-  CountDataFile = "data/CountData.csv",
-  FlightDataFile = "data/FlightHeight.csv",
+  BirdDataFile = BirdDataFile,
+  TurbineDataFile = TurbineDataFile,
+  CountDataFile = CountDataFile,
+  FlightDataFile = FlightDataFile,
   iter = 10,
-  CRSpecies = c("Northern_Gannet"),
+  CRSpecies = c("Black_legged_Kittiwake"),
   TPower = 1760,
   LargeArrayCorrection = "yes",
   WFWidth = 54,

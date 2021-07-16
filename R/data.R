@@ -50,3 +50,18 @@
 #'   ...
 #' }
 "TurbineData"
+
+
+#' Rotor blade sizes
+#'
+#' A dataframe giving the width of the chord relative to its maximum width at given points along the radius of the rotor
+#'
+#' @format A dataframe
+#' \describe{
+#'   \item{rad}{radius}
+#'   \item{circ}{Circumference}
+#'   ...
+#' }
+"coverC"
+
+

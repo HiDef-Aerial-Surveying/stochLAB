@@ -82,25 +82,63 @@ stochasticBand <- function(
   Flap_Glide <- ifelse (BirdData$Flight == "Flapping", 1, 2/pi)
 
 
-
-  #### produces a data frame with number of hours daylight and night per month
+  #### produces a data frame with number of hours daylight and night per month based on the latitude
   hours <- DayLength(Latitude)
 
-  # load sampling functions for stochastic bits -----------------------------
 
-  #source("scripts/helpers_sampling functions.r", local=T)
+  # Sample the bird attributes ----------------------------------------------
+
+  sampledBirdParams$WingSpan <- sampler_hd(dat = species.dat$WingspanSD,
+                                           mode = 'rtnorm',
+                                           n = iter,
+                                           mean=species.dat$Wingspan,
+                                           sd = species.dat$WingspanSD,
+                                           lower = 0)
+
+  sampledBirdParams$BodyLength <- sampler_hd(dat = species.dat$Body_LengthSD,
+                                             mode = 'rtnorm',
+                                             n = iter,
+                                             mean=species.dat$Body_Length,
+                                             sd = species.dat$Body_LengthSD,
+                                             lower = 0)
+
+
+  sampledBirdParams$FlightSpeed <- sampler_hd(dat = species.dat$Flight_SpeedSD,
+                                              mode = 'rtnorm',
+                                              n = iter,
+                                              mean=species.dat$Flight_Speed,
+                                              sd = species.dat$Flight_SpeedSD,
+                                              lower = 0)
+
+  sampledBirdParams$PCH <- sampler_hd(dat = species.dat$Prop_CRH_ObsSD,
+                                      mode = 'rbeta',
+                                      n = iter,
+                                      mean=species.dat$Prop_CRH_Obs,
+                                      sd = species.dat$Prop_CRH_ObsSD)
+
+
+  sampledBirdParams$NocturnalActivity <- sampler_hd(dat = species.dat$Nocturnal_ActivitySD,
+                                                    mode = 'rbeta',
+                                                    n = iter,
+                                                    mean=species.dat$Nocturnal_Activity,
+                                                    sd = species.dat$Nocturnal_ActivitySD)
+
+
+  sampledBirdParams$AvoidanceBasic <- sampler_hd(dat = species.dat$AvoidanceBasicSD,
+                                                 mode = 'rbeta',
+                                                 n = iter,
+                                                 mean=species.dat$AvoidanceBasic,
+                                                 sd = species.dat$AvoidanceBasicSD)
+
+  sampledBirdParams$AvoidanceExtended <- sampler_hd(dat = species.dat$AvoidanceExtendedSD,
+                                                    mode = 'rbeta',
+                                                    n = iter,
+                                                    mean=species.dat$AvoidanceExtended,
+                                                    sd = species.dat$AvoidanceExtendedSD)
 
 
 
-  # Prob collision functions and associated bits ----------------------------
 
-  ##### create dataframe giving the width of the chord relative to its maximum width at given points along the radius of the rotor
-
-  rad = round(seq(0,1,0.05),2)
-
-  circ = c(0.69,0.73,0.79,0.88,0.96,1,0.98,0.92,0.85,0.8,0.75,0.7,0.64,0.58,0.52,0.47,0.41,0.37,0.3,0.24,0)
-
-  coverC = data.frame(cbind(rad, circ))
 
   ##### bring in call functions needed to calculate collision risk along blade
 
