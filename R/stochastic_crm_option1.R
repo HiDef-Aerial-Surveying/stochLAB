@@ -31,12 +31,12 @@
 
 stochasticBand <- function(
   results_folder = NULL,
-  BirdDataFile = "data/BirdData.csv",
-  TurbineDataFile = "data/TurbineData.csv",
-  CountDataFile = "data/CountData.csv",
-  FlightDataFile = "data/FlightHeight.csv",
+  BirdDataFile = BirdDataFile, #"data/BirdData.csv",
+  TurbineDataFile = TurbineDataFile, #"data/TurbineData.csv",
+  CountDataFile = CountDataFile, #"data/CountData.csv",
+  FlightDataFile = FlightDataFile, #"data/FlightHeight.csv",
   iter = 10,
-  CRSpecies = c("Northern_Gannet"),
+  CRSpecies = c("Black_legged_Kittiwake"),
   TPower = 1760,
   LargeArrayCorrection = "yes",
   WFWidth = 54,
@@ -45,6 +45,7 @@ stochasticBand <- function(
   TideOff = 2.5,
   windSpeedMean = 30,
   windSpeedSD = 0.000000001,
+
   #updateProgress_Spec,  # pass in the updateProgress function so that it can update the progress indicator.
   #updateProgress_Iter,
   DensityOpt
@@ -59,11 +60,9 @@ stochasticBand <- function(
 
 
   # Create folders and paths ------------------------------------------------
-
   if(is.null(results_folder)){
     stop("Please supply a value for results_folder")
   }
-
 
   # ###create results folder
   # if(results_folder == "") results_folder<- Sys.Date() ## if no name given for results folder, use today's date
@@ -74,20 +73,18 @@ stochasticBand <- function(
   dir.create(paste(results_folder, "tables", sep="/"))
   dir.create(paste(results_folder, "input", sep="/"))
 
-  # Masden use this a lot - just make once
-  monthLabels <- c("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul",  "Aug", "Sep", "Oct", "Nov", "Dec")
+  monthLabels <- month.abb
 
 
-  # read data sources -------------------------------------------------------
+  # set the row names of the bird data and assign flapping/gliding ----------
+  row.names(BirdData) <-  BirdData$Species
+  #### flapping or Gliding for collision risk sheet
+  Flap_Glide <- ifelse (BirdData$Flight == "Flapping", 1, 2/pi)
 
-  ### Read in Distance corrected count data for each species, bird biometric data, flight height distributions and turbine characteristics
-
-  #source("scripts/helpers_read data.r", local=T)
 
 
   #### produces a data frame with number of hours daylight and night per month
-
-  #source("scripts/DayLength.r", local=T)
+  hours <- DayLength(Latitude)
 
   # load sampling functions for stochastic bits -----------------------------
 

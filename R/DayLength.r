@@ -10,6 +10,7 @@
 #'
 
 DayLength <- function(Latitude){
+
   DaylengthThruYr = data.frame (seq(1,365,1))
   names(DaylengthThruYr) = c("YrDay")
 
