@@ -1,7 +1,7 @@
 #' The initial flux of birds
 #'
 #' The flux of birds travelling through the turbine area
-#' @param TurbineData A data frame. The Turbine data formatted as per the "TurbineData" data object
+#' @param NTurbines An integer value. The number of turbines in the site.
 #' @param sampledBirdParams A data frame. The data frame with all the sampled parameters of the bird's features
 #' @param sampledTurbine A data frame. The data frame with all the sampled parameters from the turbine
 #' @param sampledSpeciesCount A data frame. The sample of the density of birds in the wind farm area (i.e. the count)
@@ -10,15 +10,13 @@
 #' @return A data frame. The hours data frame returned with the flux calculations included
 #' @export
 
-initial_flux <- function(TurbineData=TurbineData,
+initial_flux <- function(NTurbines=NTurbines,
                          sampledTurbine=sampledTurbine,
                          sampledBirdParams=sampledBirdParams,
                          sampledSpeciesCount=sampledSpeciesCount,
                          TPower=TPower,
                          hours=hours){
 
-  ### Number of turbines of given Output required to produce target output
-  NTurbines = round (TPower / TurbineData$TurbineModel)
   TotalFrontalArea = NTurbines * pi * sampledTurbine$RotorRadius ^2
 
   #### Calculate the total number of birds passing through the wind farm in each month

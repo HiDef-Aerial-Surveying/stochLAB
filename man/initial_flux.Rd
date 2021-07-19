@@ -5,7 +5,7 @@
 \title{The initial flux of birds}
 \usage{
 initial_flux(
-  TurbineData = TurbineData,
+  NTurbines = NTurbines,
   sampledTurbine = sampledTurbine,
   sampledBirdParams = sampledBirdParams,
   sampledSpeciesCount = sampledSpeciesCount,
@@ -14,7 +14,7 @@ initial_flux(
 )
 }
 \arguments{
-\item{TurbineData}{A data frame. The Turbine data formatted as per the "TurbineData" data object}
+\item{NTurbines}{An integer value. The number of turbines in the site.}
 
 \item{sampledTurbine}{A data frame. The data frame with all the sampled parameters from the turbine}
 

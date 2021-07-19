@@ -3,6 +3,7 @@
 export(CV)
 export(DayLength)
 export(initial_flux)
+export(large_array_correction)
 export(probability_collision_no_avoid)
 export(rbeta_dmp)
 export(rtnorm_dmp)

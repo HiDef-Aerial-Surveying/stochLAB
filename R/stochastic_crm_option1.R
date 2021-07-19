@@ -257,6 +257,9 @@ stochasticBand <- function(
     # Start of turbine loop ---------------------------------------------------
     for (j in 1:nrow(TurbineData))  {   ## GH CHANGE <- t is a function, replaced this with j
 
+      ### Number of turbines of given Output required to produce target output
+      NTurbines = round (TPower / TurbineData$TurbineModel[j])
+
       ## create results tables - 3 identical
       tab1 <- data.frame(matrix(data = 0, ncol = 12, nrow = iter))
       names(tab1) <- monthLabels
@@ -315,8 +318,7 @@ stochasticBand <- function(
 
         ############## STEP TWO - Calculate Flux Factor - the number of birds passing a turbine in each month
 
-
-        hours <- initial_flux(TurbineData=TurbineData[j,],
+        hours <- initial_flux(NTurbines=NTurbines,
                               sampledTurbine=sampledTurbine[i,],
                               sampledBirdParams=sampledBirdParams[i,],
                               sampledSpeciesCount=sampledSpeciesCount[i,],
