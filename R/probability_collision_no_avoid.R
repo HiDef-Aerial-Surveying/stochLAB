@@ -3,11 +3,15 @@
 #' The probability of a bird colliding a blade as modified from Masden (2015)
 #' @param sampledBirdParams A data frame. The data frame with all the sampled parameters of the bird's features
 #' @param sampledTurbine A data frame. The data frame with all the sampled parameters from the turbine
+#' @param TurbineData A data frame. The Turbine data formatted as per the "TurbineData" data object
+#' @param Prop_Upwind A decimal value. A value between 0-1 bounded as proportion of flights upwind - default of 0.5.
 #' @return A numeric value. The proportion of birds that could collide a blade
 #' @export
 
 probability_collision_no_avoid <- function(sampledBirdParams=sampledBirdParams,
-                                           sampledTurbine=sampledTurbine){
+                                           sampledTurbine=sampledTurbine,
+                                           TurbineData=turbineData,
+                                           Prop_Upwind=Prop_Upwind){
 
   CollisionRiskTab = data.frame(matrix(data = 0, nrow = 21, ncol = 7))
   names(CollisionRiskTab) = c("radius", "chord", "alpha", "Up_length", "Up_P", "Down_length", "Down_P")
@@ -53,7 +57,7 @@ probability_collision_no_avoid <- function(sampledBirdParams=sampledBirdParams,
     #### Now calculate upwind probability of collision
 
 
-    CollisionRiskTab$Up_P[u+1] = min (1, (TurbineData$Blades[t]/(60/sampledTurbine$RotorSpeed[i])) *
+    CollisionRiskTab$Up_P[u+1] = min (1, (TurbineData$Blades/(60/sampledTurbine$RotorSpeed[i])) *
                                         CollisionRiskTab$Up_length[u+1]/sampledBirdParams$FlightSpeed[i])
 
     #### Now calculate downwind length

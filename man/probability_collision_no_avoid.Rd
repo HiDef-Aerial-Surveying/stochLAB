@@ -6,13 +6,19 @@
 \usage{
 probability_collision_no_avoid(
   sampledBirdParams = sampledBirdParams,
-  sampledTurbine = sampledTurbine
+  sampledTurbine = sampledTurbine,
+  TurbineData = turbineData,
+  Prop_Upwind = Prop_Upwind
 )
 }
 \arguments{
 \item{sampledBirdParams}{A data frame. The data frame with all the sampled parameters of the bird's features}
 
 \item{sampledTurbine}{A data frame. The data frame with all the sampled parameters from the turbine}
+
+\item{TurbineData}{A data frame. The Turbine data formatted as per the "TurbineData" data object}
+
+\item{Prop_Upwind}{A decimal value. A value between 0-1 bounded as proportion of flights upwind - default of 0.5.}
 }
 \value{
 A numeric value. The proportion of birds that could collide a blade
