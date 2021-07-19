@@ -91,7 +91,7 @@ stochasticBand <- function(
 
 
   ##### bring in call functions needed to calculate collision risk along blade
-
+  ### Turned off for Option 1 GH - Needs updating
   #source("scripts/PCollFunctions.r", local=T)
 
 
@@ -285,11 +285,6 @@ stochasticBand <- function(
         #  updateProgress_Iter(value = i/iter, detail = text)
         #}
 
-        # following are required to speed up pcoll function - need single numeric inputs for speed
-        # coverC
-        currentRad <- coverC$rad
-        currentCirc <- coverC$circ
-
         # fixed turbine pars
         currentBlades <- TurbineData$Blades
 
@@ -307,9 +302,7 @@ stochasticBand <- function(
         currentFlightSpeed <- sampledBirdParams$FlightSpeed[i]
         currentBirdLength <- sampledBirdParams$BodyLength[i]
 
-
         # Collision risk steps - options appear here ------------------------------
-
 
         ############## STEP ONE - Calculate the collision risk in the absence of avoidance action
 
