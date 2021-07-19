@@ -19,10 +19,16 @@
 #' @param TideOff A decimal value. Tidal offset in metres
 #' @param windSpeedMean A decimal value. Site specific mean wind speed (m/s)
 #' @param windSpeedSD A decimal value. Site specific standard deviation of wind speeds
+#' @param windData_rotation A data frame. The table of wind speed versus rotor speed
+#' @param windData_pitch A data frame. The table of wind speed versus rotor pitch
+#' @param c_DensOpt A character value. The type of sampling to do for the species data.
 #' @return CSV files saved into the results_folder directory
 #' @export
 #' @import msm
-#' @import dplyr
+#' @importFrom dplyr select
+#' @importFrom dplyr filter
+#' @importFrom dplyr sample_n
+#' @importFrom dplyr left_join
 #' @import tidyr
 #' @import pracma
 #' @import data.table
@@ -49,15 +55,16 @@ stochasticBand <- function(
   windData_pitch = startUpValues$turbinePars$pitchVsWind_df,
   #updateProgress_Spec,  # pass in the updateProgress function so that it can update the progress indicator.
   #updateProgress_Iter,
-  DensityOpt = list(userOption = "truncNorm")
+  c_densOpt = "truncNorm"
+  #DensityOpt = list(userOption = "truncNorm")
 ) {
 
-  #S<-iter*20 ## this is number of samples, increased to ensure enough valid values - is this used?
+  start.time <- Sys.time()
 
   #### BC ##### -- initialise objects to store simulation replicates of monthly collisions, for each option, for current species and turbine  ===========
   monthCollsnReps_opt1 <- list()
-  monthCollsnReps_opt2 <- list()
-  monthCollsnReps_opt3 <- list()
+  #monthCollsnReps_opt2 <- list()
+  #monthCollsnReps_opt3 <- list()
 
 
   # Create folders and paths ------------------------------------------------
@@ -65,19 +72,18 @@ stochasticBand <- function(
     stop("Please supply a value for results_folder")
   }
 
-  # ###create results folder
-  # if(results_folder == "") results_folder<- Sys.Date() ## if no name given for results folder, use today's date
-  # if(results_folder !="") dir.create(results_folder) ## if name given for results folder use that and create folder      #####    BC CHANGE  -- folder created beforehand by app  ######
-
   ##make input, figures and tables folders
-  dir.create(paste(results_folder, "figures", sep="/"))
-  dir.create(paste(results_folder, "tables", sep="/"))
-  dir.create(paste(results_folder, "input", sep="/"))
+  fig.dir <- paste(results_folder, "figures", sep="/")
+  tab.dir <- paste(results_folder, "tables", sep="/")
+  inp.dir <- paste(results_folder, "input", sep="/")
+  if(!dir.exists(fig.dir))dir.create(fig.dir)
+  if(!dir.exists(tab.dir))dir.create(tab.dir)
+  if(!dir.exists(inp.dir))dir.create(inp.dir)
 
   monthLabels <- month.abb
 
   # Join rotation and pitch data into a single table ------------------------
-  windData <- left_join(windData_rotation,windData_pitch,by='windSpeed')
+  windData <- dplyr::left_join(windData_rotation,windData_pitch,by='windSpeed')
   windThreshold <- windData$windSpeed[min(which(windData$rotationSpeed != 0))]  ##GH change (ROTOR to rotationSpeed)
 
   # set the row names of the bird data and assign flapping/gliding ----------
@@ -131,7 +137,7 @@ stochasticBand <- function(
     Flap_Glide = ifelse (species.dat$Flight == "Flapping", 1, 2/pi)
 
 
-    c_densOpt <- dplyr::filter(DensityOpt, specLabel == CRSpecies[s])$userOption  ### <- work on this
+    #c_densOpt <-  ##dplyr::filter(DensityOpt, specLabel == CRSpecies[s])$userOption  ### <- work on this
 
     if(c_densOpt == "truncNorm"){
       species.count = subset(CountData, Species == CRSpecies[s])
@@ -140,13 +146,13 @@ stochasticBand <- function(
 
     if(c_densOpt == "reSamp"){
       species.count <- fread("data/birdDensityData_samples.csv") %>%
-        filter(specLabel == CRSpecies[s])
+        dplyr::filter(specLabel == CRSpecies[s])
     }
 
 
     if(c_densOpt == "pcntiles"){
       species.count <- fread("data/birdDensityData_refPoints.csv") %>%
-        filter(specLabel == CRSpecies[s])
+        dplyr::filter(specLabel == CRSpecies[s])
     }
 
 
@@ -288,32 +294,15 @@ stochasticBand <- function(
         #  updateProgress_Iter(value = i/iter, detail = text)
         #}
 
-
-        #####################################################################
-        ##### GH - nothing here used?
-        # fixed turbine pars
-        currentBlades <- TurbineData$Blades
-
-        # sampled turbine pars
-        currentRotorRadius <- sampledTurbine$RotorRadius[i]
-        currentBladeWidth <- sampledTurbine$BladeWidth[i]
-        currentRotorSpeed <- sampledTurbine$RotorSpeed[i]
-        currentPitch <- sampledTurbine$Pitch[i]
-
-        # fixed bird parameter
-        currentFlightNumeric <- species.dat$FlightNumeric
-
-        # sampled bird parameters
-        currentWingSpan <- sampledBirdParams$WingSpan[i]
-        currentFlightSpeed <- sampledBirdParams$FlightSpeed[i]
-        currentBirdLength <- sampledBirdParams$BodyLength[i]
-        #####################################################################
-
         # Collision risk steps - options appear here ------------------------------
 
         ############## STEP ONE - Calculate the collision risk in the absence of avoidance action
 
-        P_Collision <- probability_collision_no_avoid(sampledBirdParams,sampledTurbine,TurbineData[j],Prop_Upwind)
+        P_Collision <- probability_collision_no_avoid(sampledBirdParams=sampledBirdParams[i,],
+                                                      sampledTurbine=sampledTurbine[i,],
+                                                      TurbineData=TurbineData[j,],
+                                                      Prop_Upwind=Prop_Upwind,
+                                                      Flap_Glide=Flap_Glide)
 
 
         ############## STEP TWO - Calculate Flux Factor - the number of birds passing a turbine in each month
@@ -329,10 +318,10 @@ stochasticBand <- function(
 
 
         L_ArrayCF <- large_array_correction(NTurbines=NTurbines,
-                                            sampledTurbine=sampledTurbine,
-                                            sampledBirdParams=sampledBirdParams,
+                                            sampledTurbine=sampledTurbine[i,],
+                                            sampledBirdParams=sampledBirdParams[i,],
                                             P_Collision=P_Collision,
-                                            MeanOperational=MeanOperational,
+                                            MeanOperational=MeanOperational[i],
                                             WFWidth=WFWidth)
 
         # Option 1 ----------------------------------------------------------------
@@ -379,7 +368,7 @@ stochasticBand <- function(
 
       } # end of i to iter
 
-      # End of the random samplling iterations i --------------------------------
+      # End of the random sampling iterations i --------------------------------
 
 
       #source("scripts/turbineSpeciesOuputs.r", local=T)
@@ -407,11 +396,9 @@ stochasticBand <- function(
     ###output species plots of density by option with curves for turbine model###
     ###PLOT DENSITY BY OPTION (useful if several turbine models)###
 
-    if (nrow(TurbineData)>1)  {
-
+    #if (nrow(TurbineData)>1)  {
       #source("scripts/species_turbine_plots.r", local = T)
-
-    }
+    #}
 
     ###relabel sampledBirdParams by species name###
     assign(paste(CRSpecies[s],"params", sep="_"), sampledBirdParams)
@@ -445,8 +432,8 @@ stochasticBand <- function(
   sink()
 
   #### BC ##### -- return collision replicates as output  ===========
-  return(list(monthCollsnReps_opt1 = monthCollsnReps_opt1, monthCollsnReps_opt2 = monthCollsnReps_opt2,
-              monthCollsnReps_opt3 = monthCollsnReps_opt3))
+  return(list(monthCollsnReps_opt1 = monthCollsnReps_opt1))#, monthCollsnReps_opt2 = monthCollsnReps_opt2,#monthCollsnReps_opt3 = monthCollsnReps_opt3))
+
 
 }
 

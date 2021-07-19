@@ -20,13 +20,13 @@ sCRM_option1 <- function(MonthlyOperational=MonthlyOperational,
                          LargeArrayCorrection=FALSE,
                          L_ArrayCF=NULL){
 
-  Operational <-  unlist(MonthlyOperational[i,]) / 100
+  Operational <-  unlist(MonthlyOperational) / 100
 
-  Option1_Transits <- hours$Flux * sampledBirdParams$PCH[i] * Operational
+  Option1_Transits <- hours$Flux * PCH * Operational
 
   Option1_collisions_No_Avoid <- Option1_Transits * (P_Collision/100)
 
-  Option1_CollisionRate <- data.frame(Month = monthLabels, Collisions = NA)
+  Option1_CollisionRate <- data.frame(Month = month.abb, Collisions = NA)
 
   if(LargeArrayCorrection==TRUE){
     Option1_CollisionRate$Collisions <- Option1_collisions_No_Avoid * (1-AvoidanceBasic) * L_ArrayCF

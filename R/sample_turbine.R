@@ -7,7 +7,7 @@
 #' @param windThreshold A numeric value. The minimum wind speed required for the blades to turn
 #' @param iter An integer value. The number of samples to generate
 #' @return A data frame of all the information sampled for the turbine with nrow = iter
-#' @import dplyr
+#' @importFrom dplyr select
 #' @export
 #'
 

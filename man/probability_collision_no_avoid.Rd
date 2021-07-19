@@ -8,7 +8,8 @@ probability_collision_no_avoid(
   sampledBirdParams = sampledBirdParams,
   sampledTurbine = sampledTurbine,
   TurbineData = turbineData,
-  Prop_Upwind = Prop_Upwind
+  Prop_Upwind = Prop_Upwind,
+  Flap_Glide = Flap_Glide
 )
 }
 \arguments{
@@ -19,6 +20,8 @@ probability_collision_no_avoid(
 \item{TurbineData}{A data frame. The Turbine data formatted as per the "TurbineData" data object}
 
 \item{Prop_Upwind}{A decimal value. A value between 0-1 bounded as proportion of flights upwind - default of 0.5.}
+
+\item{Flap_Glide}{A decimal value. The value representing the correction for flapping or gliding birds}
 }
 \value{
 A numeric value. The proportion of birds that could collide a blade
