@@ -1,9 +1,9 @@
-#' Customised sampling function wrapper for rtnorm_dmp and rbeta_dmp
+#' Customised sampling function wrapper
 #'
-#' Samples a dataset based on inputs for either the rtnorm or rbeta distributions
+#' Samples a dataset based on inputs for either the rtnorm, rbeta or 'rnorm' distributions
 #'
 #' @param dat = A decimal value. The SD value to test (from the UI) - if not available in the UI, then do not create a distribution
-#' @param mode = A string.  Either 'rtnorm' or 'rbeta' to determine which distribution to generate
+#' @param mode = A string.  Either 'rtnorm', 'rbeta' or 'rnorm' to determine which distribution to generate
 #' @param n An integer value. The number of samples to generate
 #' @param mean A decimal value. The mean for the truncated normal distribution
 #' @param sd A decimal value. The standard deviation of the distribution to simulate
@@ -24,7 +24,13 @@ sampler_hd <- function(dat,mode="rtnorm",n=NULL,mean=NULL,sd=NULL,lower=NULL,upp
       output <- rbeta_dmp(n = n,
                           p = mean,
                           sd = sd)
+
+    }else if(mode == "rnorm"){
+      output <- rnorm(n = n,
+                          mean = mean,
+                          sd = sd)
     }
+
   }else{
     output <- rep(dat,n)
   }

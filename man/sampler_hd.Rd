@@ -2,7 +2,7 @@
 % Please edit documentation in R/sampler_hd.R
 \name{sampler_hd}
 \alias{sampler_hd}
-\title{Customised sampling function wrapper for rtnorm_dmp and rbeta_dmp}
+\title{Customised sampling function wrapper}
 \usage{
 sampler_hd(
   dat,
@@ -17,7 +17,7 @@ sampler_hd(
 \arguments{
 \item{dat}{= A decimal value. The SD value to test (from the UI) - if not available in the UI, then do not create a distribution}
 
-\item{mode}{= A string.  Either 'rtnorm' or 'rbeta' to determine which distribution to generate}
+\item{mode}{= A string.  Either 'rtnorm', 'rbeta' or 'rnorm' to determine which distribution to generate}
 
 \item{n}{An integer value. The number of samples to generate}
 
@@ -33,5 +33,5 @@ sampler_hd(
 a vector of samples values from the distribution
 }
 \description{
-Samples a dataset based on inputs for either the rtnorm or rbeta distributions
+Samples a dataset based on inputs for either the rtnorm, rbeta or 'rnorm' distributions
 }

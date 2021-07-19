@@ -52,7 +52,7 @@ stochasticBand <- function(
   DensityOpt = list(userOption = "truncNorm")
 ) {
 
-  S<-iter*20 ## this is number of samples, increased to ensure enough valid values - is this used?
+  #S<-iter*20 ## this is number of samples, increased to ensure enough valid values - is this used?
 
   #### BC ##### -- initialise objects to store simulation replicates of monthly collisions, for each option, for current species and turbine  ===========
   monthCollsnReps_opt1 <- list()
@@ -76,6 +76,9 @@ stochasticBand <- function(
 
   monthLabels <- month.abb
 
+  # Join rotation and pitch data into a single table ------------------------
+  windData <- left_join(windData_rotation,windData_pitch,by='windSpeed')
+  windThreshold <- windData$windSpeed[min(which(windData$rotationSpeed != 0))]  ##GH change (ROTOR to rotationSpeed)
 
   # set the row names of the bird data and assign flapping/gliding ----------
   #row.names(BirdData) <-  BirdData$Species
@@ -235,7 +238,7 @@ stochasticBand <- function(
 
     if(c_densOpt == "reSamp"){
       for(currentMonth in monthLabels){
-        workingVect <- sampleCount_resample(n = iter, countsSample = species.count %>% dplyr::select(contains(currentMonth)))
+        workingVect <- dplyr::sample_n(tbl = species.count %>% dplyr::select(contains(currentMonth)), size = iter, replace = TRUE)
         sampledSpeciesCount[,grep(currentMonth, names(sampledSpeciesCount))] <- workingVect
       }
     }
@@ -251,16 +254,8 @@ stochasticBand <- function(
     }
 
 
-
     # Start of turbine loop ---------------------------------------------------
-
-
     for (j in 1:nrow(TurbineData))  {   ## GH CHANGE <- t is a function, replaced this with j
-
-      ###CREATE TURBINE DATA FRAME###
-      sampledTurbine = data.frame(matrix(data = 0, ncol = 18, nrow = iter))
-      names(sampledTurbine) = c("RotorRadius", "HubHeight", "BladeWidth", "WindSpeed", "RotorSpeed", "Pitch", ### BC CHANGE ### -- windSpeed added
-                                as.vector(sapply(month.abb,function(x)paste0(x,"Op"))))  ### GH change -- streamlined to an sapply instead of a hard-coded vector
 
       ## create results tables - 3 identical
       tab1 <- data.frame(matrix(data = 0, ncol = 12, nrow = iter))
@@ -274,42 +269,10 @@ stochasticBand <- function(
       sampledCollInt <- data.frame(matrix(data = 0, ncol = 1, nrow = iter))
       names(sampledCollInt) <- "CollInt"
 
-
-      # sample turbine pars based on their sampling dists
-      #= samples from wind pars, then uses pitch/speed curves
-      windData <- left_join(windData_rotation,windData_pitch,by='windSpeed')
-      # iter*20 is used for some reason ### GH change
-      windSpeed<-rtnorm((iter*20), windSpeedMean,windSpeedSD,0)
-      #= Unsure of the number of samples being taken here - greater than iter seems to be the goal
-      wind.speed.m.s<-sample(windSpeed, iter+(iter/5), replace=T)
-      windThreshold <- windData$windSpeed[min(which(windData$rotationSpeed != 0))]  ##GH change (ROTOR to rotationSpeed)
-      wind.speed.m.s <- wind.speed.m.s[wind.speed.m.s>windThreshold]
-      rotorSpeed <- numeric()
-      rotorPitch <- numeric()
-
-      ### Streamlined by GH July 19 2021.
-      ### Samples the generated wind speeds to find those that fall within the wind speed bands
-      ### in the data sheet to match the sampled wind speeds to rotor pitch and rotation speed
-      ### Basically acts as a lookup to find what the rotation speed of a blade is at different wind speeds
-      for (y in 1:length(wind.speed.m.s)){
-        for (z in 1:nrow(windData)){
-          if(z<nrow(windData)){
-            if(dplyr::between(wind.speed.m.s[y],windData$windSpeed[z],windData$windSpeed[z+1])){
-              rotorSpeed[y]<-windData$rotationSpeed[z]
-              rotorPitch[y]<-windData$bladePitch[z]
-            }}else if(wind.speed.m.s[y]>=max(windData$windSpeed)){
-                rotorSpeed[y]<-windData$rotationSpeed[z]
-                rotorPitch[y]<-windData$bladePitch[z]}
-        }
-      }
-
-
-      #= outputs large (size S) rotor speeds and pitch - sampled into the DF
-
-      source("scripts/sampleturbineparams.r", local=T)
+      ## GH streamlined code to a function where the row gets passed in for sampling
+      sampledTurbine <- sample_turbine(TurbineData[j,],windData,windThreshold,iter)
 
       MonthlyOperational <- sampledTurbine %>% select(contains("Op", ignore.case = F))
-
       MeanOperational <- apply(MonthlyOperational, 1, mean)
 
       # Iterating i - over random samples  --------------------------------------
@@ -321,7 +284,6 @@ stochasticBand <- function(
         #  text <- NULL # paste0("Working through iteration ", i)
         #  updateProgress_Iter(value = i/iter, detail = text)
         #}
-
 
         # following are required to speed up pcoll function - need single numeric inputs for speed
         # coverC
@@ -429,7 +391,7 @@ stochasticBand <- function(
 
         ##progress bar for iterations##
         #setTxtProgressBar(pb, s*t+i)
-        setTxtProgressBar(pb, (s*nrow(TurbineData)-(nrow(TurbineData)-t))*iter-(iter-i))
+        #setTxtProgressBar(pb, (s*nrow(TurbineData)-(nrow(TurbineData)-t))*iter-(iter-i))
 
 
       } # end of i to iter

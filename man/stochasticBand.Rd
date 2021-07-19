@@ -19,8 +19,10 @@ stochasticBand(
   Latitude = 53.7,
   TideOff = 2.5,
   windSpeedMean = 30,
-  windSpeedSD = 1e-09,
-  DensityOpt
+  windSpeedSD = 5.1,
+  windData_rotation = startUpValues$turbinePars$rotationVsWind_df,
+  windData_pitch = startUpValues$turbinePars$pitchVsWind_df,
+  DensityOpt = list(userOption = "truncNorm")
 )
 }
 \arguments{
