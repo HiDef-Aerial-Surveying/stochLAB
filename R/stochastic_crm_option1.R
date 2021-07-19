@@ -31,10 +31,10 @@
 
 stochasticBand <- function(
   results_folder = NULL,
-  BirdDataFile = BirdDataFile, #"data/BirdData.csv",
-  TurbineDataFile = TurbineDataFile, #"data/TurbineData.csv",
-  CountDataFile = CountDataFile, #"data/CountData.csv",
-  FlightDataFile = FlightDataFile, #"data/FlightHeight.csv",
+  BirdDataFile = BirdDataFile,
+  TurbineDataFile = TurbineDataFile,
+  CountDataFile = CountDataFile,
+  FlightDataFile = FlightDataFile,
   iter = 10,
   CRSpecies = c("Black_legged_Kittiwake"),
   TPower = 1760,
@@ -44,13 +44,14 @@ stochasticBand <- function(
   Latitude = 53.7,
   TideOff = 2.5,
   windSpeedMean = 30,
-  windSpeedSD = 0.000000001,
-
+  windSpeedSD = 5.1,
+  windData_rotation = startUpValues$turbinePars$rotationVsWind_df,
+  windData_pitch = startUpValues$turbinePars$pitchVsWind_df,
   #updateProgress_Spec,  # pass in the updateProgress function so that it can update the progress indicator.
   #updateProgress_Iter,
-  DensityOpt
+  DensityOpt = list(userOption = "truncNorm")
 ) {
-  ##
+
   S<-iter*20 ## this is number of samples, increased to ensure enough valid values - is this used?
 
   #### BC ##### -- initialise objects to store simulation replicates of monthly collisions, for each option, for current species and turbine  ===========
@@ -77,67 +78,13 @@ stochasticBand <- function(
 
 
   # set the row names of the bird data and assign flapping/gliding ----------
-  row.names(BirdData) <-  BirdData$Species
+  #row.names(BirdData) <-  BirdData$Species
   #### flapping or Gliding for collision risk sheet
-  Flap_Glide <- ifelse (BirdData$Flight == "Flapping", 1, 2/pi)
+  Flap_Glide <- ifelse (BirdData$Flight == "Flapping", 1, 2/pi)  ### <- DO WE NEED THIS?!?
 
 
   #### produces a data frame with number of hours daylight and night per month based on the latitude
   hours <- DayLength(Latitude)
-
-
-  # Sample the bird attributes ----------------------------------------------
-
-  sampledBirdParams$WingSpan <- sampler_hd(dat = species.dat$WingspanSD,
-                                           mode = 'rtnorm',
-                                           n = iter,
-                                           mean=species.dat$Wingspan,
-                                           sd = species.dat$WingspanSD,
-                                           lower = 0)
-
-  sampledBirdParams$BodyLength <- sampler_hd(dat = species.dat$Body_LengthSD,
-                                             mode = 'rtnorm',
-                                             n = iter,
-                                             mean=species.dat$Body_Length,
-                                             sd = species.dat$Body_LengthSD,
-                                             lower = 0)
-
-
-  sampledBirdParams$FlightSpeed <- sampler_hd(dat = species.dat$Flight_SpeedSD,
-                                              mode = 'rtnorm',
-                                              n = iter,
-                                              mean=species.dat$Flight_Speed,
-                                              sd = species.dat$Flight_SpeedSD,
-                                              lower = 0)
-
-  sampledBirdParams$PCH <- sampler_hd(dat = species.dat$Prop_CRH_ObsSD,
-                                      mode = 'rbeta',
-                                      n = iter,
-                                      mean=species.dat$Prop_CRH_Obs,
-                                      sd = species.dat$Prop_CRH_ObsSD)
-
-
-  sampledBirdParams$NocturnalActivity <- sampler_hd(dat = species.dat$Nocturnal_ActivitySD,
-                                                    mode = 'rbeta',
-                                                    n = iter,
-                                                    mean=species.dat$Nocturnal_Activity,
-                                                    sd = species.dat$Nocturnal_ActivitySD)
-
-
-  sampledBirdParams$AvoidanceBasic <- sampler_hd(dat = species.dat$AvoidanceBasicSD,
-                                                 mode = 'rbeta',
-                                                 n = iter,
-                                                 mean=species.dat$AvoidanceBasic,
-                                                 sd = species.dat$AvoidanceBasicSD)
-
-  sampledBirdParams$AvoidanceExtended <- sampler_hd(dat = species.dat$AvoidanceExtendedSD,
-                                                    mode = 'rbeta',
-                                                    n = iter,
-                                                    mean=species.dat$AvoidanceExtended,
-                                                    sd = species.dat$AvoidanceExtendedSD)
-
-
-
 
 
   ##### bring in call functions needed to calculate collision risk along blade
@@ -148,7 +95,7 @@ stochasticBand <- function(
   # calculations ------------------------------------------------------------
 
   ##set progress bar
-  pb   <- txtProgressBar(1, iter*length(CRSpecies)*nrow(TurbineData), style=3)
+  #pb   <- txtProgressBar(1, iter*length(CRSpecies)*nrow(TurbineData), style=3)
 
   ###create overall results summary table###
   resultsSummary = data.frame(matrix(data = 0, ncol = 8, nrow = length(CRSpecies)*nrow(TurbineData)))
@@ -157,6 +104,17 @@ stochasticBand <- function(
   # Start of the species loop -----------------------------------------------
 
   for (s in 1 : length (CRSpecies)){
+    ###CREATE BIRD PARAMETER DATA FRAME###
+    sampledBirdParams = data.frame(matrix(data = 0, ncol = 7, nrow = iter))
+    names(sampledBirdParams) = c("AvoidanceBasic", "AvoidanceExtended",  "WingSpan", "BodyLength", "PCH", "FlightSpeed", "NocturnalActivity")
+
+    ###CREATE COUNT/DENSITY DATA FRAME###
+    sampledSpeciesCount = data.frame(matrix(data = 0, ncol = 12, nrow = iter))
+    names(sampledSpeciesCount) = month.abb
+
+    ###CREATE DATA FRAME FOR DENSITY DATA###
+    densitySummary=data.frame(matrix(data = 0, ncol = nrow(TurbineData)*3, nrow = iter))
+
 
     #### BC ##### -- progress bar update for iterations    ===========
     #if (is.function(updateProgress_Spec)) {
@@ -167,9 +125,10 @@ stochasticBand <- function(
     species.dat = subset (BirdData, Species == CRSpecies[s])
 
     species.dat$FlightNumeric <- ifelse(species.dat$Flight == 'Flapping', 1, 0)
+    Flap_Glide = ifelse (species.dat$Flight == "Flapping", 1, 2/pi)
 
 
-    c_densOpt <- filter(DensityOpt, specLabel == CRSpecies[s])$userOption
+    c_densOpt <- dplyr::filter(DensityOpt, specLabel == CRSpecies[s])$userOption  ### <- work on this
 
     if(c_densOpt == "truncNorm"){
       species.count = subset(CountData, Species == CRSpecies[s])
@@ -189,54 +148,124 @@ stochasticBand <- function(
 
 
 
-    Flap_Glide = ifelse (species.dat$Flight == "Flapping", 1, 2/pi)
-
     ##input flight curves for the species
+    #################################
+    #### TURNED OFF FOR OPTION 1 ####
 
-    ht<-paste("data/", CRSpecies[s],"_ht.csv", sep='')
+    #ht<-paste("data/", CRSpecies[s],"_ht.csv", sep='')
 
-    FlightHeightSpec <- read.csv(ht, header = T) #and change in option2 code
+    #FlightHeightSpec <- read.csv(ht, header = T) #and change in option2 code
 
-    flight.boot <- 2:dim(FlightHeightSpec)[2]     ##### BC CHANGE  -- need to skip first column with heights ######
+    #flight.boot <- 2:dim(FlightHeightSpec)[2]     ##### BC CHANGE  -- need to skip first column with heights ######
 
-    flight.boot.sample <- sample(flight.boot, iter, replace=T)
+    #flight.boot.sample <- sample(flight.boot, iter, replace=T)
+    ###########################################################################################
 
 
-    ###CREATE BIRD PARAMETER DATA FRAME###
-    sampledBirdParams = data.frame(matrix(data = 0, ncol = 7, nrow = iter))
-    names(sampledBirdParams) = c("AvoidanceBasic", "AvoidanceExtended",  "WingSpan", "BodyLength", "PCH", "FlightSpeed", "NocturnalActivity")
-
-    ###CREATE COUNT/DENSITY DATA FRAME###
-    sampledSpeciesCount = data.frame(matrix(data = 0, ncol = 12, nrow = iter))
-    names(sampledSpeciesCount) = monthLabels
-
-    ###CRAETE DATA FRAME FOR DENSITY DATA###
-    densitySummary=data.frame(matrix(data = 0, ncol = nrow(TurbineData)*3, nrow = iter))
     ##add names of columns later in turbine loop###
 
-    #source("scripts/samplebirdparams.r", local=T)
+
+    # Sample the bird attributes ----------------------------------------------
+    ### Streamlined by GH 19 July 2021.
+    sampledBirdParams$WingSpan <- sampler_hd(dat = species.dat$WingspanSD,
+                                             mode = 'rtnorm',
+                                             n = iter,
+                                             mean=species.dat$Wingspan,
+                                             sd = species.dat$WingspanSD,
+                                             lower = 0)
+
+    sampledBirdParams$BodyLength <- sampler_hd(dat = species.dat$Body_LengthSD,
+                                               mode = 'rtnorm',
+                                               n = iter,
+                                               mean=species.dat$Body_Length,
+                                               sd = species.dat$Body_LengthSD,
+                                               lower = 0)
+
+
+    sampledBirdParams$FlightSpeed <- sampler_hd(dat = species.dat$Flight_SpeedSD,
+                                                mode = 'rtnorm',
+                                                n = iter,
+                                                mean=species.dat$Flight_Speed,
+                                                sd = species.dat$Flight_SpeedSD,
+                                                lower = 0)
+
+    sampledBirdParams$PCH <- sampler_hd(dat = species.dat$Prop_CRH_ObsSD,
+                                        mode = 'rbeta',
+                                        n = iter,
+                                        mean=species.dat$Prop_CRH_Obs,
+                                        sd = species.dat$Prop_CRH_ObsSD)
+
+
+    sampledBirdParams$NocturnalActivity <- sampler_hd(dat = species.dat$Nocturnal_ActivitySD,
+                                                      mode = 'rbeta',
+                                                      n = iter,
+                                                      mean=species.dat$Nocturnal_Activity,
+                                                      sd = species.dat$Nocturnal_ActivitySD)
+
+
+    sampledBirdParams$AvoidanceBasic <- sampler_hd(dat = species.dat$AvoidanceBasicSD,
+                                                   mode = 'rbeta',
+                                                   n = iter,
+                                                   mean=species.dat$AvoidanceBasic,
+                                                   sd = species.dat$AvoidanceBasicSD)
+
+    sampledBirdParams$AvoidanceExtended <- sampler_hd(dat = species.dat$AvoidanceExtendedSD,
+                                                      mode = 'rbeta',
+                                                      n = iter,
+                                                      mean=species.dat$AvoidanceExtended,
+                                                      sd = species.dat$AvoidanceExtendedSD)
+
+
+
+    # Monthly density estimates sampled here --------------------------------------------
+
+    if(c_densOpt == "truncNorm"){
+      for(currentMonth in month.abb){
+        # separate out the current month mean and SD. Species.count is already filtered for current species
+        workingMean <- species.count %>% dplyr::select(contains(currentMonth),-contains('SD'))
+        workingSD <- species.count %>% dplyr::select(contains(paste0(currentMonth,"SD")))
+        sampledSpeciesCount[,grep(currentMonth, names(sampledSpeciesCount))] <- sampler_hd(dat = data.frame(workingSD)[1,1],
+                                                                                           mode = 'rtnorm',
+                                                                                           n = iter,
+                                                                                           mean=data.frame(workingMean)[1,1],
+                                                                                           sd = data.frame(workingSD)[1,1])
+      }
+    }
+
+
+    if(c_densOpt == "reSamp"){
+      for(currentMonth in monthLabels){
+        workingVect <- sampleCount_resample(n = iter, countsSample = species.count %>% dplyr::select(contains(currentMonth)))
+        sampledSpeciesCount[,grep(currentMonth, names(sampledSpeciesCount))] <- workingVect
+      }
+    }
+
+
+
+    if(c_densOpt == "pcntiles"){
+      for(currentMonth in monthLabels){
+        cPcntls <- species.count %>% dplyr::select(referenceProbs, contains(currentMonth))
+        workingVect <- sampleCount_pctiles(iter, probs = cPcntls[, 1], countsPctls = cPcntls[, 2])
+        sampledSpeciesCount[,grep(currentMonth, names(sampledSpeciesCount))] <- workingVect
+      }
+    }
+
 
 
     # Start of turbine loop ---------------------------------------------------
 
 
-    for ( t in 1:nrow(TurbineData))  {
+    for (j in 1:nrow(TurbineData))  {   ## GH CHANGE <- t is a function, replaced this with j
 
       ###CREATE TURBINE DATA FRAME###
       sampledTurbine = data.frame(matrix(data = 0, ncol = 18, nrow = iter))
       names(sampledTurbine) = c("RotorRadius", "HubHeight", "BladeWidth", "WindSpeed", "RotorSpeed", "Pitch", ### BC CHANGE ### -- windSpeed added
-                                "JanOp", "FebOp", "MarOp", "AprOp", "MayOp",   "JunOp", "JulOp",
-                                "AugOp", "SepOp", "OctOp", "NovOp", "DecOp")
-
+                                as.vector(sapply(month.abb,function(x)paste0(x,"Op"))))  ### GH change -- streamlined to an sapply instead of a hard-coded vector
 
       ## create results tables - 3 identical
-
       tab1 <- data.frame(matrix(data = 0, ncol = 12, nrow = iter))
       names(tab1) <- monthLabels
-
       tab2 <- tab3 <- tab1
-
-
 
       ###set vectors to store PCol and CollInt###
       sampledPColl <- data.frame(matrix(data = 0, ncol = 1, nrow = iter))
@@ -248,8 +277,32 @@ stochasticBand <- function(
 
       # sample turbine pars based on their sampling dists
       #= samples from wind pars, then uses pitch/speed curves
+      windData <- left_join(windData_rotation,windData_pitch,by='windSpeed')
+      # iter*20 is used for some reason ### GH change
+      windSpeed<-rtnorm((iter*20), windSpeedMean,windSpeedSD,0)
+      #= Unsure of the number of samples being taken here - greater than iter seems to be the goal
+      wind.speed.m.s<-sample(windSpeed, iter+(iter/5), replace=T)
+      windThreshold <- windData$windSpeed[min(which(windData$rotationSpeed != 0))]  ##GH change (ROTOR to rotationSpeed)
+      wind.speed.m.s <- wind.speed.m.s[wind.speed.m.s>windThreshold]
+      rotorSpeed <- numeric()
+      rotorPitch <- numeric()
 
-      source("scripts/get_rotor_plus_pitch_auto.r", local=T)
+      ### Streamlined by GH July 19 2021.
+      ### Samples the generated wind speeds to find those that fall within the wind speed bands
+      ### in the data sheet to match the sampled wind speeds to rotor pitch and rotation speed
+      ### Basically acts as a lookup to find what the rotation speed of a blade is at different wind speeds
+      for (y in 1:length(wind.speed.m.s)){
+        for (z in 1:nrow(windData)){
+          if(z<nrow(windData)){
+            if(dplyr::between(wind.speed.m.s[y],windData$windSpeed[z],windData$windSpeed[z+1])){
+              rotorSpeed[y]<-windData$rotationSpeed[z]
+              rotorPitch[y]<-windData$bladePitch[z]
+            }}else if(wind.speed.m.s[y]>=max(windData$windSpeed)){
+                rotorSpeed[y]<-windData$rotationSpeed[z]
+                rotorPitch[y]<-windData$bladePitch[z]}
+        }
+      }
+
 
       #= outputs large (size S) rotor speeds and pitch - sampled into the DF
 
@@ -306,7 +359,7 @@ stochasticBand <- function(
 
         ## First calculate turbine frontal area
 
-        NTurbines = round (TPower / TurbineData$TurbineModel[t]) ### Number of turbines of given Output required to produce target output
+        NTurbines = round (TPower / TurbineData$TurbineModel[j]) ### Number of turbines of given Output required to produce target output
         TotalFrontalArea = NTurbines * pi * sampledTurbine$RotorRadius[i] ^2
 
         #### Calculate the total number of birds passing through the wind farm in each month
@@ -395,7 +448,7 @@ stochasticBand <- function(
 
       #### BC ##### -- Store simulation replicates under each option, for current species and turbine  ===========
       cSpec <- CRSpecies[s]
-      cTurbModel <- paste0("turbModel", TurbineData$TurbineModel[t])
+      cTurbModel <- paste0("turbModel", TurbineData$TurbineModel[j])
 
       monthCollsnReps_opt1[[cSpec]][[cTurbModel]] <- tab1
       monthCollsnReps_opt2[[cSpec]][[cTurbModel]] <- tab2

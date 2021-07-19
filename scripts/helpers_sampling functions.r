@@ -13,62 +13,6 @@
 
 # Sampling function --------------------------------------------
 
-
-
-
-
-
-
-
-
-
-#= wingspan
-  sampleWingSpan <- function(n, meanspan, sdspan){
-
-    #rnorm(n, meanspan, sdspan)
-    rtnorm_dmp(n, mean = meanspan, sd = sdspan, lower = 0)               # <<<<< BC <<<<<
-
-  }
-
-#= bird length
-
-  sampleBirdLength <- function(n, meanlength, sdlength){
-
-    #rnorm(n, meanlength, sdlength)
-    rtnorm_dmp(n, mean = meanlength, sd = sdlength, lower = 0)          # <<<<< BC <<<<<
-
-  }
-
-#= CHR?
-
-  sampleCRH <- function(n, meanCRH, sdCRH){
-
-    #rnorm(n, meanCRH, sdCRH)
-    rbeta_dmp(n, p = meanCRH, sd = sdCRH)   ##### BC #####
-
-  }
-
-
-
-#= Flight Speed                                                         # <<<<< BC <<<<<
-
-  sampleFlightSpeed <- function(n, meanflspeed, sdflspeed){
-
-    rtnorm_dmp(n, mean = meanflspeed, sd = sdflspeed, lower = 0)
-  }
-
-
-
-#= Nocturnal (?)
-
-  sampleNocturnal <- function(n, meannoc, sdnoc){
-
-    #rnorm(n, meannoc, sdnoc)
-    rbeta_dmp(n, p = meannoc, sd = sdnoc)                              # <<<<< BC <<<<<
-
-  }
-
-
 #= Avoidance (basic and extended)
 
   sampleAvoidance <- function(n, meanavoid, sdavoid){
@@ -78,24 +22,6 @@
 
   }
 
-
-
-
-#= Bird counts                                                        # <<<<< BC <<<<<
-
-  # sampleCount <- function(n, meancount, sdcount){
-  #
-  #   if(sdcount > 0 & meancount > 0){
-  #     return(rtnorm(n, meancount, sdcount, 0))
-  #   }else{
-  #     if(sdcount==0 & meancount >=0){
-  #       return(rep(meancount, n))
-  #     }
-  #     if(sdcount==0 & meancount < 0){
-  #       return(rep(0,n))
-  #     }
-  #   }
-  # }
 
   # sample from a truncated normal bounded at 0
   sampleCount_tnorm <- function(n, meancount, sdcount){
