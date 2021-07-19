@@ -285,6 +285,9 @@ stochasticBand <- function(
         #  updateProgress_Iter(value = i/iter, detail = text)
         #}
 
+
+        #####################################################################
+        ##### GH - nothing here used?
         # fixed turbine pars
         currentBlades <- TurbineData$Blades
 
@@ -301,32 +304,24 @@ stochasticBand <- function(
         currentWingSpan <- sampledBirdParams$WingSpan[i]
         currentFlightSpeed <- sampledBirdParams$FlightSpeed[i]
         currentBirdLength <- sampledBirdParams$BodyLength[i]
+        #####################################################################
 
         # Collision risk steps - options appear here ------------------------------
 
         ############## STEP ONE - Calculate the collision risk in the absence of avoidance action
 
-        #source("scripts/ProbabilityCollision.r", local=T)
+        P_Collision <- probability_collision_no_avoid(sampledBirdParams,sampledTurbine)
 
 
         ############## STEP TWO - Calculate Flux Factor - the number of birds passing a turbine in each month
 
 
-        ## First calculate turbine frontal area
-
-        NTurbines = round (TPower / TurbineData$TurbineModel[j]) ### Number of turbines of given Output required to produce target output
-        TotalFrontalArea = NTurbines * pi * sampledTurbine$RotorRadius[i] ^2
-
-        #### Calculate the total number of birds passing through the wind farm in each month
-
-        ### LAPPLY (VECTORIZE)
-        for (h in 1:nrow(hours)) {
-
-          hours$Flux[h] = sampledBirdParams$FlightSpeed[i] * sampledSpeciesCount[i, h]/ (2 * sampledTurbine$RotorRadius[i]) * TotalFrontalArea *
-            (hours$Day[h] + sampledBirdParams$NocturnalActivity[i] * hours$Night[h]) * 3600/1000000
-
-        }
-
+        hours <- initial_flux(TurbineData=TurbineData[j,],
+                              sampledTurbine=sampledTurbine[i,],
+                              sampledBirdParams=sampledBirdParams[i,],
+                              sampledSpeciesCount=sampledSpeciesCount[i,],
+                              TPower=TPower,
+                              hours=hours)
 
         ############## STEP THREE - Calculate Large Array Correction Factor
 
@@ -361,27 +356,18 @@ stochasticBand <- function(
 
 
         #######################		Do model using option 2 - modelled flight height distribution		###############################
-
-
-
         #source("scripts/Option2.r", local=T)
         ## add results to overall species/turbine results table
-        tab2[i,]=Option2_CollisionRate[,2]
-
-
+        #tab2[i,]=Option2_CollisionRate[,2]
         # Option 3 ----------------------------------------------------------------
-
 
         #######################		Do model using option 3 - modelled flight height distribution		###############################
         #######################		taking account of variation in risk along the rotor blades		###############################
-
         #source("scripts/Option3.r", local=T)
         ## add results to overall species/turbine results table
-        tab3[i,]=Option3_CollisionRate[,2]
-
+        #tab3[i,]=Option3_CollisionRate[,2]
         #Store Collision Integral
-        sampledCollInt[i,]<-CollInt
-
+        #sampledCollInt[i,]<-CollInt
         ##progress bar for iterations##
         #setTxtProgressBar(pb, s*t+i)
         #setTxtProgressBar(pb, (s*nrow(TurbineData)-(nrow(TurbineData)-t))*iter-(iter-i))
@@ -406,15 +392,13 @@ stochasticBand <- function(
       cTurbModel <- paste0("turbModel", TurbineData$TurbineModel[j])
 
       monthCollsnReps_opt1[[cSpec]][[cTurbModel]] <- tab1
-      monthCollsnReps_opt2[[cSpec]][[cTurbModel]] <- tab2
-      monthCollsnReps_opt3[[cSpec]][[cTurbModel]] <- tab3
+      #monthCollsnReps_opt2[[cSpec]][[cTurbModel]] <- tab2
+      #monthCollsnReps_opt3[[cSpec]][[cTurbModel]] <- tab3
 
-    } # end of t over number of turbine
+    } # end of j over number of turbine
 
 
     # End of the turbine loop -------------------------------------------------
-
-
 
     ###output species plots of density by option with curves for turbine model###
     ###PLOT DENSITY BY OPTION (useful if several turbine models)###

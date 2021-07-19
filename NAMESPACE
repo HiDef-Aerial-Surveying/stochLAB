@@ -2,6 +2,8 @@
 
 export(CV)
 export(DayLength)
+export(initial_flux)
+export(probability_collision_no_avoid)
 export(rbeta_dmp)
 export(rtnorm_dmp)
 export(sample_turbine)
