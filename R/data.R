@@ -9,7 +9,7 @@
 #'   \item{AvoidanceBasicSD}{Basic avoidance rate SD}
 #'   ...
 #' }
-"BirdData"
+"Bird_Data"
 
 
 #' Bird densities for the CRM
@@ -23,7 +23,7 @@
 #'   \item{AvoidanceBasicSD}{Basic avoidance rate SD}
 #'   ...
 #' }
-"CountData"
+"Count_Data"
 
 #' Bird parameters for the CRM
 #'
@@ -36,7 +36,7 @@
 #'   \item{AvoidanceBasicSD}{Basic avoidance rate SD}
 #'   ...
 #' }
-"FlightHeight"
+"Flight_Height"
 
 #' Bird parameters for the CRM
 #'
@@ -49,7 +49,7 @@
 #'   \item{AvoidanceBasicSD}{Basic avoidance rate SD}
 #'   ...
 #' }
-"TurbineData"
+"Turbine_Data"
 
 
 #' Rotor blade sizes

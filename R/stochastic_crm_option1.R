@@ -37,10 +37,10 @@
 
 stochasticBand <- function(
   results_folder = NULL,
-  BirdDataFile = BirdDataFile,
-  TurbineDataFile = TurbineDataFile,
-  CountDataFile = CountDataFile,
-  FlightDataFile = FlightDataFile,
+  BirdData = BirdData,
+  TurbineData = TurbineData,
+  CountData = CountData,
+  FlightData = FlightData,
   iter = 10,
   CRSpecies = c("Black_legged_Kittiwake"),
   TPower = 1760,
@@ -279,7 +279,9 @@ stochasticBand <- function(
       names(sampledCollInt) <- "CollInt"
 
       ## GH streamlined code to a function where the row gets passed in for sampling
-      sampledTurbine <- sample_turbine(TurbineData[j,],windData,windThreshold,iter)
+      sampledTurbine <- sample_turbine(TurbineData[j,],
+                                       windSpeedMean = windSpeedMean,
+                                       windSpeedSD = windSpeedSD,windData,windThreshold,iter)
 
       MonthlyOperational <- sampledTurbine %>% select(contains("Op", ignore.case = F))
       MeanOperational <- apply(MonthlyOperational, 1, mean)

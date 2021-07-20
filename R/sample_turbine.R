@@ -3,6 +3,8 @@
 #' Samples and aggregates appropriate data for a single wind turbine
 #'
 #' @param TurbineData A data frame. The Turbine data formatted as per the "TurbineData" data object
+#' @param windSpeedMean A numeric value. The mean wind speed in km/hr
+#' @param windSpeedSD A numeric value. The SD of the wind speed in km/hr
 #' @param windData A data frame.  The wind speed x rotation speed x blade pitch data table
 #' @param windThreshold A numeric value. The minimum wind speed required for the blades to turn
 #' @param iter An integer value. The number of samples to generate
@@ -11,7 +13,12 @@
 #' @export
 #'
 
-sample_turbine <- function(TurbineData = TurbineData,windData=windData,windThreshold=windThreshold,iter=iter){
+sample_turbine <- function(TurbineData = TurbineData,
+                           windSpeedMean = windSpeedMean,
+                           windSpeedSD = windSpeedSD,
+                           windData=windData,
+                           windThreshold=windThreshold,
+                           iter=iter){
     ### GH Created function to take in a single row from the Turbine data (1 turbine at a time)
     ### CREATE TURBINE DATA FRAME###
     sampledTurbine = data.frame(matrix(data = 0, ncol = 18, nrow = iter))
