@@ -6,6 +6,8 @@
 \usage{
 sample_turbine(
   TurbineData = TurbineData,
+  windSpeedMean = windSpeedMean,
+  windSpeedSD = windSpeedSD,
   windData = windData,
   windThreshold = windThreshold,
   iter = iter
@@ -13,6 +15,10 @@ sample_turbine(
 }
 \arguments{
 \item{TurbineData}{A data frame. The Turbine data formatted as per the "TurbineData" data object}
+
+\item{windSpeedMean}{A numeric value. The mean wind speed in km/hr}
+
+\item{windSpeedSD}{A numeric value. The SD of the wind speed in km/hr}
 
 \item{windData}{A data frame.  The wind speed x rotation speed x blade pitch data table}
 

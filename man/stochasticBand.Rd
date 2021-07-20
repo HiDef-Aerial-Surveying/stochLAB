@@ -6,10 +6,10 @@
 \usage{
 stochasticBand(
   results_folder = NULL,
-  BirdDataFile = BirdDataFile,
-  TurbineDataFile = TurbineDataFile,
-  CountDataFile = CountDataFile,
-  FlightDataFile = FlightDataFile,
+  BirdData = Bird_Data,
+  TurbineData = Turbine_Data,
+  CountData = Count_Data,
+  FlightData = Flight_Data,
   iter = 10,
   CRSpecies = c("Black_legged_Kittiwake"),
   TPower = 1760,
@@ -28,13 +28,13 @@ stochasticBand(
 \arguments{
 \item{results_folder}{A character string. Path name to an existing output folder for tables/plots}
 
-\item{BirdDataFile}{A data frame. Contains all the parameters for the species}
+\item{BirdData}{A data frame. Contains all the parameters for the species}
 
-\item{TurbineDataFile}{A data frame. Contains all the parameters for the turbines}
+\item{TurbineData}{A data frame. Contains all the parameters for the turbines}
 
-\item{CountDataFile}{A data frame. Contains density data for the wind farm of interest}
+\item{CountData}{A data frame. Contains density data for the wind farm of interest}
 
-\item{FlightDataFile}{A data frame. Contains flight height data for species}
+\item{FlightData}{A data frame. Contains flight height data for species}
 
 \item{iter}{An integer constant > 0. The number of stochastic draws to take}
 
