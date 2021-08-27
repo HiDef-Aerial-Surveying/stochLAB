@@ -5,6 +5,7 @@
 \title{Translation of Masden 2015 collision risk models for offshore wind collisions}
 \usage{
 stochasticBand(
+  scenario_id = 1,
   results_folder = NULL,
   BirdData = Bird_Data,
   TurbineData = Turbine_Data,
@@ -13,6 +14,7 @@ stochasticBand(
   iter = 10,
   CRSpecies = c("Black_legged_Kittiwake"),
   TPower = 1760,
+  NTurbines = 100,
   LargeArrayCorrection = TRUE,
   WFWidth = 54,
   Prop_Upwind = 0.5,
