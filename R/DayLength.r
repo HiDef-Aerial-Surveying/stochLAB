@@ -1,14 +1,12 @@
-#' Day length function
+#' Total day and night hours per month
 #'
 #' Taken from Forsythe et al.(1995) A model comparison for daylength as a
 #' function of latitude and day of year.  Ecological Modelling. 80: 87 - 95
 #'
-#'
 #' @param Latitude A decimal value. The latitude of the centroid of the windfarm
-#' @return data frame of hours
+#' @return data frame with total number of daylight hours and night hours in each
+#' month at the specified atitude
 #' @export
-#'
-
 DayLength <- function(Latitude){
 
   DaylengthThruYr = data.frame (seq(1,365,1))
