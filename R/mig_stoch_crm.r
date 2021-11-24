@@ -1,31 +1,23 @@
-#' Stochastic collision risk model for a single species and one turbine scenario
+#' Stochastic migration collision risk model for a single species and one turbine scenario
 #'
-#' Run stochastic collision risk model for a single species and one turbine scenario
+#' Run migration stochastic collision risk model for a single species and one turbine scenario
 #'
 #' @details
 #' This function is an adaption of code from Masden(2015) used for estimating
 #' the collision risk of seabirds in offshore windfarm sites and is a further
-#' adaptation from Band(2012).
+#' adaptation from Band(2012). It is a further adaptation of the stoch_crm function.
 #'
-#' The collision risk model evaluates risk on a month by month basis in order
-#' to reflect changing bird abundance within and utilization of the area.
+#' The collision risk model evaluates risk for each defined migratory period where
+#' flux rate is simply the number of birds travelling through the windfarm.
 #'
-#' Changes in relation to previous top-line function \code{stochasticBand}
+#' Changes in relation to previous top-line function \code{stoch_crm}
 #' \itemize{
-#'   \item function runs the model for one single scenario (i.e. one species for
-#'   one turbine scenario). Advantages include:
-#'   \itemize{
-#'       \item streamlined infrastructure for easier scenario management
-#'       \item easier implementation of parallelisation for multiple scenarios
-#'   }
-#'   \item results are no longer saved to an external file
+#'   \item function will run only option 1 for migratory species#'
 #' }
 #'
 #'
-#' @return Estimates of number of collisions per month, for each of the chosen
-#'    model options
+#' @return Estimates of number of collisions per migratory season
 #'
-#' @param model_options numeric vector
 #' @param n_turbines integer
 #' @param BirdData A data frame. Contains all the parameters for the species
 #' @param TurbineData A data frame. Contains all the parameters for the turbines
@@ -51,28 +43,11 @@
 #' @import pracma
 #'
 #' @examples
-#' stoch_crm(model_options = c(1, 2, 3),
-#'   BirdData = Bird_Data[3, ],
-#'   TurbineData = Turbine_Data,
-#'   CountData = Count_Data[3, ],
-#'   iter = 10,
-#'   spp_name = c("Black_legged_Kittiwake"),
-#'   LargeArrayCorrection = TRUE,
-#'   n_turbines = 300,
-#'   WFWidth = 4,
-#'   Prop_Upwind = 0.5,
-#'   Latitude = 56,
-#'   TideOff = 2.5,
-#'   windSpeedMean = 30,
-#'   windSpeedSD = 5.1,
-#'   windData_rotation = startUpValues$turbinePars$rotationVsWind_df,
-#'   windData_pitch = startUpValues$turbinePars$pitchVsWind_df,
-#'   dens_opt = "truncNorm",
-#'   fhd_bootstraps = generic_fhd_bootstraps$Black_headed_Gull)
 #'
 #' @export
-stoch_crm <- function(model_options = c(1, 2, 3),
-                      BirdData, TurbineData, CountData, #FlightData = Flight_Data,
+#'
+mig_stoch_crm <- function(
+                      BirdData, TurbineData, CountData,
                       iter = 10,
                       spp_name,
                       LargeArrayCorrection,
@@ -108,7 +83,6 @@ stoch_crm <- function(model_options = c(1, 2, 3),
   )
 
 
-
   # Initiate objects to harvest results ----------------------------------------
   sampledBirdParams <- list()
 
@@ -118,57 +92,22 @@ stoch_crm <- function(model_options = c(1, 2, 3),
       data.matrix(
         matrix(data = NA, ncol = n_months, nrow = iter,
                dimnames = list(NULL, model_months))
-        )
+      )
   }
 
-
-  # # TODO: section likely to be dropped
-  #
-  # ## for results summary table
-  # resultsSummary = data.frame(matrix(data = 0, ncol = 6,
-  #                                    nrow = 3))
-  # names(resultsSummary) = c("Option", "Mean", "SD","CV",
-  #                           "Median", "IQR")
-  #
-  # ## for sampled bird parameters
-  # sampledBirdParams = data.frame(matrix(data = 0, ncol = 7, nrow = iter))
-  # names(sampledBirdParams) = c("AvoidanceBasic", "AvoidanceExtended",
-  #                              "WingSpan", "BodyLength", "PCH", "FlightSpeed",
-  #                              "NocturnalActivity")
-  #
-  # for sampled counts
-  sampledSpeciesCount = data.frame(matrix(data = 0, ncol = 12, nrow = iter))
-  names(sampledSpeciesCount) = month.abb
-
-  # ## for density data
-  # densitySummary=data.frame(matrix(data = 0, ncol = 3, nrow = iter))
-  #
-  #
-  # ## results tables - 3 identical
-  # tab1 <- data.frame(matrix(data = 0, ncol = 12, nrow = iter))
-  # names(tab1) <- monthLabels
-  # tab2 <- tab3 <- tab1
-  #
-  # ## vectors to store PCol and CollInt###
-  # sampledPColl <- data.frame(matrix(data = 0, ncol = 1, nrow = iter))
-  # names(sampledPColl) <- "PColl"
-  #
-  # sampledCollInt <- data.frame(matrix(data = 0, ncol = 1, nrow = iter))
-  # names(sampledCollInt) <- "CollInt"
-
-
   # Prepare inputs  ------------------------------------------------------------
-  # TODO: inputs interface needs rework
 
-  ## get daylight hours and night hours per month based on the latitude
-  daynight_hrs_month <- DayLength(Latitude)
+  ## For the migration app we make the assumption to be precautionary, that the animals are
+  ## passing through the windfarm area during the day time.
+  ## Thus, flux is simply a count of the number of birds passing through the area
+  ## as per the simulation outputs
 
   ## month labels
   monthLabels <- month.abb
 
   ## join rotation and pitch data into a single table
   windData <- dplyr::left_join(windData_rotation,windData_pitch,by='windSpeed')
-  windThreshold <- windData$windSpeed[min(which(windData$rotationSpeed != 0))]  ##GH change (ROTOR to rotationSpeed)
+  windThreshold <- windData$windSpeed[min(which(windData$rotationSpeed != 0))]
 
   ## bird inputs
   species.dat = BirdData
@@ -179,16 +118,6 @@ stoch_crm <- function(model_options = c(1, 2, 3),
   if(dens_opt == "truncNorm"){
     species.count = subset(CountData, Species == spp_name)
   }
-
-#   if(dens_opt == "reSamp"){
-#     species.count <- fread("data/birdDensityData_samples.csv") %>%
-#       dplyr::filter(specLabel == CRSpecies[s])
-#   }
-#
-#   if(dens_opt == "pcntiles"){
-#     species.count <- fread("data/birdDensityData_refPoints.csv") %>%
-#       dplyr::filter(specLabel == CRSpecies[s])
-#   }
 
 
   # Generate random draws of parameters  ---------------------------------------
@@ -239,11 +168,7 @@ stoch_crm <- function(model_options = c(1, 2, 3),
                                                  mean=species.dat$AvoidanceBasic,
                                                  sd = species.dat$AvoidanceBasicSD)
 
-  sampledBirdParams$AvoidanceExtended <- sampler_hd(dat = species.dat$AvoidanceExtendedSD,
-                                                    mode = 'rbeta',
-                                                    n = iter,
-                                                    mean=species.dat$AvoidanceExtended,
-                                                    sd = species.dat$AvoidanceExtendedSD)
+
 
   ## sample monthly densities
 
@@ -277,23 +202,6 @@ stoch_crm <- function(model_options = c(1, 2, 3),
 
   # convert to data.matrix for improved performance
   sampledSpeciesCount <- data.matrix(sampledSpeciesCount)
-
-
-  ## sample species flight height distribution
-  if(any(model_options %in% c(2, 3))){
-    if(!is.null(fhd_bootstraps)){
-      sampledSpeciesFHD <- data.matrix(
-        fhd_bootstraps[, sample(2:ncol(fhd_bootstraps), iter, replace = TRUE)]
-      )
-    } else {
-      stop("`fhd_bootstraps` argument is NULL while model options 2 and/or 3 are",
-           " requested in `model_options`.\n",
-           "   Dataset with bootstrap samples of flight height distributions ",
-           "must be provided for model options 2 and 3")
-    }
-  }
-
-
 
   ## turbine parameters
 
@@ -355,7 +263,8 @@ stoch_crm <- function(model_options = c(1, 2, 3),
     }
 
 
-    # STEP 3 - Calculate bird flux per month -----------------------------------
+    # STEP 3 - flux per season -----------------------------------
+
     flux_fct <-
       get_flux_factor(
         n_turbines = n_turbines,
@@ -364,132 +273,20 @@ stoch_crm <- function(model_options = c(1, 2, 3),
         bird_dens = sampledSpeciesCount[i, ],
         daynight_hrs = daynight_hrs_month,
         noct_activity = sampledBirdParams$NocturnalActivity[i]
-    )
+      )
 
-
-    # STEP 4 - for model options 2 or 3, calculate generic FHD across rotor height -
-    if(any(model_options %in% c(2, 3))){
-
-      gen_fhd_at_rotor <- get_fhd_rotor(
-        hub_height = sampledTurbine$HubHeight[i],
-        fhd = sampledSpeciesFHD[, i],
-        rotor_radius = sampledTurbine$RotorRadius[i],
-        tide_off = TideOff)
-    }
-
-
-    # STEP 5 - Calculate collisions per month under each model option ----------
-    if(any(model_options == 1)){
-
-      scrm_outputs$opt1[i, ] <-
-        crm_opt1(
-          flux_factor = flux_fct,
-          prop_crh_surv = sampledBirdParams$PCH[i],
-          prob_single_collision = p_single_collision,
-          prop_operational = sampled_oper_prop[i, ],
-          avoidance_rate = sampledBirdParams$AvoidanceBasic[i],
-          lac_factor = L_ArrayCF)
-    }
-
-
-
-    if(any(model_options == 2)){
-      scrm_outputs$opt2[i, ] <-
-        crm_opt2(
-          gen_d_y = gen_fhd_at_rotor,
-          flux_factor = flux_fct,
-          prob_single_collision = p_single_collision,
-          prop_operational = sampled_oper_prop[i, ],
-          avoidance_rate = sampledBirdParams$AvoidanceBasic[i],
-          lac_factor = L_ArrayCF)
-    }
-
-
-    if(any(model_options == 3)){
-      scrm_outputs$opt3[i, ] <-
-        crm_opt3(
-          gen_d_y = gen_fhd_at_rotor,
-          rotor_radius = sampledTurbine$RotorRadius[i],
-          blade_width = sampledTurbine$BladeWidth[i],
-          rotor_speed = sampledTurbine$RotorSpeed[i],
-          blade_pitch = sampledTurbine$Pitch[i],
-          flight_type_num = species.dat$FlightNumeric,
-          wing_span = sampledBirdParams$WingSpan[i],
-          flight_speed = sampledBirdParams$FlightSpeed[i],
-          body_lt = sampledBirdParams$BodyLength[i],
-          n_blades = Turbine_Data$Blades,
-          prop_upwind = Prop_Upwind,
-          avoidance_rate_ext = sampledBirdParams$AvoidanceExtended[i],
-          flux_factor = flux_fct,
-          prop_operational = sampled_oper_prop[i, ],
-          lac_factor = L_ArrayCF)
-    }
-
-
+    scrm_outputs$opt1[i, ] <-
+      crm_opt1(
+        flux_factor = flux_fct,
+        prop_crh_surv = sampledBirdParams$PCH[i],
+        prob_single_collision = p_single_collision,
+        prop_operational = sampled_oper_prop[i, ],
+        avoidance_rate = sampledBirdParams$AvoidanceBasic[i],
+        lac_factor = L_ArrayCF)
 
   } # end of i to iter
 
   scrm_outputs
-
-#   # End of the random sampling iterations i --------------------------------
-#
-#
-#   #source("scripts/turbineSpeciesOuputs.r", local=T)
-#
-#   #### BC ##### -- reset counter of progress bar for iterations =====================
-#   #if (is.function(updateProgress_Iter)) {
-#   #  text <- NULL # paste0("Working through iteration ", i)
-#   #  updateProgress_Iter(value = 0, detail = text)
-#   #}
-#
-#
-#   #### BC ##### -- Store simulation replicates under each option, for current species and turbine  ===========
-#   cSpec <- CRSpecies[s]
-#   cTurbModel <- paste0("turbModel", TurbineData$TurbineModel[j])
-#
-#   monthCollsnReps_opt1[[cSpec]][[cTurbModel]] <- tab1
-#   #monthCollsnReps_opt2[[cSpec]][[cTurbModel]] <- tab2
-#   #monthCollsnReps_opt3[[cSpec]][[cTurbModel]] <- tab3
-#
-#
-#   ###output species plots of density by option with curves for turbine model###
-#   ###PLOT DENSITY BY OPTION (useful if several turbine models)###
-#
-#   #if (nrow(TurbineData)>1)  {
-#   #source("scripts/species_turbine_plots.r", local = T)
-#   #}
-#
-#   ###relabel sampledBirdParams by species name###
-#   assign(paste(CRSpecies[s],"params", sep="_"), sampledBirdParams)
-#
-#   ###relabel sampledSpeciesCount by species name###
-#   assign(paste(CRSpecies[s],"counts", sep="_"), sampledSpeciesCount)
-#
-#
-#   ##output input data##
-#   fwrite(BirdData, paste(results_folder,"input", "BirdData.csv", sep="/"))
-#   fwrite(CountData, paste(results_folder,"input", "birdDensityData.csv", sep="/"))      # <<<<< BC <<<<<  change of file name, for clarity
-#   fwrite(TurbineData, paste(results_folder,"input", "TurbineData.csv", sep="/"))
-#
-#   ###output results table###
-#   fwrite(resultsSummary, paste(results_folder,"tables", "CollisionEstimates.csv", sep="/"))
-#
-#
-#   end.time <- Sys.time()
-#   run.time <- end.time - start.time
-#   run.time
-#
-#   sink(paste(results_folder,"run.time.txt", sep="/"))
-#   print(run.time)
-#   print(paste("The model ran", iter,"iterations", sep=" "))
-#   print("The following species were modelled:")
-#   print(CRSpecies)
-#   print("The following turbines were modelled:")
-#   print(TurbineData$TurbineModel)
-#   sink()
-#
-#   #### BC ##### -- return collision replicates as output  ===========
-#   return(list(monthCollsnReps_opt1 = monthCollsnReps_opt1))#, monthCollsnReps_opt2 = monthCollsnReps_opt2,#monthCollsnReps_opt3 = monthCollsnReps_opt3))
 
 
 }
