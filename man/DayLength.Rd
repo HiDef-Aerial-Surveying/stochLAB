@@ -2,7 +2,7 @@
 % Please edit documentation in R/DayLength.r
 \name{DayLength}
 \alias{DayLength}
-\title{Day length function}
+\title{Total day and night hours per month}
 \usage{
 DayLength(Latitude)
 }
@@ -10,7 +10,8 @@ DayLength(Latitude)
 \item{Latitude}{A decimal value. The latitude of the centroid of the windfarm}
 }
 \value{
-data frame of hours
+data frame with total number of daylight hours and night hours in each
+month at the specified atitude
 }
 \description{
 Taken from Forsythe et al.(1995) A model comparison for daylength as a
