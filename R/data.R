@@ -38,6 +38,22 @@
 #' }
 "Flight_Height"
 
+
+#' Bird parameters for the CRM
+#'
+#' A dataframe of species biological parameters for the model
+#'
+#' @format A dataframe
+#' \describe{
+#'   \item{Species}{Species name}
+#'   \item{AvoidanceBasic}{Basic avoidance rate}
+#'   \item{AvoidanceBasicSD}{Basic avoidance rate SD}
+#'   ...
+#' }
+"Johnston_flight_heights"
+
+
+
 #' Bird parameters for the CRM
 #'
 #' A dataframe of species biological parameters for the model

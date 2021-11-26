@@ -14,6 +14,9 @@
 #'
 
 sampler_hd <- function(dat,mode="rtnorm",n=NULL,mean=NULL,sd=NULL,lower=NULL,upper=NULL){
+
+  mean <- as.numeric(mean)
+  sd <- as.numeric(sd)
   if(!is.na(dat)){
     if(mode == "rtnorm"){
       output <- rtnorm_dmp(n = n,

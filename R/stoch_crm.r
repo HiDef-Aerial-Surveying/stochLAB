@@ -71,6 +71,7 @@
 #'   fhd_bootstraps = generic_fhd_bootstraps$Black_headed_Gull)
 #'
 #' @export
+#'
 stoch_crm <- function(model_options = c(1, 2, 3),
                       BirdData, TurbineData, CountData, #FlightData = Flight_Data,
                       iter = 10,

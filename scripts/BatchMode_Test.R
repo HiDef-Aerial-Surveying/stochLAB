@@ -6,9 +6,15 @@ library(tidyverse)
 library(doParallel)
 library(stochLAB)
 
+<<<<<<< HEAD
 Turbines <- readxl::read_xlsx("D:/Collision_Risk_Modelling/data/Spreadsheet.xlsx",sheet = "TurbineParameters")
 Birds <- readxl::read_xlsx("D:/Collision_Risk_Modelling/data/Spreadsheet.xlsx",sheet = "BirdParameters")
 Ws_relation <- readxl::read_xlsx("D:/Collision_Risk_Modelling/data/Spreadsheet.xlsx",sheet = "WindSpeedRelation")
+=======
+Turbines <- readxl::read_xlsx("../Collision_Risk_Modelling/data/Spreadsheet.xlsx",sheet = "TurbineParameters")
+Birds <- readxl::read_xlsx("../Collision_Risk_Modelling/data/Spreadsheet.xlsx",sheet = "BirdParameters")
+Ws_relation <- readxl::read_xlsx("../Collision_Risk_Modelling/data/Spreadsheet.xlsx",sheet = "WindSpeedRelation")
+>>>>>>> d3ebc95217b48d86c34fbf4ab14dde667f8df303
 
 
 Trow <- Turbines[1,]
@@ -24,7 +30,11 @@ Ws_relation_rotation <- Ws_relation %>% select(windSpeed,rotationSpeed)
 Ws_relation_pitch <- Ws_relation %>% select(windSpeed,bladePitch)
 
 
+<<<<<<< HEAD
 test <- stochasticBand(results_folder = "D:/TEMP/CRM_TEST/",scenario_id = Scenario_id,
+=======
+test <- stochasticBand(results_folder = "C:/Temp/CRM_TEST/",scenario_id = Scenario_id,
+>>>>>>> d3ebc95217b48d86c34fbf4ab14dde667f8df303
                BirdData = BirdDat,TurbineData = TurbineDat,
                CountData = CountDat,CRSpecies = BirdDat$Species,TPower = TurbineDat$Tpower,
                NTurbines = TurbineDat$NTurbines,LargeArrayCorrection = TRUE,

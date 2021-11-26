@@ -31,7 +31,7 @@ rtnorm_dmp <- function(n, mean=0, sd=1, lower=-Inf, upper=Inf){
         out <- rep(mean, n)
       }
       if(sd > 0){
-        out <- rtnorm(n, mean = mean, sd = sd, lower = lower, upper = upper)
+        out <- msm::rtnorm(n, mean = mean, sd = sd, lower = lower, upper = upper)
       }
     }else{
       warning("SD < 0 - NAs produced")
