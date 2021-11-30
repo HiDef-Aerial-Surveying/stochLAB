@@ -150,7 +150,7 @@ mig_stoch_crm <- function(
 
 
   ### Iterate over seasons, then over sampled parameters
-  browser()
+
   for(bp in c('PrBMigration','PoBMigration','Omigration')){
     sampTurb <- sampledTurbine %>% dplyr::select(RotorRadius,BladeWidth,RotorSpeed,Pitch,contains(bp))
     if(ncol(sampTurb)>4){
