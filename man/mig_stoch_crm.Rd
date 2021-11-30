@@ -27,7 +27,7 @@ mig_stoch_crm(
 \item{n_turbines}{integer}
 }
 \value{
-Estimates of number of collisions per migratory season
+Estimates of number of collisions per migratory season for the number of iters specified
 }
 \description{
 Run migration stochastic collision risk model for a single species and one turbine scenario
@@ -42,6 +42,6 @@ flux rate is simply the number of birds travelling through the windfarm.
 
 Changes in relation to previous top-line function \code{stoch_crm}
 \itemize{
-  \item function will run only option 1 for migratory species#'
+  \item function will run only option 1 for migratory species
 }
 }

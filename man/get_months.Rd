@@ -15,3 +15,7 @@ A vector of the months within the given range
 \description{
 Outputs a vector of months from the input month range
 }
+\examples{
+get_months("Jan - Apr")
+
+}
