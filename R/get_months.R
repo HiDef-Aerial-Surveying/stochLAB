@@ -5,7 +5,7 @@
 #' @param Mrange A character string. The month range in the format "XXX - XXX"
 #' @return A vector of the months within the given range
 #' @export
-#' @example
+#' @examples
 #' get_months("Jan - Apr")
 #'
 get_months <- function(Mrange,month.abb){

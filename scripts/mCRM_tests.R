@@ -1,12 +1,12 @@
 library(foreach)
 library(tidyverse)
+library(stochLAB)
 
-
-BirdData <- readxl::read_xlsx("D:/TEMP/CRM_TEST/Test_mCRM_data.xlsx",sheet="BirdData")
+BirdData <- readxl::read_xlsx("C:/Temp/CRM_TEST/Test_mCRM_data.xlsx",sheet="BirdData")
 names(BirdData) <- str_replace_all(names(BirdData)," ","")
-TurbineData <- readxl::read_xlsx("D:/TEMP/CRM_TEST/Test_mCRM_data.xlsx",sheet="TurbineData")
+TurbineData <- readxl::read_xlsx("C:/Temp/CRM_TEST/Test_mCRM_data.xlsx",sheet="TurbineData")
 names(TurbineData) <- str_replace_all(names(TurbineData)," ","")
-CountData <- readxl::read_xlsx("D:/TEMP/CRM_TEST/Test_mCRM_data.xlsx",sheet="CountData")
+CountData <- readxl::read_xlsx("C:/Temp/CRM_TEST/Test_mCRM_data.xlsx",sheet="CountData")
 names(CountData) <- str_replace_all(names(CountData)," ","")
 
 
@@ -23,14 +23,6 @@ LargeArrayCorrection <- TRUE
 
 
 mig_stoch_crm(BirdData,TurbineData,CountData,iter=1000,spp_name,LargeArrayCorrection = T)
-
-
-
-
-
-
-
-
 
 
 

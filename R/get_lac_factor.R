@@ -14,6 +14,7 @@
 #'   in kilometers (\eqn{w})
 #'
 #' @return The large array correction factor to be applied
+#' @export
 get_lac_factor <- function(n_turbines,
                            rotor_radius,
                            avoidance_rate,

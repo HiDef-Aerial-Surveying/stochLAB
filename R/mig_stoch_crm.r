@@ -47,7 +47,7 @@ mig_stoch_crm <- function(
   ## get daylight hours and night hours per month based on the latitude
   ## This is only for future proofing, 2021 model does not assume day hours have
   ## impact on birds
-  daynight_hrs_month <- DayLength(TurbineData$Latitude)
+  daynight_hrs_month <- stochLAB::DayLength(TurbineData$Latitude)
 
   # Chord taper profile based on the blade of a typical 5 MW turbine used for
   # offshore generation. Required for `p_single_collision` function
@@ -85,14 +85,14 @@ mig_stoch_crm <- function(
   # Generate random draws of parameters  ---------------------------------------
   ## sample bird attributes
 
-  sampledBirdParams$WingSpan <- sampler_hd(dat = species.dat$WingspanSD,
+  sampledBirdParams$WingSpan <- stochLAB::sampler_hd(dat = species.dat$WingspanSD,
                                            mode = 'rtnorm',
                                            n = iter,
                                            mean=species.dat$Wingspan,
                                            sd = species.dat$WingspanSD,
                                            lower = 0)
 
-  sampledBirdParams$BodyLength <- sampler_hd(dat = species.dat$BodyLengthSD,
+  sampledBirdParams$BodyLength <- stochLAB::sampler_hd(dat = species.dat$BodyLengthSD,
                                              mode = 'rtnorm',
                                              n = iter,
                                              mean=species.dat$BodyLength,
@@ -100,7 +100,7 @@ mig_stoch_crm <- function(
                                              lower = 0)
 
 
-  sampledBirdParams$FlightSpeed <- sampler_hd(dat = species.dat$FlightSpeedSD,
+  sampledBirdParams$FlightSpeed <- stochLAB::sampler_hd(dat = species.dat$FlightSpeedSD,
                                               mode = 'rtnorm',
                                               n = iter,
                                               mean=species.dat$FlightSpeed,
@@ -141,7 +141,7 @@ mig_stoch_crm <- function(
 
   # Sample the counts -------------------------------------------------------
 
-  SampledCounts <- sampler_hd(dat = CountData$`Populationestimate(SD)`,
+  SampledCounts <- stochLAB::sampler_hd(dat = CountData$`Populationestimate(SD)`,
                               mode = 'rtnorm',
                               n = iter,
                               mean=CountData$Populationestimate,
@@ -150,8 +150,7 @@ mig_stoch_crm <- function(
 
 
   ### Iterate over seasons, then over sampled parameters
-
-
+  browser()
   for(bp in c('PrBMigration','PoBMigration','Omigration')){
     sampTurb <- sampledTurbine %>% dplyr::select(RotorRadius,BladeWidth,RotorSpeed,Pitch,contains(bp))
     if(ncol(sampTurb)>4){
