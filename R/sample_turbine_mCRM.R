@@ -31,7 +31,7 @@ sample_turbine_mCRM <- function(TurbineData,BirdData,iter){
   sampledTurbine$BladeWidth <- rep(TurbineData$Bladewidth,iter)
 
 
-  for(bp in c('PrBMigration','PoBMigration','Omigration')){
+  for(bp in c('PrBMigration','PoBMigration','OMigration')){
     if(BirdData[bp][[1]] != "NA"){
       mnths <- get_months(c(BirdData[bp])[[1]],month.abb)
 
