@@ -6,6 +6,8 @@
 #' @param BirdData A data frame. The bird data for getting migratory seasons
 #' @param iter An integer value. The number of samples to generate
 #' @return A data frame of all the information sampled for the turbine with nrow = iter
+#' @import foreach
+#' @importFrom msm rtnorm
 #' @importFrom dplyr select
 #' @export
 
