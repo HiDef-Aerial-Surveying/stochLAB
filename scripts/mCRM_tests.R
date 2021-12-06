@@ -2,27 +2,66 @@ library(foreach)
 library(tidyverse)
 library(stochLAB)
 
-BirdData <- readxl::read_xlsx("C:/Temp/Scenarios_for_Nina.xlsx",sheet="BirdData")
-names(BirdData) <- str_replace_all(names(BirdData)," ","")
-TurbineData <- readxl::read_xlsx("C:/Temp/Scenarios_for_Nina.xlsx",sheet="TurbineData")
-names(TurbineData) <- str_replace_all(names(TurbineData)," ","")
-CountData <- readxl::read_xlsx("C:/Temp/Scenarios_for_Nina.xlsx",sheet="CountData")
-names(CountData) <- str_replace_all(names(CountData)," ","")
+BirdDat <- readxl::read_xlsx("C:/Temp/Scenarios_for_Nina.xlsx",sheet="BirdData")
+names(BirdDat) <- str_replace_all(names(BirdDat)," ","")
+TurbineDat <- readxl::read_xlsx("C:/Temp/Scenarios_for_Nina.xlsx",sheet="TurbineData")
+names(TurbineDat) <- str_replace_all(names(TurbineDat)," ","")
+CountDat <- readxl::read_xlsx("C:/Temp/Scenarios_for_Nina.xlsx",sheet="CountData")
+names(CountDat) <- str_replace_all(names(CountDat)," ","")
+
+
+
+outputs <- matrix(nrow=nrow(CountDat),ncol=5)
+
+for(i in 1:nrow(CountDat)){
+
+  spp_name <- CountDat$Species[i]
+  wf_name <- CountDat$Windfarm[i]
+
+  BirdData <- BirdDat %>% dplyr::filter(Species == spp_name)
+  TurbineData <- TurbineDat %>% dplyr::filter(Windfarm == wf_name)
+  CountData <- CountDat[i,]
+
+  outs <- mig_stoch_crm(BirdData,TurbineData,CountData,iter=1000,spp_name,LargeArrayCorrection = T)
+
+
+  ## Send outputs to matrix
+  outputs[i,1] <- spp_name
+  outputs[i,2] <- wf_name
+  outputs[i,3] <- paste(round(mean(outs[,1],na.rm=T),3), "\u00B1", round(sd(outs[,1],na.rm=T),3))
+  outputs[i,4] <- paste(round(mean(outs[,2],na.rm=T),3), "\u00B1", round(sd(outs[,2],na.rm=T),3))
+  outputs[i,5] <- paste(round(mean(outs[,3],na.rm=T),3), "\u00B1", round(sd(outs[,3],na.rm=T),3))
+
+}
+outputs <- data.frame(outputs)
+names(outputs) <- c('species',"windfarm","PrBMigration","PoBMigration","Omigration")
+
+
+
+PreBreedout <- reshape2::dcast(outputs[,c(1:3)],formula = species ~windfarm)
+PostBreedout <- reshape2::dcast(outputs[,c(1,2,4)],formula = species ~windfarm)
+Otherout <- reshape2::dcast(outputs[,c(1,2,5)],formula = species ~windfarm)
+
+
+outputs[,c(1:3)]
+
+
+
+
+
 
 
 
 i <- 1
 
-BirdData <- BirdData[i,]
-TurbineData <- TurbineData[i,]
-CountData <- CountData[i,]
-iter = 10
-spp_name <- CountData$Species[i]
-LargeArrayCorrection <- TRUE
 
 
 
-mig_stoch_crm(BirdData,TurbineData,CountData,iter=1000,spp_name,LargeArrayCorrection = T)
+PrBsummary <- data.frame(species = CountData$Species[i])
+
+PoBsummary <-
+
+Osummary <-
 
 
 

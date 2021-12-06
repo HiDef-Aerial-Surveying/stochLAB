@@ -2,6 +2,7 @@
 
 export(CV)
 export(DayLength)
+export(GetSampleProp)
 export(crm_opt1)
 export(get_lac_factor)
 export(get_months)
