@@ -30,15 +30,15 @@
 #' rotor's circular area
 
 get_mig_flux_factor <- function(n_turbines, rotor_radius, wf_width,
-                            popn_est, daynight_hrs, noct_activity){
+                            popn_est){#, daynight_hrs, noct_activity){
 
   tot_frontal_area <- n_turbines * pi * rotor_radius^2
 
   # Get an estimate of birds/km and then convert that to birds/m
   bird_dens_per_m <- (popn_est/wf_width) / 1000
 
-  active_secs <- (daynight_hrs$Day + noct_activity * daynight_hrs$Night) * 3600
+  #active_secs <- (daynight_hrs$Day + noct_activity * daynight_hrs$Night) * 3600
 
-  (bird_dens_per_m/(2*rotor_radius)) * tot_frontal_area * active_secs
+  (bird_dens_per_m/(2*rotor_radius)) * tot_frontal_area #* active_secs
 
 }

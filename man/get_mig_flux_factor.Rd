@@ -4,14 +4,7 @@
 \alias{get_mig_flux_factor}
 \title{Migration Flux factor}
 \usage{
-get_mig_flux_factor(
-  n_turbines,
-  rotor_radius,
-  wf_width,
-  popn_est,
-  daynight_hrs,
-  noct_activity
-)
+get_mig_flux_factor(n_turbines, rotor_radius, wf_width, popn_est)
 }
 \arguments{
 \item{n_turbines}{An integer. The number of turbines on the wind farm (\eqn{T}).}
