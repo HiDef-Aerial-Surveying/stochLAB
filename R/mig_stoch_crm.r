@@ -191,7 +191,10 @@ mig_stoch_crm <- function(
           L_ArrayCF <- 1
         }
 
-        flux_fct <- SampledCounts[i]
+        flux_fct <- get_mig_flux_factor(n_turbines = TurbineData$Numberofturbines,
+                                        rotor_radius = sampTurb$RotorRadius[i],
+                                        wf_width = TurbineData$Width,
+                                        popn_est = SampledCounts[i])
 
 
         # Step 3 - Apply option 1 of the sCRM --------------------------------------
