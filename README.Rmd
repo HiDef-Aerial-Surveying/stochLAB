@@ -158,11 +158,11 @@ two-fold:
 1. Suggest how input parameter data sets used in the previous implementation can
 be reshaped to fit `stoch_crm()`'s  interface. Suggested code is also relevant
 in the context of multiple scenarios applications, as the wide tabular format of
-these data sets is likely preferred structure for users to gather input
+these data sets is the likely favoured structure for users to gather input
 parameters under different scenarios.
 
-2. Set up the groundwork to run stoch_crm() for multiple species and
-windfarm/turbines features.
+2. Propose a functional programming framework to run stoch_crm() for multiple
+species and windfarm/turbines features.
 
 Please note the example runs on fictional data.
 
