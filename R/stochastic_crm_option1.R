@@ -15,13 +15,13 @@
 #' @param LargeArrayCorrection A boolean. If TRUE, correct if the wind farm array is very large
 #' @param WFWidth A decimal value. The "width" of wind farm used in Large Array Correction (KM)
 #' @param Prop_Upwind A decimal value. A value between 0-1 bounded as proportion of flights upwind - default of 0.5.
-#' @param Latitude. A decimal value. Latitude in WGS 1984 (decimal degrees)
+#' @param Latitude A decimal value. Latitude in WGS 1984 (decimal degrees)
 #' @param TideOff A decimal value. Tidal offset in metres
 #' @param windSpeedMean A decimal value. Site specific mean wind speed (m/s)
 #' @param windSpeedSD A decimal value. Site specific standard deviation of wind speeds
 #' @param windData_rotation A data frame. The table of wind speed versus rotor speed
 #' @param windData_pitch A data frame. The table of wind speed versus rotor pitch
-#' @param c_DensOpt A character value. The type of sampling to do for the species data.
+#' @param c_densOpt A character value. The type of sampling to do for the species data.
 #' @return CSV files saved into the results_folder directory
 #' @export
 #' @import msm
@@ -31,8 +31,6 @@
 #' @importFrom dplyr left_join
 #' @import tidyr
 #' @import pracma
-#' @import data.table
-#'
 
 
 stochasticBand <- function(
@@ -412,12 +410,12 @@ stochasticBand <- function(
   } # end of the species loop over s
 
   ##output input data##
-  fwrite(BirdData, paste(results_folder,"input", "BirdData.csv", sep="/"))
-  fwrite(CountData, paste(results_folder,"input", "birdDensityData.csv", sep="/"))      # <<<<< BC <<<<<  change of file name, for clarity
-  fwrite(TurbineData, paste(results_folder,"input", "TurbineData.csv", sep="/"))
+  data.table::fwrite(BirdData, paste(results_folder,"input", "BirdData.csv", sep="/"))
+  data.table::fwrite(CountData, paste(results_folder,"input", "birdDensityData.csv", sep="/"))      # <<<<< BC <<<<<  change of file name, for clarity
+  data.table::fwrite(TurbineData, paste(results_folder,"input", "TurbineData.csv", sep="/"))
 
   ###output results table###
-  fwrite(resultsSummary, paste(results_folder,"tables", "CollisionEstimates.csv", sep="/"))
+  data.table::fwrite(resultsSummary, paste(results_folder,"tables", "CollisionEstimates.csv", sep="/"))
 
 
   end.time <- Sys.time()

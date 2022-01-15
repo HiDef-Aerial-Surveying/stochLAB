@@ -6,11 +6,11 @@
 \title{Parameter values and outputs from Band's Collision Risk spreadsheet
 ("Final_Report_SOSS02_BandSpreadSheetWorkedExampl1.xlsm")}
 \format{
-A list object with ...:
+A list object containing:
 \describe{
-  \item{flight_speed}{Bird flight speed, in m/s}
-  \item{rotor_radius}{rotor radius, in meters}
-  ...
+\item{flight_speed}{Bird flight speed, in m/s}
+\item{rotor_radius}{rotor radius, in meters}
+...
 }
 }
 \usage{
@@ -19,6 +19,6 @@ band_spreadsheet_dt
 \description{
 A list object comprising parameter values and outputs from Band's worked example
 for testing the consistency of package functions with the original model and
-its implementation
+its implementation.
 }
 \keyword{datasets}

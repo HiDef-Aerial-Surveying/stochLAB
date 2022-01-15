@@ -5,44 +5,46 @@
 \title{Number of collisions under model option 2}
 \usage{
 crm_opt2(
-  gen_d_y,
+  d_y,
   flux_factor,
-  prob_single_collision,
-  prop_operational,
+  avg_prob_coll,
+  mth_prop_oper,
   avoidance_rate,
   lac_factor
 )
 }
 \arguments{
-\item{gen_d_y}{a vector with the proportion of birds at height bands across #
-the rotor disc, calculated from a generic flight height distribution}
+\item{d_y}{a vector with the proportion of bird flights at height bands
+within the rotor disc}
 
 \item{flux_factor}{a vector containing the flux factor for each month}
 
-\item{prob_single_collision}{The probability of collision for a single bird
-transit through a rotor, assuming no avoidance action.}
+\item{avg_prob_coll}{A numeric value, the average probability of collision for a single bird
+transit through a rotor, assuming no avoidance action (\eqn{p_{average}}).}
 
-\item{prop_operational}{The proportion of time during which turbines are
-operational per month}
+\item{mth_prop_oper}{A numeric vector, the proportion of time during which
+turbines are operational per month.}
 
-\item{avoidance_rate}{The proportion of birds likely to take action to avoid
-collision with rotor}
+\item{avoidance_rate}{A numeric value within the interval \eqn{[0, 1]}. The
+avoidance rate, expressing the probability that a bird flying on a
+collision course with a turbine will take evading action to avoid collision.}
 
-\item{lac_factor}{The large array correction factor. Defaults to 1,
-meaning large array correction is not applicable}
+\item{lac_factor}{A numerical value, the large array correction factor.
+Defaults to 1, meaning large array correction is not applicable.}
 }
 \value{
-Expected number of collisions per month based on model option 2
+A numeric vector, the expected number of collisions per month based
+on model Option 2.
 }
 \description{
-Top-level function to run CRM model under option 2:
-   \itemize{
-      \item Basic model, i.e. flights across collision risk height are
-       uniformly distributed
-      \item Proportion at collision risk height derived from a generic flight
-      height distribution
-   }
+Wrapper function to run CRM calculations under option 2, i.e.:
+\itemize{
+\item Basic model, i.e. flights across collision risk height are uniformly
+distributed
+\item Proportion at collision risk height derived from a flight height
+distribution (\eqn{Q'_2R})
+}
 }
 \seealso{
-[get_fhd_rotor()], [get_flux_factor()]
+\code{get_fhd_rotor()}, \code{get_flux_factor()}
 }

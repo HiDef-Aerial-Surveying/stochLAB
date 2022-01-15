@@ -120,7 +120,9 @@ sample_turbine <- function(TurbineData = TurbineData,
         # will explicitly rep mean, although not needed as filling into the DF
         ### === BC BUG FIXING === ### workingOp needs to be converted from a data.frame (see above)
         ### GH - Above bug fix no longer an issue with vector change
-      } else {sampledTurbine[,grep(currentMonth, names(sampledTurbine))] <- workingOp - rep(workingMean, iter)}
+      } else {
+        sampledTurbine[,grep(currentMonth, names(sampledTurbine))] <- workingOp - rep(workingMean, iter)
+        }
   }
   return(sampledTurbine)
 }

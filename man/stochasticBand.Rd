@@ -48,6 +48,8 @@ stochasticBand(
 
 \item{Prop_Upwind}{A decimal value. A value between 0-1 bounded as proportion of flights upwind - default of 0.5.}
 
+\item{Latitude}{A decimal value. Latitude in WGS 1984 (decimal degrees)}
+
 \item{TideOff}{A decimal value. Tidal offset in metres}
 
 \item{windSpeedMean}{A decimal value. Site specific mean wind speed (m/s)}
@@ -58,9 +60,7 @@ stochasticBand(
 
 \item{windData_pitch}{A data frame. The table of wind speed versus rotor pitch}
 
-\item{Latitude.}{A decimal value. Latitude in WGS 1984 (decimal degrees)}
-
-\item{c_DensOpt}{A character value. The type of sampling to do for the species data.}
+\item{c_densOpt}{A character value. The type of sampling to do for the species data.}
 }
 \value{
 CSV files saved into the results_folder directory

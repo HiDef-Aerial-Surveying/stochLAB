@@ -7,10 +7,10 @@
 \format{
 A nested list with 3 upper levels
 \describe{
-  \item{turbinepars}{Parameters for the wind farm turbines}
-  \item{windfarmpars}{Parameters for the wind farms themselves}
-  \item{speciespars}{Parameters for species}
-  ...
+\item{turbinepars}{Parameters for the wind farm turbines}
+\item{windfarmpars}{Parameters for the wind farms themselves}
+\item{speciespars}{Parameters for species}
+...
 }
 }
 \usage{

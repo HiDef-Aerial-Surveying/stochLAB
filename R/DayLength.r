@@ -3,18 +3,20 @@
 #' Taken from Forsythe et al.(1995) A model comparison for daylength as a
 #' function of latitude and day of year.  Ecological Modelling. 80: 87 - 95
 #'
-#' @param Latitude A decimal value. The latitude of the centroid of the windfarm
+#' @param wf_latitude A decimal value. The latitude of the centroid of the
+#'   windfarm, in degrees.
 #' @return data frame with total number of daylight hours and night hours in each
-#' month at the specified atitude
+#' month at the specified latitude.
+#'
 #' @export
-DayLength <- function(Latitude){
+DayLength <- function(wf_latitude){
 
   DaylengthThruYr = data.frame (seq(1,365,1))
   names(DaylengthThruYr) = c("YrDay")
 
   DaylengthThruYr$P = asin(0.39795 * cos (0.2163108 + 2 * atan (0.9671396 * tan(0.0086 * (DaylengthThruYr$YrDay - 186)))))
 
-  DaylengthThruYr$DayLength = 24 - (24/pi) * acos((sin(0.8333*pi/180) + sin(Latitude * pi / 180) * sin (DaylengthThruYr$P)) / (cos(Latitude *pi /180 ) * cos(DaylengthThruYr$P)))
+  DaylengthThruYr$DayLength = 24 - (24/pi) * acos((sin(0.8333*pi/180) + sin(wf_latitude * pi / 180) * sin (DaylengthThruYr$P)) / (cos(wf_latitude *pi /180 ) * cos(DaylengthThruYr$P)))
 
   hours = data.frame(month.abb)
   names(hours) = c("Month")

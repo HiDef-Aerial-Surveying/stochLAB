@@ -13,7 +13,7 @@ get_rotor_transits(flux_factor, prop_crh)
 (\eqn{Q'_2R})}
 }
 \value{
-The number of bird flights potentially transiting through rotors
+A vector with the number of bird flights potentially transiting through rotors
 at each time period (assuming no avoidance)
 }
 \description{
@@ -26,5 +26,5 @@ are described in "Stage B" of
 \href{https://www.bto.org/sites/default/files/u28/downloads/Projects/Final_Report_SOSS02_Band1ModelGuidance.pdf}{Band (2012)}
 }
 \seealso{
-[get_flux_factor()] for calculating the flux factor
+\code{\link[=get_flux_factor]{get_flux_factor()}} for calculating the flux factor
 }

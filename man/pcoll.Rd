@@ -20,8 +20,13 @@ pcoll(
 )
 }
 \arguments{
-\item{flight_type}{a numeric value. 1 = flapping, 0 = gliding, indicating the
-type of flight that best typifies most flights of the species in question}
+\item{r, phi, direction, rotor_radius}{numeric TODO}
+
+\item{blade_width, rotor_speed}{numeric TODO}
+
+\item{blade_pitch, flight_type_num}{numeric TODO}
+
+\item{wing_span, flight_speed, body_lt, n_blades}{numeric TODO}
 }
 \description{
 prob of collision, called within xrisksum2 and pcollxy

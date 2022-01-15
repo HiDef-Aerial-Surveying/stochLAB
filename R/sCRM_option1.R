@@ -22,7 +22,7 @@ sCRM_option1 <- function(MonthlyOperational=MonthlyOperational,
 
   Operational <-  unlist(MonthlyOperational) / 100
 
-  Option1_Transits <- hours$Flux * PCH * Operational
+  Option1_Transits <- unlist(hours$Flux) * PCH * Operational
 
   Option1_collisions_No_Avoid <- Option1_Transits * (P_Collision/100)
 

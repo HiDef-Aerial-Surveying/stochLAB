@@ -4,14 +4,17 @@
 \alias{pcollxy}
 \title{In Masden construction, relies on various objects from outside function
 These will be passed explicitly:
-sampledTurbine [ith row]
-sampledBirdParams [ith row]}
+sampledTurbine \verb{[ith row]}
+sampledBirdParams \verb{[ith row]}}
 \usage{
 pcollxy(x, y, direction, pars)
+}
+\arguments{
+\item{x, y, direction, pars}{numeric}
 }
 \description{
 In Masden construction, relies on various objects from outside function
 These will be passed explicitly:
-sampledTurbine [ith row]
-sampledBirdParams [ith row]
+sampledTurbine \verb{[ith row]}
+sampledBirdParams \verb{[ith row]}
 }

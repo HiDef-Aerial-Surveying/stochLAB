@@ -10,7 +10,7 @@ sampler_hd(
   n = NULL,
   mean = NULL,
   sd = NULL,
-  lower = NULL,
+  lower = 0,
   upper = NULL
 )
 }

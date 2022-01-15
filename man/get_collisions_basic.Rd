@@ -6,33 +6,35 @@
 \usage{
 get_collisions_basic(
   n_transits,
-  prob_single_collision,
-  prop_operational,
+  avg_prob_coll,
+  mth_prop_oper,
   avoidance_rate,
   lac_factor = 1
 )
 }
 \arguments{
-\item{n_transits}{Vector with the estimated number of bird flights crossing
-the rotors of the wind farm at each time period}
+\item{n_transits}{A numeric vector, the estimated number of bird flights crossing
+the rotors of the wind farm at each time period.}
 
-\item{prob_single_collision}{The probability of collision for a single bird
-transit through a rotor, assuming no avoidance action.}
+\item{avg_prob_coll}{A numeric value, the average probability of collision for a single bird
+transit through a rotor, assuming no avoidance action (\eqn{p_{average}}).}
 
-\item{prop_operational}{The proportion of time during which turbines are
-operational per month}
+\item{mth_prop_oper}{A numeric vector, the proportion of time during which
+turbines are operational per month.}
 
-\item{avoidance_rate}{The proportion of birds likely to take action to avoid
-collision with rotor}
+\item{avoidance_rate}{A numeric value within the interval \eqn{[0, 1]}. The
+avoidance rate, expressing the probability that a bird flying on a
+collision course with a turbine will take evading action to avoid collision.}
 
-\item{lac_factor}{The large array correction factor. Defaults to 1,
-meaning large array correction is not applicable}
+\item{lac_factor}{A numerical value, the large array correction factor.
+Defaults to 1, meaning large array correction is not applicable.}
 }
 \value{
-A numeric vector. The expected number of collisions at each time period
+A numeric vector. The expected number of collisions at each time
+periods
 }
 \description{
 Provides the number of collisions expected to occur by month. The basic model
 assumes a uniform distribution of bird flights at risk height (i.e. between
-min and max rotor height)
+min and max rotor height).
 }

@@ -9,12 +9,13 @@ A list object with 25 elements, one for each species, containing a data
 frame with 500 bootstrap samples of the distribution of bird flights with height.
 Each nested data frame contains:
 \describe{
-  \item{Height_m}{Height above sea level, in metres. Height interval must be 1 metre}
-  \item{bootId_1}{First bootstrap sample of the proportion of birds flights within each
-  height interval}
-  ...
-\item{bootId_200}{200th bootstrap sample of the proportion of birds flights within each
-  height interval}
+\item{height}{Height above sea level, in metres. First element represents the
+0-1 meters height band, and height interval is 1 metre.}
+\item{bootId_1}{First bootstrap sample of the proportion of birds flights
+within each height interval}
+...
+\item{bootId_200}{200th bootstrap sample of the proportion of birds flights
+within each height interval}
 }
 }
 \source{
@@ -24,8 +25,8 @@ Each nested data frame contains:
 generic_fhd_bootstraps
 }
 \description{
-A list object comprising bootstrap samples of the generic flight height distribution
-(FHD) of 25 seabird species. FHD is expressed as the proportion of bird flights at 1
-height intervals
+A list object comprising bootstrap samples of the generic flight height
+distribution (FHD) of 25 seabird species. FHD is expressed as the proportion
+of bird flights at 1 metre height intervals.
 }
 \keyword{datasets}

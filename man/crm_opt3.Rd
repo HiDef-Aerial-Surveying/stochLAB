@@ -2,57 +2,85 @@
 % Please edit documentation in R/crm_opt3.R
 \name{crm_opt3}
 \alias{crm_opt3}
-\title{Number of collisions under model option 3}
+\title{Number of collisions under model Option 3}
 \usage{
 crm_opt3(
-  gen_d_y,
+  rotor_grids,
+  d_y_gen,
   rotor_radius,
   blade_width,
   rotor_speed,
   blade_pitch,
-  flight_type_num,
+  flight_type,
   wing_span,
   flight_speed,
   body_lt,
   n_blades,
   prop_upwind,
-  avoidance_rate_ext,
+  avoidance_rate,
   flux_factor,
-  prop_operational,
+  mth_prop_oper,
   lac_factor
 )
 }
 \arguments{
-\item{gen_d_y}{a vector with the proportion of birds at height bands across #
-the rotor disc, calculated from a generic flight height distribution}
+\item{rotor_grids}{A list object containing geometric attributes of the rotor
+at equidistant points within its unit circle. This object should be
+built via the function \code{generate_rotor_grids()}.}
+
+\item{d_y_gen}{a vector with the proportion of birds at height bands within
+the rotor disc, from a generic flight height distribution}
+
+\item{rotor_radius}{Numeric value. The radius of the rotor (\eqn{R}), in
+metres.}
+
+\item{blade_width}{Numeric value, giving the maximum blade width, in metres.}
+
+\item{rotor_speed}{Numeric value. The operational rotation speed, in
+revolutions/min.}
+
+\item{blade_pitch}{Numeric value. The average blade pitch angle, the angle
+between the blade surface and the rotor plane (\eqn{\gamma}), in radians.}
+
+\item{flight_type}{A character string, either 'flapping' or 'gliding',
+indicating the species' characteristic flight type.}
+
+\item{wing_span}{Numeric value. The wingspan of the bird (\eqn{W}), in
+metres.}
+
+\item{flight_speed}{Numeric value. The bird flying speed (\eqn{v}), in
+metres/sec.}
+
+\item{body_lt}{Numeric value. The length of the bird (\eqn{L}), in metres.}
+
+\item{n_blades}{An integer, the number of blades in rotor (\eqn{b}).}
+
+\item{prop_upwind}{Numeric value between 0-1 giving the proportion of
+flights upwind - defaults to 0.5.}
+
+\item{avoidance_rate}{a numeric value within the interval \eqn{[0, 1]}. The
+avoidance rate, expressing the probability that a bird flying on a
+collision course with a turbine will take evading action to avoid
+collision.}
 
 \item{flux_factor}{a vector containing the flux factor for each month}
 
-\item{prop_operational}{The proportion of time during which turbines are
-operational per month}
+\item{mth_prop_oper}{A numeric vector, the proportion of time during which
+turbines are operational per month.}
 
-\item{lac_factor}{The large array correction factor. Defaults to 1,
-meaning large array correction is not applicable}
+\item{lac_factor}{A numerical value, the large array correction factor.
+Defaults to 1, meaning large array correction is not applicable.}
 }
 \value{
-Expected number of collisions per month based on model option 2
+A numeric vector, the expected number of collisions per month based
+on model option 3
 }
 \description{
-Top-level function to run CRM model under option 3:
-   \itemize{
-      \item Extended model, i.e. takes into account the distribution of bird
-      flight heights at risk height (above the minimum and below the maximum
-      height of the rotor blade)
-      \item Uses a generic flight height distribution
-   }
+Wrapper function to run CRM calculations under option 3, i.e.:
+\itemize{
+\item Using the extended model, which takes into account the distribution
+of bird flight heights at risk height (above the minimum and below the
+maximum height of the rotor blade)
+\item Using generic flight height distribution data
 }
-\note{
-The original Masden code included the calculation of the "Flux Integral" and
-   "Average collision risk for single rotor transit". These quantities are not
-   required for the calculation of collisions under option 3, nor are used
-   anywhere else in the remaining code. Therefore, those calculations were
-   dropped from the current implementation.
-}
-\seealso{
-[get_fhd_rotor()], [get_flux_factor()]
 }

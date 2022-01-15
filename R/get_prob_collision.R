@@ -1,20 +1,19 @@
-#' Single transit collision risk with no avoidance
+#' Average single transit collision risk with no avoidance
 #'
-#' Calculate the average probability of collision for a single bird rotor transit
-#' under the basic model (i.e. uniform distribution of bird flights at
-#' risk height), assuming no avoidance action.
+#' Calculate the average probability of collision for a single bird transit
+#' at any point across the rotor, assuming no avoidance action.
 #'
-#' @details Methodology and assumptions underpinning \code{get_prob_collision}
+#' @details Methodology and assumptions underpinning `get_prob_collision`
 #' are described in "Stage C" of
-#' \href{https://www.bto.org/sites/default/files/u28/downloads/Projects/Final_Report_SOSS02_Band1ModelGuidance.pdf}{Band (2012)}
+#' [Band (2012)](https://www.bto.org/sites/default/files/u28/downloads/Projects/Final_Report_SOSS02_Band1ModelGuidance.pdf)
 #'
 #' @param chord_prof a data.frame with the blade's chord taper profile. Function
 #'   expects two named columns:
 #'   \itemize{
-#'    \item{\code{pp_radius}, radius at bird passage point, as a proportion
-#'       of \code{rotor_radius}}
-#'    \item{\code{chord}, chord width at (\code{pp_radius}), as a proportion
-#'       of \code{blade_width}}
+#'    \item{`pp_radius`, radius at bird passage point, as a proportion
+#'       of `rotor_radius`}, starting from 0.05 to 1
+#'    \item{`chord`, chord width at `pp_radius`, as a proportion
+#'       of `blade_width`}
 #'   }
 #' @param flight_speed The bird flying speed (\eqn{v}), in metres/sec
 #' @param body_lt The length of the bird (\eqn{L}), in metres
@@ -34,8 +33,7 @@
 #'   flying through a rotor's circle area
 #'
 #' @export
-get_prob_collision <- function(chord_prof,
-                               flight_speed,
+get_prob_collision <- function(flight_speed,
                                body_lt,
                                wing_span,
                                prop_upwind = 0.5,
@@ -44,7 +42,8 @@ get_prob_collision <- function(chord_prof,
                                rotor_radius,
                                blade_width,
                                blade_pitch,
-                               n_blades) {
+                               n_blades,
+                               chord_prof) {
 
   if(prop_upwind < 0 | prop_upwind > 1){
     stop("Value specified for `prop_upwind` should be bounded between 0 and 1")
@@ -54,7 +53,7 @@ get_prob_collision <- function(chord_prof,
   rtr_speed_radps <- 2 * pi * rotor_speed/60
 
   # compute terms comprised in probability of collision risk equation
-  alpha <-  flight_speed/(chord_prof$pp_radius * rtr_speed_radps * rotor_radius)
+  alpha <- flight_speed/(chord_prof$pp_radius * rtr_speed_radps * rotor_radius)
 
   # upwind length
   Up_length <- collide_length(alpha, chord_prof$chord, body_lt, wing_span,
@@ -73,7 +72,7 @@ get_prob_collision <- function(chord_prof,
   Down_P <- pmin(1, n_blades * rtr_speed_radps/(2 * pi * flight_speed) * Down_length)
 
 
-  # vectors length, for indexing required for integration step performed in subsequent code
+  # vectors length, for indexing - required for integration step performed below
   lt_p <- length(chord_prof$pp_radius)
 
   Total_Up_Wind_P <- 2 * (sum(chord_prof$pp_radius[1:(lt_p-1)] * Up_P[1:(lt_p-1)]) +

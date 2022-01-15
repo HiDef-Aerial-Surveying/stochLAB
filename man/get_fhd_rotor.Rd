@@ -2,28 +2,35 @@
 % Please edit documentation in R/get_fhd_rotor.R
 \name{get_fhd_rotor}
 \alias{get_fhd_rotor}
-\title{Returns the proportion of birds at height bands across the rotor height}
+\title{Returns the proportion of birds at height bands along the rotor}
 \usage{
-get_fhd_rotor(hub_height, fhd, rotor_radius, tide_off)
+get_fhd_rotor(hub_height, fhd, rotor_radius, tidal_offset, yinc = 0.05)
 }
 \arguments{
-\item{hub_height}{The height of the rotor hub (\eqn{H}), the sum of rotor
-radius and minimum blade clearance above the highest astronomical tide (HAT)}
+\item{hub_height}{A numeric value, the height of the rotor hub (\eqn{H}), given by the
+sum of rotor radius and minimum blade clearance above the highest
+astronomical tide (HAT), in metres.}
 
-\item{fhd}{A vector, each element with the proportion of bird flights per-1 metre
-height intervals from sea surface, starting from 0-1 metre band.}
+\item{fhd}{A numeric vector, the proportion of bird flights per-1 metre
+height bands from sea surface, starting from 0-1 metre band.}
 
-\item{rotor_radius}{The radius of the rotor (\eqn{R}), in metres.}
+\item{rotor_radius}{A numeric value, the radius of the rotor (\eqn{R}), in
+metres.}
 
-\item{tide_off}{The tidal offset, the difference between HAT and mean sea
-level, in metres}
+\item{tidal_offset}{A numeric value, the tidal offset, the difference between
+HAT and mean sea level, in metres.}
+
+\item{yinc}{A numeric value, the increment for height bands between the
+lowest and highest points of the rotor, expressed as a proportion of rotor
+radius (defaults is 0.05).}
 }
 \value{
-The flight height distribution at collision risk, i.e. between
-  minimum and maximum rotor height.
+A numeric vector, the flight height distribution at collision risk,
+i.e. between minimum and maximum rotor height.
 }
 \description{
-Derive the expected proportion of bird flights at equidistant height
-bands between the lowest and highest points of the rotor. In other words, returns
-the flight height distribution at collision risk (\eqn{d(y)}).
+Derive the expected proportion of bird flights at equidistant
+height bands between the lowest and highest points of the rotor. In other
+words, returns the flight height distribution at collision risk
+(\eqn{d(y)}).
 }

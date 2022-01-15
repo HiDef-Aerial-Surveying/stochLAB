@@ -38,7 +38,7 @@ rbeta_dmp <- function(n, p, sd){
 
       if(sd > 0){
         if(betaMeanVarCond){
-          out <- rbeta(n, shape1 = alpha, shape2 = beta)
+          out <- stats::rbeta(n, shape1 = alpha, shape2 = beta)
         }else{
           out <- rep(NA, n)
           warning("condition var < p*(1 - p) not met - NAs produced")

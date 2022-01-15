@@ -15,13 +15,13 @@
 #' @param LargeArrayCorrection A boolean. If TRUE, correct if the wind farm array is very large
 #' @param WFWidth A decimal value. The "width" of wind farm used in Large Array Correction (KM)
 #' @param Prop_Upwind A decimal value. A value between 0-1 bounded as proportion of flights upwind - default of 0.5.
-#' @param Latitude. A decimal value. Latitude in WGS 1984 (decimal degrees)
+#' @param Latitude A decimal value. Latitude in WGS 1984 (decimal degrees)
 #' @param TideOff A decimal value. Tidal offset in metres
 #' @param windSpeedMean A decimal value. Site specific mean wind speed (m/s)
 #' @param windSpeedSD A decimal value. Site specific standard deviation of wind speeds
 #' @param windData_rotation A data frame. The table of wind speed versus rotor speed
 #' @param windData_pitch A data frame. The table of wind speed versus rotor pitch
-#' @param c_DensOpt A character value. The type of sampling to do for the species data.
+#' @param c_densOpt A character value. The type of sampling to do for the species data.
 #' @return CSV files saved into the results_folder directory
 #' @export
 #' @import msm
@@ -337,11 +337,11 @@ stochBand <- function(
                                               L_ArrayCF=L_ArrayCF)
 
 
-#         Option1_CollisionRate_2 <- get_collisions_basic(n_transits = n_transits,
-#                                                         prob_single_collision = P_Collision,
-#                                                         prop_time_operating = MonthlyOperational[i,],
-#                                                         avoidance_rate = sampledBirdParams$AvoidanceBasic[i],
-#                                                         lac_factor = L_ArrayCF)
+        #         Option1_CollisionRate_2 <- get_collisions_basic(n_transits = n_transits,
+        #                                                         prob_single_collision = P_Collision,
+        #                                                         prop_time_operating = MonthlyOperational[i,],
+        #                                                         avoidance_rate = sampledBirdParams$AvoidanceBasic[i],
+        #                                                         lac_factor = L_ArrayCF)
 
 
 

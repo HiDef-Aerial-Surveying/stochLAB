@@ -7,9 +7,9 @@
 \format{
 A dataframe
 \describe{
-  \item{rad}{radius}
-  \item{circ}{Circumference}
-  ...
+\item{rad}{radius}
+\item{circ}{Circumference}
+...
 }
 }
 \usage{

@@ -8,31 +8,37 @@ get_lac_factor(
   n_turbines,
   rotor_radius,
   avoidance_rate,
-  prob_single_collision,
-  mean_prop_operational,
+  avg_prob_coll,
+  avg_prop_operational,
   wf_width
 )
 }
 \arguments{
-\item{n_turbines}{The number of turbines on the wind farm (\eqn{T}).}
+\item{n_turbines}{Integer, the number of turbines on the wind farm
+(\eqn{T}).}
 
-\item{rotor_radius}{The radius of the rotor (\eqn{R}), in metres}
+\item{rotor_radius}{Numeric value, the radius of the rotor (\eqn{R}), in
+metres.}
 
-\item{avoidance_rate}{The avoidance rate assumed (\eqn{A})}
+\item{avoidance_rate}{Numeric value within the interval \eqn{[0, 1]}. The species
+avoidance rate, expressing the probability that a bird flying on a
+collision course with a turbine will take evading action to avoid
+collision. (\eqn{A}).}
 
-\item{prob_single_collision}{The average probability of collision for a single bird
-transit through a rotor, assuming no avoidance action.}
+\item{avg_prob_coll}{Numeric value, the average probability of collision
+for a single bird transit through a rotor, assuming no avoidance action
+(\eqn{p_average}).}
 
-\item{mean_prop_operational}{the mean proportion of time turbines are
-operational through the year (decimal)}
+\item{avg_prop_operational}{Numeric value, the average proportion of time
+turbines are operational through the year.}
 
-\item{wf_width}{The approximate longitudinal width of the wind farm,
-in kilometers (\eqn{w})}
+\item{wf_width}{Numeric value, the approximate longitudinal width of the
+wind farm, in kilometres (\eqn{w}).}
 }
 \value{
 The large array correction factor to be applied
 }
 \description{
-A correction factor for large windfarms with a large array of turbines, to take
-into account the depletion of bird density in later rows of the site.
+A correction factor for large windfarms with a large array of turbines, to
+take into account the depletion of bird density in later rows of the site.
 }

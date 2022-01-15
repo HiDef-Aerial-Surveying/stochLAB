@@ -2,7 +2,7 @@
 % Please edit documentation in R/rtnorm_dmp.R
 \name{rtnorm_dmp}
 \alias{rtnorm_dmp}
-\title{Customised sampling functions for the Truncated Normal distribution}
+\title{Customised sampling of Truncated Normal distribution}
 \usage{
 rtnorm_dmp(n, mean = 0, sd = 1, lower = -Inf, upper = Inf)
 }
@@ -21,5 +21,26 @@ rtnorm_dmp(n, mean = 0, sd = 1, lower = -Inf, upper = Inf)
 a vector of samples values from the truncated normal distribution
 }
 \description{
-generate random samples from a truncated normal distribution, parameterized as mean and sd, and returning NAs if conditions are not met
+Wrapper of the msm::rtnorm() function, improving on outputs management and
+user feedback on edge cases
+}
+\examples{
+\donttest{
+## Example case one:  mean < lower while sd = 0
+##
+## original function freezes the R session
+msm::rtnorm(n = 1, mean = 1, sd = 0, lower = 0)
+## this version returns NA and issues a warning
+rtnorm_dmp(n = 1, mean = 1, sd = 0, lower = 0)
+
+
+## Example case two: mean = lower while sd = 0
+##
+## original function returns NA with no warning
+msm::rtnorm(n = 1, mean = 1, sd = 0, lower = 1)
+## this version returns NA and issues a warning
+rtnorm_dmp(n = 1, mean = 1, sd = 0, lower = 1)
+}
+
+
 }

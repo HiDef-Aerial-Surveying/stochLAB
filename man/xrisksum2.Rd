@@ -6,6 +6,15 @@
 \usage{
 xrisksum2(y, xinc, direction, pars)
 }
+\arguments{
+\item{y}{numeric}
+
+\item{xinc}{numeric}
+
+\item{direction}{numeric}
+
+\item{pars}{numeric}
+}
 \description{
 Single transit collision risk/probability at rotor height bands
 }
@@ -14,8 +23,8 @@ This function will calculate the risk associated with each point along the surfa
 }
 \note{
 Modified version of the original code. Changes focused on streamlining
-   the code and optimizing the performance of the functions involved.
-   \code{xrisksum2} and nested functions are called hundreds of times in
-   each iteration, so performance under option 3 depends heavily on
-   their execution speed
+the code and optimizing the performance of the functions involved.
+\code{xrisksum2} and nested functions are called hundreds of times in
+each iteration, so performance under option 3 depends heavily on
+their execution speed
 }

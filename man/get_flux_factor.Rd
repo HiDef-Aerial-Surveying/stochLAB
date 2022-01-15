@@ -14,40 +14,41 @@ get_flux_factor(
 )
 }
 \arguments{
-\item{n_turbines}{The number of turbines on the wind farm (\eqn{T}).}
+\item{n_turbines}{An integer, the number of turbines on the wind farm (\eqn{T}).}
 
-\item{rotor_radius}{The radius of the rotor (\eqn{R}), in metres}
+\item{rotor_radius}{A numeric value, the radius of the rotor (\eqn{R}), in metres.}
 
-\item{flight_speed}{The bird flight speed (\eqn{v}), in metres/sec}
+\item{flight_speed}{A numeric value, the bird flight speed (\eqn{v}), in metres/sec.}
 
-\item{bird_dens}{Vector with daytime in-flight bird densities per unit area
-(\eqn{D_A}), for each month, in birds/km^2}
+\item{bird_dens}{A numeric vector with daytime in-flight bird densities (\eqn{D_A}), for
+each month, in birds/km^2.}
 
-\item{daynight_hrs}{Two-column data frame with the total number of daylight
+\item{daynight_hrs}{A data frame with the total number of daylight
 hours and night hours at the wind farm site's location, in each month.
-Expected column names:
+It must contain, at least, the following columns:
 \itemize{
- \item{\code{Day}, daylight duration, in decimal hours}
- \item{\code{Night}, night time duration, in decimal hours}
+\item \code{Month}, name of the month.
+\item \code{Day}, daylight duration, in decimal hours.
+\item \code{Night}, night time duration, in decimal hour
 }}
 
-\item{noct_activity}{Nocturnal flight activity level, expressed as a #
-proportion of observed levels of daytime activity (\eqn{f_night})}
+\item{noct_activity}{A numeric value. The nocturnal flight activity level,
+expressed as a proportion of daytime activity levels (\eqn{f_night}).}
 }
 \value{
-The number of bird flights potentially transiting through rotors
-at each time period (assuming no avoidance), if all flights occur within the
-rotor's circular area
+The number of bird flights potentially transiting through rotors at
+each time period (assuming no avoidance), if all flights occur within the
+rotor's circular area.
 }
 \description{
-Returns the flux factor, expressing the total number of
-bird flights through the rotors of the wind farm per month, if all flights
-occur within the rotor's circle area of all turbines, and assuming birds take no
-avoiding action.
+Returns the flux factor, expressing the total number of bird flights through
+the rotors of the wind farm per month if all flights occurred within the
+rotor's circle area of all turbines, i.e. before the proportion at risk
+height and avoidance level are taken into account.
 }
 \details{
 The flux factor is used for other model calculations (e.g.
-   \code{get_rotor_transits}). Methodology and assumptions underpinning
-   \code{get_flux_factor} are described in "Stage B" of
-   \href{https://www.bto.org/sites/default/files/u28/downloads/Projects/Final_Report_SOSS02_Band1ModelGuidance.pdf}{Band (2012)}
+\code{get_rotor_transits}). Methodology and assumptions underpinning
+\code{get_flux_factor} are described in "Stage B" of
+\href{https://www.bto.org/sites/default/files/u28/downloads/Projects/Final_Report_SOSS02_Band1ModelGuidance.pdf}{Band (2012)}
 }

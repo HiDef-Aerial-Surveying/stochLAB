@@ -2,10 +2,9 @@
 % Please edit documentation in R/get_prob_collision.R
 \name{get_prob_collision}
 \alias{get_prob_collision}
-\title{Single transit collision risk with no avoidance}
+\title{Average single transit collision risk with no avoidance}
 \usage{
 get_prob_collision(
-  chord_prof,
   flight_speed,
   body_lt,
   wing_span,
@@ -15,19 +14,11 @@ get_prob_collision(
   rotor_radius,
   blade_width,
   blade_pitch,
-  n_blades
+  n_blades,
+  chord_prof
 )
 }
 \arguments{
-\item{chord_prof}{a data.frame with the blade's chord taper profile. Function
-expects two named columns:
-\itemize{
- \item{\code{pp_radius}, radius at bird passage point, as a proportion
-    of \code{rotor_radius}}
- \item{\code{chord}, chord width at (\code{pp_radius}), as a proportion
-    of \code{blade_width}}
-}}
-
 \item{flight_speed}{The bird flying speed (\eqn{v}), in metres/sec}
 
 \item{body_lt}{The length of the bird (\eqn{L}), in metres}
@@ -50,15 +41,23 @@ or gliding birds (\eqn{F}).}
 the rotor plane (\eqn{\gamma}), in radians}
 
 \item{n_blades}{The number of blades in rotor (\eqn{b}).}
+
+\item{chord_prof}{a data.frame with the blade's chord taper profile. Function
+expects two named columns:
+\itemize{
+\item{\code{pp_radius}, radius at bird passage point, as a proportion
+of \code{rotor_radius}}, starting from 0.05 to 1
+\item{\code{chord}, chord width at \code{pp_radius}, as a proportion
+of \code{blade_width}}
+}}
 }
 \value{
 A numeric value. The average collision probability (risk) for a bird
-  flying through a rotor's circle area
+flying through a rotor's circle area
 }
 \description{
-Calculate the average probability of collision for a single bird rotor transit
-under the basic model (i.e. uniform distribution of bird flights at
-risk height), assuming no avoidance action.
+Calculate the average probability of collision for a single bird transit
+at any point across the rotor, assuming no avoidance action.
 }
 \details{
 Methodology and assumptions underpinning \code{get_prob_collision}

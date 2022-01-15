@@ -4,14 +4,15 @@
 \alias{DayLength}
 \title{Total day and night hours per month}
 \usage{
-DayLength(Latitude)
+DayLength(wf_latitude)
 }
 \arguments{
-\item{Latitude}{A decimal value. The latitude of the centroid of the windfarm}
+\item{wf_latitude}{A decimal value. The latitude of the centroid of the
+windfarm, in degrees.}
 }
 \value{
 data frame with total number of daylight hours and night hours in each
-month at the specified atitude
+month at the specified latitude.
 }
 \description{
 Taken from Forsythe et al.(1995) A model comparison for daylength as a

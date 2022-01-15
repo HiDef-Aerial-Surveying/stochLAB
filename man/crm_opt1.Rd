@@ -7,8 +7,8 @@
 crm_opt1(
   flux_factor,
   prop_crh_surv,
-  prob_single_collision,
-  prop_operational,
+  avg_prob_coll,
+  mth_prop_oper,
   avoidance_rate,
   lac_factor
 )
@@ -17,28 +17,33 @@ crm_opt1(
 \item{flux_factor}{a vector containing the flux factor for each month}
 
 \item{prop_crh_surv}{The proportion of flights at collision risk height derived
-from site survey (\eqn{Q_2R})}
+from site survey (\eqn{Q_2R}). Only required for model Option 1.}
 
-\item{prob_single_collision}{The probability of collision for a single bird
-transit through a rotor, assuming no avoidance action.}
+\item{avg_prob_coll}{A numeric value, the average probability of collision for a single bird
+transit through a rotor, assuming no avoidance action (\eqn{p_{average}}).}
 
-\item{prop_operational}{The proportion of time during which turbines are
-operational per month}
+\item{mth_prop_oper}{A numeric vector, the proportion of time during which
+turbines are operational per month.}
 
-\item{avoidance_rate}{The proportion of birds likely to take action to avoid
-collision with rotor}
+\item{avoidance_rate}{A numeric value within the interval \eqn{[0, 1]}. The
+avoidance rate, expressing the probability that a bird flying on a
+collision course with a turbine will take evading action to avoid collision.}
 
-\item{lac_factor}{The large array correction factor. Defaults to 1,
-meaning large array correction is not applicable}
+\item{lac_factor}{A numerical value, the large array correction factor.
+Defaults to 1, meaning large array correction is not applicable.}
 }
 \value{
-Expected number of collisions per month based on model option 1
+A numeric vector, the expected number of collisions per month based
+on model option 1
 }
 \description{
-Top-level function to run CRM model under option 1:
-   \itemize{
-      \item Basic model, i.e. flights across collision risk height are
-       uniformly distributed
-      \item proportion at collision risk height derived from site survey
-   }
+Wrapper function to run CRM calculations under option 1:
+\itemize{
+\item Basic model, i.e. flights across collision risk height are
+uniformly distributed.
+\item Proportion at collision risk height derived from site survey.
+}
+}
+\seealso{
+\code{\link[=get_flux_factor]{get_flux_factor()}} for calculating the flux factor
 }

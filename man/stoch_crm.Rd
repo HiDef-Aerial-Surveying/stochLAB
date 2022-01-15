@@ -2,112 +2,401 @@
 % Please edit documentation in R/stoch_crm.r
 \name{stoch_crm}
 \alias{stoch_crm}
-\title{Stochastic collision risk model for a single species and one turbine scenario}
+\title{Stochastic collision risk model for a single species and one wind farm scenario}
 \usage{
 stoch_crm(
-  model_options = c(1, 2, 3),
-  BirdData,
-  TurbineData,
-  CountData,
-  iter = 10,
-  spp_name,
-  LargeArrayCorrection,
-  n_turbines,
-  WFWidth,
-  Prop_Upwind,
-  Latitude,
-  TideOff,
-  windSpeedMean,
-  windSpeedSD,
-  windData_rotation,
-  windData_pitch,
-  fhd_bootstraps = NULL,
-  dens_opt = "truncNorm"
+  model_options = c("1", "2", "3", "4"),
+  n_iter = 1000,
+  flt_speed_pars,
+  body_lt_pars,
+  wing_span_pars,
+  avoid_bsc_pars = NULL,
+  avoid_ext_pars = NULL,
+  noct_act_pars,
+  prop_crh_pars = NULL,
+  bird_dens_opt = c("tnorm", "resample", "qtiles"),
+  bird_dens_dt,
+  flight_type,
+  prop_upwind,
+  gen_fhd_boots = NULL,
+  site_fhd_boots = NULL,
+  n_blades,
+  air_gap_pars,
+  rtr_radius_pars,
+  bld_width_pars,
+  bld_chord_prf = chord_prof_5MW,
+  rtn_pitch_opt = c("probDist", "windSpeedReltn"),
+  bld_pitch_pars = NULL,
+  rtn_speed_pars = NULL,
+  windspd_pars = NULL,
+  rtn_pitch_windspd_dt = NULL,
+  trb_wind_avbl,
+  trb_downtime_pars,
+  wf_n_trbs,
+  wf_width,
+  wf_latitude,
+  tidal_offset,
+  lrg_arr_corr = TRUE,
+  xinc = 0.05,
+  yinc = 0.05,
+  out_format = c("draws", "summaries"),
+  out_sampled_pars = FALSE,
+  out_period = c("months", "seasons", "annum"),
+  season_specs = NULL,
+  verbose = TRUE,
+  log_file = NULL,
+  seed = NULL
 )
 }
 \arguments{
-\item{model_options}{numeric vector}
+\item{model_options}{Character vector, the model options for calculating collision
+risk (see \strong{Details} section below).}
 
-\item{BirdData}{A data frame. Contains all the parameters for the species}
+\item{n_iter}{An integer. The number of iterations for the model simulation.}
 
-\item{TurbineData}{A data frame. Contains all the parameters for the turbines}
+\item{flt_speed_pars}{A single row data frame with columns \code{mean} and \code{sd},
+the mean and standard deviation of the species flying speed, in metres/sec.
+Assumed to follow a Truncated Normal with lower bound at 0 (\emph{tnorm-lw0}).}
 
-\item{CountData}{A data frame. Contains density data for the wind farm of interest}
+\item{body_lt_pars}{A single row data frame with columns \code{mean} and \code{sd}, the
+mean and standard deviation of the species body length, in metres. Assumed
+to follow a \emph{tnorm-lw0} distribution.}
 
-\item{iter}{An integer constant > 0. The number of stochastic draws to take}
+\item{wing_span_pars}{A single row data frame with columns \code{mean} and \code{sd},
+the mean and standard deviation of the species wingspan, in metres. Assumed
+to follow a \emph{tnorm-lw0} distribution.}
 
-\item{spp_name}{A character vector.}
+\item{avoid_bsc_pars, avoid_ext_pars}{Single row data frames with columns
+\code{mean} and \code{sd}, the mean and standard deviation of the species avoidance
+rate to be used in the basic model (Options 1 and 2) and extended model
+(Options 3 and 4) calculations (see \strong{Details} section). Avoidance rate
+expresses the probability that a bird flying on a collision course with a
+turbine will take evading action to avoid collision, and it is assumed to
+follow a Beta distribution.}
 
-\item{LargeArrayCorrection}{A boolean. If TRUE, correct if the wind farm array is very large}
+\item{noct_act_pars}{A single row data frame with columns \code{mean} and \code{sd},
+The mean and standard deviation of the species nocturnal flight activity
+level, expressed as a proportion of daytime activity levels, and assumed to
+be Beta distributed.}
 
-\item{n_turbines}{integer}
+\item{prop_crh_pars}{Required only for model Option 1, a single row data
+frame with columns \code{mean} and \code{sd}. The mean and standard deviation of the
+proportion of flights at collision risk height derived from site survey,
+assumed to be Beta distributed.}
 
-\item{WFWidth}{A decimal value. The "width" of wind farm used in Large Array Correction (KM)}
+\item{bird_dens_opt}{Option for specifying the random sampling mechanism for bird
+densities:
+\itemize{
+\item \code{"tnorm"}: Sampling of density estimates from a \emph{tnorm-lw0} distribution
+(default value),
+\item \code{"resample"}: Re-sample draws of bird density estimates (e.g. bootstrap
+samples),
+\item \code{"qtiles"}: Sampling from a set of quantile estimates of bird densities.
+}}
 
-\item{Prop_Upwind}{A decimal value. A value between 0-1 bounded as proportion of flights upwind - default of 0.5.}
+\item{bird_dens_dt}{A data frame with monthly estimates of bird density
+within the windfarm footprint, expressed as the number of daytime in-flight
+birds/km^2 per month. Data frame format requirements:
+\itemize{
+\item If \code{bird_dens_opt = "tnorm"}, \code{bird_dens_dt} must contain the following
+columns:
+\itemize{
+\item \code{month}, (unique) month names,
+\item \code{mean}, the mean number of birds in flight at any height per square
+kilometre in each month,
+\item \code{sd}, idem, for standard deviation.
+}
+\item If \code{bird_dens_opt = "resample"}, \code{bird_dens_dt} columns must be named as
+months (i.e. \code{Jan}, \code{Feb}, ...), each containing random samples of monthly
+density estimates.
+\item If \code{bird_dens_opt = "qtiles"}, \code{bird_dens_dt} must comply with:
+\itemize{
+\item First column named as \code{p}, giving reference probabilities,
+\item Remaining columns named as months (i.e. \code{Jan}, \code{Feb}, ...), each
+giving the quantile estimates of bird density in a given month, for the
+reference probabilities in column \code{p}.
+}
+}}
 
-\item{TideOff}{A decimal value. Tidal offset in metres}
+\item{flight_type}{A character string, either 'flapping' or 'gliding',
+indicating the species' characteristic flight type.}
 
-\item{windSpeedMean}{A decimal value. Site specific mean wind speed (m/s)}
+\item{prop_upwind}{Numeric value between 0-1 giving the proportion of
+flights upwind - defaults to 0.5.}
 
-\item{windSpeedSD}{A decimal value. Site specific standard deviation of wind speeds}
+\item{gen_fhd_boots}{Required only for model Options 2 and 3, a data frame
+with bootstrap samples of flight height distributions (FHD) of the species
+derived from general (country/regional level) data. FHD provides relative
+frequency distribution of bird flights at 1-metre height bands, starting
+from sea surface. The first column must be named as \code{height},
+expressing the lower bound of the height band (thus it's first element must
+be 0). Each remaining column should provide a bootstrap sample of the
+proportion of bird flights at each height band, with no column naming
+requirements.
 
-\item{windData_rotation}{A data frame. The table of wind speed versus rotor speed}
+\strong{NOTE:} \link{generic_fhd_bootstraps} is a list object with generic FHD
+bootstrap estimates for 25 seabird species from \href{https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/1365-2664.12191}{Johnson et al (2014)}
+(see usage in Example Section below).}
 
-\item{windData_pitch}{A data frame. The table of wind speed versus rotor pitch}
+\item{site_fhd_boots}{Required only for model Option 4, a data frame similar
+to \code{gen_fhd_boots}, but for FHD estimates derived from site-specific
+data.}
 
-\item{dens_opt}{A character value. The type of sampling to do for the species density data.}
+\item{n_blades}{An integer, the number of blades in rotor (\eqn{b}).}
 
-\item{FlightData}{A data frame. Contains flight height data for species}
+\item{air_gap_pars}{A single row data frame with columns \code{mean} and \code{sd}, the
+mean and standard deviation of the tip clearance gap, in metres, i.e. the
+distance between the minimum rotor tip height and the highest astronomical
+tide (HAT). Assumed to follow a \emph{tnorm-lw0} distribution.}
 
-\item{TPower}{A decimal value. The amount of power generated by the wind farm (MW)}
+\item{rtr_radius_pars}{A single row data frame with columns \code{mean} and \code{sd},
+the mean and standard deviation of the radius of the rotor, in metres.
+Assumed to follow a \emph{tnorm-lw0} distribution.}
 
-\item{Latitude.}{A decimal value. Latitude in WGS 1984 (decimal degrees)}
+\item{bld_width_pars}{A single row data frame with columns \code{mean} and \code{sd},
+the mean and standard deviation of the maximum blade width, in metres.
+Assumed to be \emph{tnorm-lw0} distribution.}
+
+\item{bld_chord_prf}{A data frame with the chord taper profile of the rotor
+blade. It must contain the columns:
+\itemize{
+\item \code{pp_radius}, equidistant intervals of radius at bird passage point,
+as a proportion of \code{rotor_radius}, within the range \eqn{[0, 1]}.
+\item \code{chord}, the chord width at \code{pp_radius}, as a proportion of \code{blade_width}.
+}
+
+Defaults to a generic profile for a typical modern 5MW turbine. See
+\code{\link[=chord_prof_5MW]{chord_prof_5MW()}} for details.}
+
+\item{rtn_pitch_opt}{a character string, the option for specifying
+the sampling mechanism for rotation speed and blade pitch:
+\itemize{
+\item \code{"probDist"}: sample rotation speed and blade pitch values from a
+\emph{tnorm-lw0} distribution (default value).
+\item \code{"windSpeedReltn"}: generate rotation speed and blade pitch values as a
+function of wind speed intensity.
+}}
+
+\item{bld_pitch_pars}{Only required if \code{rtn_pitch_opt = "probDist"}, a single
+row data frame with columns \code{mean} and \code{sd}, the mean and standard
+deviation of the blade pitch angle, i.e. the angle between the blade
+surface and the rotor plane, in degrees. Assumed to follow a
+\emph{tnorm-lw0} distribution.}
+
+\item{rtn_speed_pars}{Only required if \code{rtn_pitch_opt = "probDist"}, a
+single row data frame with columns \code{mean} and \code{sd}, the mean and standard
+deviation of the operational rotation speed, in revolutions per minute.
+Assumed to follow a \emph{tnorm-lw0} distribution.}
+
+\item{windspd_pars}{Only required if \code{rtn_pitch_opt = "windSpeedReltn"},
+a single row data frame with columns \code{mean} and \code{sd}, the mean and the
+standard deviation of wind speed at the windfarm site, in metres/sec.
+Assumed to follow a \emph{tnorm-lw0} distribution.}
+
+\item{rtn_pitch_windspd_dt}{Only required if \code{rtn_pitch_opt = "windSpeedReltn"},
+a data frame giving the relationship between wind speed, rotation speed
+and blade pitch values. It must contain the columns:
+\itemize{
+\item \code{wind_speed}, wind speed in m/s,
+\item \code{rtn_speed}, rotation speed in rpm,
+\item \code{bld_pitch}, blade pitch values in degrees.
+}}
+
+\item{trb_wind_avbl}{A data frame with the monthly estimates of operational
+wind availability. It must contain the columns:
+\itemize{
+\item \code{month}, (unique) month names,
+\item \code{pctg}, the percentage of time wind conditions allow for turbine operation
+per month.
+}}
+
+\item{trb_downtime_pars}{A data frame with monthly estimates of maintenance
+downtime, assumed to follow a \emph{tnorm-lw0} distribution. It
+must contain the following columns:
+\itemize{
+\item \code{month}, (unique) month names,
+\item \code{mean}, numeric, the mean percentage of time in each month when turbines
+are not operating due to maintenance,
+\item \code{sd}, the standard deviation of monthly maintenance downtime.
+}}
+
+\item{wf_n_trbs}{Integer, the number of turbines on the windfarm.}
+
+\item{wf_width}{Numeric value, the approximate longitudinal width of the
+wind farm, in kilometres (\eqn{w}).}
+
+\item{wf_latitude}{A decimal value. The latitude of the centroid of the
+windfarm, in degrees.}
+
+\item{tidal_offset}{A numeric value, the tidal offset, the difference between
+HAT and mean sea level, in metres.}
+
+\item{lrg_arr_corr}{Boolean value. If TRUE, the large array correction will
+be applied. This is a correction factor to account for the decay in
+bird density at later rows in wind farms with a large array of turbines.}
+
+\item{yinc, xinc}{numeric values, the increments along the y-axis and x-axis
+for numerical integration across segments of the rotor circle. Chosen
+values express proportion of rotor radius. By default these are set to
+0.05, i.e. integration will be performed at a resolution of one twentieth
+of the rotor radius.}
+
+\item{out_format}{Output format specification. Possible values are:
+\itemize{
+\item \code{"draws"}: returns stochastic draws of collisions estimates (default value),
+\item \code{"summaries"}: returns summary statistics of collisions estimates.
+}}
+
+\item{out_sampled_pars}{Logical, whether to output summary statistics of values
+sampled for each stochastic model parameter.}
+
+\item{out_period}{Controls level of temporal aggregation of collision
+outputs. Possible values are:
+\itemize{
+\item \code{"months"}: monthly collisions (default value),
+\item \code{"seasons"}: collisions per user-defined season,
+\item \code{"annum"}: total collisions over 12 months.
+}}
+
+\item{season_specs}{Only required if \code{out_period = "seasons"}, a data frame
+defining the seasons for aggregating over collision estimates. It must
+comprise the following columns:
+\itemize{
+\item \code{season_id}, (unique) season identifier,
+\item \code{start_month}, name of the season's first month,
+\item \code{end_month}, name of the season's last month.
+}}
+
+\item{verbose}{Logical, print model run progress on the console?}
+
+\item{log_file}{Path to log file to store session info and main model run
+options. If set to NULL (default value), log file is not created.}
+
+\item{seed}{Integer, the random seed for \link[base:Random]{random number generation}, for analysis reproducibility.}
 }
 \value{
-Estimates of number of collisions per month, for each of the chosen
-   model options
+If \code{out_sampled_pars = FALSE}, returns a list with estimates of number of
+collisions per chosen time periods, with elements containing the outputs for
+each CRM Option.
+
+If \code{out_sampled_pars = TRUE}, returns a list object with two top-level
+elements:
+\itemize{
+\item \code{collisions}, a list comprising collision estimates for each CRM Option,
+\item \code{sampled_pars}, a list with summary statistics of values sampled for
+stochastic model parameters.
+}
 }
 \description{
-Run stochastic collision risk model for a single species and one turbine scenario
+Runs a Stochastic Collision Risk Model (SCRM) for estimating the number of
+in-flight collisions with offshore windfarm turbines, for given species and
+windfarm scenario. Core calculations follow the work developed by \href{https://data.marine.gov.scot/dataset/developing-avian-collision-risk-model-incorporate-variability-and-uncertainty}{Masden (2015)}.
+See \strong{Background and Updates} section below for more details.
 }
 \details{
-This function is an adaption of code from Masden(2015) used for estimating
-the collision risk of seabirds in offshore windfarm sites and is a further
-adaptation from Band(2012).
-
-The collision risk model evaluates risk on a month by month basis in order
-to reflect changing bird abundance within and utilization of the area.
-
-Changes in relation to previous top-line function \code{stochasticBand}
+Collision risk can be calculated under 4 options, specified by \code{model_options}:
 \itemize{
-  \item function runs the model for one single scenario (i.e. one species for
-  one turbine scenario). Advantages include:
-  \itemize{
-      \item streamlined infrastructure for easier scenario management
-      \item easier implementation of parallelisation for multiple scenarios
-  }
-  \item results are no longer saved to an external file
+\item \strong{Option 1} - Basic model with proportion at
+collision risk height derived from site survey (\code{prop_crh_surv}).
+\item \strong{Option 2} - Basic model with proportion
+at collision risk height derived from a generic flight height distribution
+(\code{gen_fhd}).
+\item \strong{Option 3} - Extended model using a
+generic flight height distribution (\code{gen_fhd}).
+\item \strong{Option 4} - Extended model using a
+site-specific flight height distribution (\code{site_fhd}).
+}
+Where,
+\itemize{
+\item Basic model - assumes a uniform distribution of bird flights at
+collision risk height (i.e. above the minimum and below the maximum height
+of the rotor blade).
+\item Extended model - takes into account the distribution of bird flight
+heights at collision risk height.
 }
 }
 \examples{
-stoch_crm(model_options = c(1, 2, 3),
-  BirdData = Bird_Data[3, ],
-  TurbineData = Turbine_Data,
-  CountData = Count_Data[3, ],
-  iter = 10,
-  spp_name = c("Black_legged_Kittiwake"),
-  LargeArrayCorrection = TRUE,
-  n_turbines = 300,
-  WFWidth = 4,
-  Prop_Upwind = 0.5,
-  Latitude = 56,
-  TideOff = 2.5,
-  windSpeedMean = 30,
-  windSpeedSD = 5.1,
-  windData_rotation = startUpValues$turbinePars$rotationVsWind_df,
-  windData_pitch = startUpValues$turbinePars$pitchVsWind_df,
-  dens_opt = "truncNorm",
-  fhd_bootstraps = generic_fhd_bootstraps$Black_headed_Gull)
+# ------------------------------------------------------
+# Run with arbitrary parameter values, for illustration
+# ------------------------------------------------------
 
+# ------------------------------------------------------
+# Setting some of the required inputs upfront
+b_dens <- data.frame(
+  month = month.abb,
+  mean = runif(12, 0.8, 1.5),
+  sd = runif(12, 0.2, 0.3)
+)
+head(b_dens)
+
+# Generic FHD bootstraps from Johnson et al (2014)
+fhd_boots <- generic_fhd_bootstraps[[1]]
+head(fhd_boots)
+
+wind_rtn_ptch <- data.frame(
+  wind_speed = seq_len(30),
+  rtn_speed = 10/(30:1),
+  bld_pitch = c(rep(90, 4), rep(0, 8), 5:22)
+)
+head(wind_rtn_ptch)
+
+windavb <- data.frame(
+  month = month.abb,
+  pctg = runif(12, 85, 98)
+)
+head(windavb)
+
+dwntm <- data.frame(
+  month = month.abb,
+  mean = runif(12, 6, 10),
+  sd = rep(2, 12))
+head(dwntm)
+
+seas_dt <- data.frame(
+  season_id = c("a", "b", "c"),
+  start_month = c("Jan", "May", "Oct"), end_month = c("Apr", "Sep", "Dec")
+  )
+head(seas_dt)
+
+# ----------------------------------------------------------
+# Run stochastic CRM, treating rotor radius, air gap and
+# blade width as fixed parameters (i.e. not stochastic)
+
+stoch_crm(
+  model_options = c(1, 2, 3),
+  n_iter = 1000,
+  flt_speed_pars = data.frame(mean = 7.26, sd = 1.5),
+  body_lt_pars = data.frame(mean = 0.39, sd = 0.005),
+  wing_span_pars = data.frame(mean = 1.08, sd = 0.04),
+  avoid_bsc_pars = data.frame(mean = 0.99, sd = 0.001),
+  avoid_ext_pars = data.frame(mean = 0.96, sd = 0.002),
+  noct_act_pars = data.frame(mean = 0.033, sd = 0.005),
+  prop_crh_pars = data.frame(mean = 0.06, sd = 0.009),
+  bird_dens_opt = "tnorm",
+  bird_dens_dt = b_dens,
+  flight_type = "flapping",
+  prop_upwind = 0.5,
+  gen_fhd_boots = fhd_boots,
+  n_blades = 3,
+  rtr_radius_pars = data.frame(mean = 80, sd = 0), # sd = 0, rotor radius is fixed
+  air_gap_pars = data.frame(mean = 36, sd = 0),    # sd = 0, air gap is fixed
+  bld_width_pars = data.frame(mean = 8, sd = 0),   # sd = 0, blade width is fixed
+  rtn_pitch_opt = "windSpeedReltn",
+  windspd_pars = data.frame(mean = 7.74, sd = 3),
+  rtn_pitch_windspd_dt = wind_rtn_ptch,
+  trb_wind_avbl = windavb,
+  trb_downtime_pars = dwntm,
+  wf_n_trbs = 200,
+  wf_width = 15,
+  wf_latitude = 56.9,
+  tidal_offset = 2.5,
+  lrg_arr_corr = TRUE,
+  verbose = TRUE,
+  seed = 1234,
+  out_format = "summaries",
+  out_sampled_pars = TRUE,
+  out_period = "seasons",
+  season_specs = seas_dt,
+  log_file = paste0(getwd(), "scrm_example.log")
+)
 }
