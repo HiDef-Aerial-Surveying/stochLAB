@@ -37,11 +37,11 @@ package lays down the code infrastructure for easier incorporation of new
 functionality, e.g. extra parameter sampling features, model expansions,
 etc.
 
-In addition, previous code underpinning key calculations for the extended model
+In addition, previous code underpinning core calculations for the extended model
 has been replaced by an alternative approach, resulting in significant gains in
 computational speed - over 30x faster than Masden's code. This optimization is
-particularly beneficial under a stochastic context, when Band calculations are
-computed repeatedly.
+particularly beneficial under a stochastic context, when core calculations are
+called repeatedly during simulations.
 
 For a more detailed overview type `?stochLAB`, once installed!
 
@@ -67,7 +67,7 @@ devtools::install_github("HiDef-Aerial-Surveying/stochLAB")
 ### Simple example
 
 This is a basic example of running the stochastic collision model for one
-seabird species and one turbine/windfarm scenario, with fictional input
+seabird species and one turbine/wind-farm scenario, with fictional input
 parameter data.
 
 ```r
@@ -155,14 +155,14 @@ stoch_crm(
 This is an example usage of `stoch_crm()` for multiple scenarios. The aim is
 two-fold:
 
-1. Suggest how input parameter data sets used in the previous implementation can
+1. Suggest how input parameter datasets used in the previous implementation can
 be reshaped to fit `stoch_crm()`'s  interface. Suggested code is also relevant
-in the context of multiple scenarios applications, as the wide tabular format of
-these data sets is the likely favoured structure for users to gather input
-parameters under different scenarios.
+in the context of multiple scenarios applications, since the wide tabular
+structure of these datasets is likely the favoured format for users to compile
+input parameters under different scenarios.
 
 2. Propose a functional programming framework to run stoch_crm() for multiple
-species and windfarm/turbines features.
+species and wind-farm/turbines features.
 
 Please note the example runs on fictional data.
 
