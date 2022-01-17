@@ -46,8 +46,6 @@ called repeatedly during simulations.
 For a more detailed overview type `?stochLAB`, once installed!
 
 
-<!-- Merged issues -->
-
 ## Installation
 
 <!-- You can install the released version of stochLAB from [CRAN](https://CRAN.R-project.org) with: -->
