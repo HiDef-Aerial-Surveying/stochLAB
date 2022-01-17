@@ -12,7 +12,6 @@
 #   2. Application to multiple scenarios (species and windfarm/turbines features)
 # ------------------------------------------------------------------------------
 
-
 # --------------------------------------------------------- #
 # ----      Reshaping into list-column data frames       ----
 # --------------------------------------------------------- #
@@ -76,7 +75,7 @@ trb_opr_pars <- turb_pars_wide_example %>%
   tidyr::pivot_longer(JanOp:DecOpSD) %>%
   dplyr::mutate(
     month = substr(name, 1, 3),
-    par = case_when(
+    par = dplyr::case_when(
       grepl("SD|sd|Sd", name) ~ "sd",
       grepl("Mean|MEAN|mean", name) ~ "mean",
       TRUE ~ "pctg"
@@ -102,7 +101,7 @@ trb_pars <- turb_pars_wide_example %>%
   tidyr::pivot_wider(names_from = par, values_from = value) %>%
   tidyr::nest(pars = c(mean, sd)) %>%
   tidyr::pivot_wider(names_from = feature, values_from = pars) %>%
-  left_join(., trb_opr_pars)
+  dplyr::left_join(., trb_opr_pars)
 
 # windspeed, rotation speed and blade pitch relationship
 wndspd_rtn_ptch_example

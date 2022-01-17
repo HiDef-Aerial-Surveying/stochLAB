@@ -150,7 +150,7 @@ aim is two-fold:
     likely the favoured format for users to compile input parameters
     under different scenarios.
 
-2.  Propose a functional programming framework to run stoch\_crm() for
+2.  Propose a functional programming framework to run `stoch_crm()` for
     multiple species and wind-farm/turbines features.
 
 Please note the example runs on fictional data.
