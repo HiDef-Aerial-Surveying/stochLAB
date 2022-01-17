@@ -26,11 +26,12 @@ Furthermore, the package lays down the code infrastructure for easier
 incorporation of new functionality, e.g. extra parameter sampling
 features, model expansions, etc.
 
-In addition, previous code underpinning key calculations for the
+In addition, previous code underpinning core calculations for the
 extended model has been replaced by an alternative approach, resulting
 in significant gains in computational speed - over 30x faster than
 Masden’s code. This optimization is particularly beneficial under a
-stochastic context, when Band calculations are computed repeatedly.
+stochastic context, when core calculations are called repeatedly during
+simulation.
 
 For a more detailed overview type `?stochLAB`, once installed!
 
