@@ -333,6 +333,7 @@ head(b_dens)
 fhd_boots <- generic_fhd_bootstraps[[1]]
 head(fhd_boots)
 
+# wind speed vs rotation speed vs blade pitch
 wind_rtn_ptch <- data.frame(
   wind_speed = seq_len(30),
   rtn_speed = 10/(30:1),
@@ -340,18 +341,21 @@ wind_rtn_ptch <- data.frame(
 )
 head(wind_rtn_ptch)
 
+# wind availability
 windavb <- data.frame(
   month = month.abb,
   pctg = runif(12, 85, 98)
 )
 head(windavb)
 
+# maintenance downtime
 dwntm <- data.frame(
   month = month.abb,
   mean = runif(12, 6, 10),
   sd = rep(2, 12))
 head(dwntm)
 
+# seasons specification
 seas_dt <- data.frame(
   season_id = c("a", "b", "c"),
   start_month = c("Jan", "May", "Oct"), end_month = c("Apr", "Sep", "Dec")

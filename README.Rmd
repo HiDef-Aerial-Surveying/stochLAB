@@ -54,7 +54,7 @@ For a more detailed overview type `?stochLAB`, once installed!
 <!-- install.packages("stochLAB") -->
 <!-- ``` -->
 
-You can install the development version from [GitHub](https://github.com/) with:
+You can install the development version from with:
 
 ```r
 # install.packages("devtools")

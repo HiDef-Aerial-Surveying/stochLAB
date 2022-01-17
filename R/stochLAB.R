@@ -92,6 +92,11 @@
 #' While being the computing workhorse of the `stoch_crm()` function, it can
 #' also be used alone, providing backward compatibility with the original Band
 #' spreadsheet outputs.
+#'
+#' @seealso
+#' Useful links:
+#' * [https://github.com/HiDef-Aerial-Surveying/stochLAB]
+#' * Report bugs at [https://github.com/HiDef-Aerial-Surveying/stochLAB/issues]
 
 
 

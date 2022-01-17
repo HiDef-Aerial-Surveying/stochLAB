@@ -95,3 +95,10 @@ also be used alone, providing backward compatibility with the original Band
 spreadsheet outputs.
 }
 
+\seealso{
+Useful links:
+\itemize{
+\item \link{https://github.com/HiDef-Aerial-Surveying/stochLAB}
+\item Report bugs at \link{https://github.com/HiDef-Aerial-Surveying/stochLAB/issues}
+}
+}
