@@ -4,23 +4,27 @@
 \alias{xrisksum2}
 \title{The xrisksum2 function for calculating risk along a turbine blade}
 \usage{
-xrisksum2(
-  y,
-  xinc,
-  direction,
-  inputRad = currentRad,
-  inputCirc = currentCirc,
-  inputRotorRadius = currentRotorRadius,
-  inputBladeWidth = currentBladeWidth,
-  inputRotorSpeed = currentRotorSpeed,
-  inputPitch = currentPitch,
-  inputFlight = currentFlightNumeric,
-  inputWingSpan = currentWingSpan,
-  inputFlightSpeed = currentFlightSpeed,
-  inputBirdLength = currentBirdLength,
-  inputBlades = currentBlades
-)
+xrisksum2(y, xinc, direction, pars)
+}
+\arguments{
+\item{y}{numeric}
+
+\item{xinc}{numeric}
+
+\item{direction}{numeric}
+
+\item{pars}{numeric}
 }
 \description{
+Single transit collision risk/probability at rotor height bands
+}
+\details{
 This function will calculate the risk associated with each point along the surface of a turbine blade
+}
+\note{
+Modified version of the original code. Changes focused on streamlining
+the code and optimizing the performance of the functions involved.
+\code{xrisksum2} and nested functions are called hundreds of times in
+each iteration, so performance under option 3 depends heavily on
+their execution speed
 }

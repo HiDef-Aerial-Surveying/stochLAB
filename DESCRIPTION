@@ -2,19 +2,37 @@ Package: stochLAB
 Type: Package
 Title: Stochastic Collision Risk Model
 Version: 0.1.0
-Author: NAMES HERE
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+Authors@R: c(
+    person("Bruno", "Caneco", email = "bruno@dmpstats.com", role = c("aut", "cre")),
+    person("Grant", "Humphries", email = "grant.humphries@hidefsurveying.co.uk", role = c("aut")),
+    person("Marine Scotland", role = c("fnd", "cph")),
+    person("HiDef", role = "cph"),
+    person("DMPstats", role = "cph"))
+Description: Tool for running Collision Risk Models for seabirds on offshore wind farms.
+License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
+LazyDataCompression: bzip2
 Imports: 
     msm,
     dplyr,
     tidyr,
     pracma,
-    data.table
+    data.table,
+    tibble,
+    purrr,
+    cli,
+    rlang,
+    magrittr,
+    logr,
+    glue,
+    stats
 RoxygenNote: 7.1.1
 Depends: 
     R (>= 2.10)
+Suggests: 
+    spelling,
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
+Roxygen: list(markdown = TRUE)
+Language: en-GB

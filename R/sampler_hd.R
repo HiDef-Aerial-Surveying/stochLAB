@@ -13,12 +13,12 @@
 #' @export
 #'
 
-sampler_hd <- function(dat,mode="rtnorm",n=NULL,mean=NULL,sd=NULL,lower=NULL,upper=NULL){
+sampler_hd <- function(dat,mode="rtnorm",n=NULL,mean=NULL,sd=NULL,lower=0,upper=NULL){
   if(!is.na(dat)){
     if(mode == "rtnorm"){
       output <- rtnorm_dmp(n = n,
                            mean = mean,
-                           sd = sd, lower = 0)
+                           sd = sd, lower = lower)
 
     }else if(mode == "rbeta"){
       output <- rbeta_dmp(n = n,

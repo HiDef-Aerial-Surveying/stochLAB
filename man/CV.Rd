@@ -6,6 +6,11 @@
 \usage{
 CV(mean, sd)
 }
+\arguments{
+\item{mean}{numeric, mean of the random variable}
+
+\item{sd}{numeric, standard deviation of the random variable}
+}
 \value{
 a numeric value
 }
