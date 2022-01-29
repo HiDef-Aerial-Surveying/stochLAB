@@ -51,7 +51,7 @@ sample_params <- function(model_options,
   )
 
   sampled_pars <- prob_dist_pars %>%
-    split(~.$feature) %>%
+    split(.$feature) %>%
     purrr::map(function(x, ...){
       sampler_hd(dat = x$sd,
                  mode = x$mode,
