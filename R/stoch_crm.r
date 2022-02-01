@@ -183,7 +183,6 @@
 #' @example examples/stoch_crm_example.r
 #'
 #' @export
-<<<<<<< HEAD
 stoch_crm <- function(model_options = c('1', '2', '3', '4'),
                       n_iter = 1000,
                       flt_speed_pars,
@@ -225,26 +224,6 @@ stoch_crm <- function(model_options = c('1', '2', '3', '4'),
                       verbose = TRUE,
                       log_file = NULL,
                       seed = NULL
-=======
-#'
-stoch_crm <- function(model_options = c(1, 2, 3),
-                      BirdData, TurbineData, CountData, #FlightData = Flight_Data,
-                      iter = 10,
-                      spp_name,
-                      LargeArrayCorrection,
-                      n_turbines,
-                      WFWidth,
-                      Prop_Upwind,
-                      Latitude,
-                      TideOff,
-                      windSpeedMean,
-                      windSpeedSD,
-                      windData_rotation,
-                      windData_pitch,
-                      fhd_bootstraps = NULL,
-                      dens_opt = "truncNorm"
-                      #DensityOpt = list(userOption = "truncNorm")
->>>>>>> fc6fef4cbcc9494cce39b453de6d86b6563015e3
 ) {
 
   # Preamble -------------------------------------------------------
@@ -289,10 +268,10 @@ stoch_crm <- function(model_options = c(1, 2, 3),
   # Input management -----------------------------------------------------------
 
   mandatory_args <- c("flt_speed_pars",  "body_lt_pars",  "wing_span_pars",
-                    "noct_act_pars", "bird_dens_dt", "flight_type", "prop_upwind",
-                    "n_blades", "air_gap_pars", "rtr_radius_pars", "bld_width_pars",
-                    "trb_wind_avbl", "trb_downtime_pars", "wf_n_trbs",
-                    "wf_width", "wf_latitude", "tidal_offset")
+                      "noct_act_pars", "bird_dens_dt", "flight_type", "prop_upwind",
+                      "n_blades", "air_gap_pars", "rtr_radius_pars", "bld_width_pars",
+                      "trb_wind_avbl", "trb_downtime_pars", "wf_n_trbs",
+                      "wf_width", "wf_latitude", "tidal_offset")
 
   for(arg in mandatory_args){
     is_missing <- eval(rlang::expr(missing(!!rlang::sym(arg))))
@@ -384,7 +363,7 @@ stoch_crm <- function(model_options = c(1, 2, 3),
     verbose = verbose,
     seed = seed,
     fn = "scrm"
-    )
+  )
 
 
   # Data preparation -------------------------------------------------------
@@ -394,9 +373,9 @@ stoch_crm <- function(model_options = c(1, 2, 3),
 
   ### extract and standardize month format from monthly data sets
   b_dens_mth <- switch (bird_dens_opt,
-    tnorm = bird_dens_dt$month,
-    resample = names(bird_dens_dt),
-    qtiles = names(bird_dens_dt)[names(bird_dens_dt) != "p"]
+                        tnorm = bird_dens_dt$month,
+                        resample = names(bird_dens_dt),
+                        qtiles = names(bird_dens_dt)[names(bird_dens_dt) != "p"]
   ) %>% format_months()
 
   dwntm_mth <- format_months(trb_downtime_pars$month)
@@ -444,7 +423,7 @@ stoch_crm <- function(model_options = c(1, 2, 3),
     if(any(mod_mths %nin% month.abb)){
       rlang::abort(
         message = c("Monthly data must be supplied for all 12 months when `out_period = annum`.",
-          i = "Monthly data arguments are: `bird_dens_opt`, `trb_downtime_pars` and `trb_wind_avbl`.")
+                    i = "Monthly data arguments are: `bird_dens_opt`, `trb_downtime_pars` and `trb_wind_avbl`.")
       )
     }
   }
@@ -510,7 +489,6 @@ stoch_crm <- function(model_options = c(1, 2, 3),
   )
 
 
-<<<<<<< HEAD
   # n_iterating over sampled parameters  -----------------------------------------
 
   if(verbose) cli::cli_progress_step("Calculating collisions | {i}/{n_iter} iterations",
@@ -557,18 +535,6 @@ stoch_crm <- function(model_options = c(1, 2, 3),
     # store results
     for(option in names(collisions_i)){
       scrm_draws[[option]][i, ] <- collisions_i[[option]]
-=======
-
-    if(any(model_options == 2)){
-      scrm_outputs$opt2[i, ] <-
-        crm_opt2(
-          gen_d_y = gen_fhd_at_rotor,
-          flux_factor = flux_fct,
-          prob_single_collision = p_single_collision,
-          prop_operational = sampled_oper_prop[i, ],
-          avoidance_rate = sampledBirdParams$AvoidanceBasic[i],
-          lac_factor = L_ArrayCF)
->>>>>>> fc6fef4cbcc9494cce39b453de6d86b6563015e3
     }
 
     if(verbose) cli::cli_progress_update()
@@ -694,7 +660,3 @@ stoch_crm <- function(model_options = c(1, 2, 3),
 
   return(scrm_ouputs)
 }
-
-
-
-
