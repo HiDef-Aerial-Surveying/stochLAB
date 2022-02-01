@@ -1,7 +1,7 @@
 Package: stochLAB
 Type: Package
 Title: Stochastic Collision Risk Model
-Version: 0.1.0
+Version: 0.2.0
 Authors@R: c(
     person("Bruno", "Caneco", email = "bruno@dmpstats.com", role = c("aut", "cre")),
     person("Grant", "Humphries", email = "grant.humphries@hidefsurveying.co.uk", role = c("aut")),
