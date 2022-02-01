@@ -95,8 +95,8 @@
 #'
 #' @seealso
 #' Useful links:
-#' * [https://github.com/HiDef-Aerial-Surveying/stochLAB]
-#' * Report bugs at [https://github.com/HiDef-Aerial-Surveying/stochLAB/issues]
+#' * <https://github.com/HiDef-Aerial-Surveying/stochLAB>
+#' * Report bugs at <https://github.com/HiDef-Aerial-Surveying/stochLAB/issues>
 
 
 

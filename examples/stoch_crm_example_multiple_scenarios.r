@@ -150,7 +150,7 @@ outputs <- scenarios_specs %>%
     c_spec <- bird_pars %>%
       dplyr::filter(Species == {{spp}}) # {{}} to avoid issues with data masking
 
-    # density for curent species
+    # density for current species
     c_dens <- dens_pars %>%
       dplyr::filter(Species == {{spp}})
 
@@ -163,7 +163,8 @@ outputs <- scenarios_specs %>%
       dplyr::filter(wf_id == {{wf_id}})
 
     # inputs in list-columns need to be unlisted, either via `unlist()` or
-    # indexing `[[1]]` switching off `verbose`, otherwise console will be
+    # indexing `[[1]]`
+    # switching off `verbose`, otherwise console will be
     # cramped with log messages
     stoch_crm(
       model_options = c(1, 2, 3),
