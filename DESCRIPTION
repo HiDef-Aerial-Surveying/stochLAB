@@ -9,7 +9,7 @@ Authors@R: c(
     person("HiDef", role = "cph"),
     person("DMPstats", role = "cph"))
 Description: Tool for running Collision Risk Models for seabirds on offshore wind farms.
-License: GPL (>= 3)
+License: GPL (>= 3) + file LICENSE
 Encoding: UTF-8
 LazyData: true
 LazyDataCompression: bzip2
