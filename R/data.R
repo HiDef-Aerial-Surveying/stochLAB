@@ -11,20 +11,6 @@
 #' }
 "Bird_Data"
 
-
-#' Bird densities for the CRM
-#'
-#' A dataframe of Bird densities for each month
-#'
-#' @format A dataframe
-#' \describe{
-#'   \item{Species}{Species name}
-#'   \item{AvoidanceBasic}{Basic avoidance rate}
-#'   \item{AvoidanceBasicSD}{Basic avoidance rate SD}
-#'   ...
-#' }
-"Count_Data"
-
 #' Bird parameters for the CRM
 #'
 #' A dataframe of species biological parameters for the model
@@ -37,21 +23,6 @@
 #'   ...
 #' }
 "Flight_Height"
-
-
-#' Bird parameters for the CRM
-#'
-#' A dataframe of species biological parameters for the model
-#'
-#' @format A dataframe
-#' \describe{
-#'   \item{Species}{Species name}
-#'   \item{AvoidanceBasic}{Basic avoidance rate}
-#'   \item{AvoidanceBasicSD}{Basic avoidance rate SD}
-#'   ...
-#' }
-"Johnston_flight_heights"
-
 
 
 #' Bird parameters for the CRM
@@ -79,6 +50,7 @@
 #'   ...
 #' }
 "coverC"
+
 
 
 #' Rotor blade chord profile
