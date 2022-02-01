@@ -29,6 +29,9 @@
 #' @param lower A decimal value. The lower limit for the distribution
 #' @param upper A decimal value. The upper limit for the distribution
 #' @return a vector of samples values from the truncated normal distribution
+#'
+#' @import msm
+#'
 #' @export
 
 rtnorm_dmp <- function(n, mean=0, sd=1, lower=-Inf, upper=Inf){

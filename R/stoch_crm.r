@@ -183,6 +183,7 @@
 #' @example examples/stoch_crm_example.r
 #'
 #' @export
+<<<<<<< HEAD
 stoch_crm <- function(model_options = c('1', '2', '3', '4'),
                       n_iter = 1000,
                       flt_speed_pars,
@@ -224,6 +225,26 @@ stoch_crm <- function(model_options = c('1', '2', '3', '4'),
                       verbose = TRUE,
                       log_file = NULL,
                       seed = NULL
+=======
+#'
+stoch_crm <- function(model_options = c(1, 2, 3),
+                      BirdData, TurbineData, CountData, #FlightData = Flight_Data,
+                      iter = 10,
+                      spp_name,
+                      LargeArrayCorrection,
+                      n_turbines,
+                      WFWidth,
+                      Prop_Upwind,
+                      Latitude,
+                      TideOff,
+                      windSpeedMean,
+                      windSpeedSD,
+                      windData_rotation,
+                      windData_pitch,
+                      fhd_bootstraps = NULL,
+                      dens_opt = "truncNorm"
+                      #DensityOpt = list(userOption = "truncNorm")
+>>>>>>> fc6fef4cbcc9494cce39b453de6d86b6563015e3
 ) {
 
   # Preamble -------------------------------------------------------
@@ -489,6 +510,7 @@ stoch_crm <- function(model_options = c('1', '2', '3', '4'),
   )
 
 
+<<<<<<< HEAD
   # n_iterating over sampled parameters  -----------------------------------------
 
   if(verbose) cli::cli_progress_step("Calculating collisions | {i}/{n_iter} iterations",
@@ -535,6 +557,18 @@ stoch_crm <- function(model_options = c('1', '2', '3', '4'),
     # store results
     for(option in names(collisions_i)){
       scrm_draws[[option]][i, ] <- collisions_i[[option]]
+=======
+
+    if(any(model_options == 2)){
+      scrm_outputs$opt2[i, ] <-
+        crm_opt2(
+          gen_d_y = gen_fhd_at_rotor,
+          flux_factor = flux_fct,
+          prob_single_collision = p_single_collision,
+          prop_operational = sampled_oper_prop[i, ],
+          avoidance_rate = sampledBirdParams$AvoidanceBasic[i],
+          lac_factor = L_ArrayCF)
+>>>>>>> fc6fef4cbcc9494cce39b453de6d86b6563015e3
     }
 
     if(verbose) cli::cli_progress_update()

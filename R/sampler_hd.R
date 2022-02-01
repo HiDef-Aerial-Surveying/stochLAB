@@ -13,7 +13,14 @@
 #' @export
 #'
 
+<<<<<<< HEAD
 sampler_hd <- function(dat,mode="rtnorm",n=NULL,mean=NULL,sd=NULL,lower=0,upper=NULL){
+=======
+sampler_hd <- function(dat,mode="rtnorm",n=NULL,mean=NULL,sd=NULL,lower=NULL,upper=NULL){
+
+  mean <- as.numeric(mean)
+  sd <- as.numeric(sd)
+>>>>>>> fc6fef4cbcc9494cce39b453de6d86b6563015e3
   if(!is.na(dat)){
     if(mode == "rtnorm"){
       output <- rtnorm_dmp(n = n,
