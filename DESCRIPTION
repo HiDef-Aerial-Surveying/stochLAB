@@ -18,7 +18,6 @@ Imports:
     dplyr,
     tidyr,
     pracma,
-<<<<<<< HEAD
     data.table,
     tibble,
     purrr,
@@ -27,13 +26,9 @@ Imports:
     magrittr,
     logr,
     glue,
-    stats
-RoxygenNote: 7.1.1
-=======
-    tibble,
+    stats,
     foreach
 RoxygenNote: 7.1.2
->>>>>>> fc6fef4cbcc9494cce39b453de6d86b6563015e3
 Depends: 
     R (>= 2.10)
 Suggests: 

@@ -7,10 +7,10 @@
 \format{
 A dataframe
 \describe{
-  \item{Species}{Species name}
-  \item{AvoidanceBasic}{Basic avoidance rate}
-  \item{AvoidanceBasicSD}{Basic avoidance rate SD}
-  ...
+\item{Species}{Species name}
+\item{AvoidanceBasic}{Basic avoidance rate}
+\item{AvoidanceBasicSD}{Basic avoidance rate SD}
+...
 }
 }
 \usage{

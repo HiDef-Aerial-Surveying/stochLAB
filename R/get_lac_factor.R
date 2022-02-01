@@ -20,10 +20,7 @@
 #'   wind farm, in kilometres (\eqn{w}).
 #'
 #' @return The large array correction factor to be applied
-<<<<<<< HEAD
 #'
-=======
->>>>>>> fc6fef4cbcc9494cce39b453de6d86b6563015e3
 #' @export
 get_lac_factor <- function(n_turbines,
                            rotor_radius,

@@ -2,7 +2,7 @@
 
 export("%>%")
 export(DayLength)
-<<<<<<< HEAD
+export(GetSampleProp)
 export(band_crm)
 export(crm_opt1)
 export(crm_opt2)
@@ -12,13 +12,8 @@ export(get_avg_prob_collision)
 export(get_collisions_basic)
 export(get_collisions_extended)
 export(get_lac_factor)
-export(get_pcoll_grid)
-=======
-export(GetSampleProp)
-export(crm_opt1)
-export(get_lac_factor)
 export(get_months)
->>>>>>> fc6fef4cbcc9494cce39b453de6d86b6563015e3
+export(get_pcoll_grid)
 export(get_prob_collision)
 export(get_prop_crh_fhd)
 export(initial_flux)
@@ -27,17 +22,9 @@ export(mig_stoch_crm)
 export(probability_collision_no_avoid)
 export(rbeta_dmp)
 export(rtnorm_dmp)
-export(sCRM_option1)
-<<<<<<< HEAD
-=======
-export(sCRM_option2)
-export(sCRM_option3)
-export(sampleCount_pctiles)
->>>>>>> fc6fef4cbcc9494cce39b453de6d86b6563015e3
 export(sample_turbine)
 export(sample_turbine_mCRM)
 export(sampler_hd)
-export(stochBand)
 export(stoch_crm)
 export(xrisksum2)
 import(dplyr)
@@ -45,12 +32,6 @@ import(foreach)
 import(msm)
 import(pracma)
 import(tidyr)
-importFrom(dplyr,filter)
-importFrom(dplyr,left_join)
-importFrom(dplyr,sample_n)
 importFrom(dplyr,select)
-<<<<<<< HEAD
 importFrom(magrittr,"%>%")
-=======
 importFrom(msm,rtnorm)
->>>>>>> fc6fef4cbcc9494cce39b453de6d86b6563015e3

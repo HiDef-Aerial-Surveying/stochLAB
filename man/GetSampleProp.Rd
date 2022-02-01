@@ -18,5 +18,5 @@ The number of lines that overlap with the polygons of interest
 }
 \description{
 A function to sample n number of lines from a full set of polylines and get the proportion of those linee
- that intersect the windfarm. Used to calculate the population size in migration CRM
+that intersect the windfarm. Used to calculate the population size in migration CRM
 }

@@ -19,8 +19,8 @@ get_mig_flux_factor(n_turbines, rotor_radius, wf_width, popn_est)
 hours and night hours at the wind farm site's location, in each month.
 Expected column names:
 \itemize{
- \item{\code{Day}, daylight duration, in decimal hours}
- \item{\code{Night}, night time duration, in decimal hours}
+\item{\code{Day}, daylight duration, in decimal hours}
+\item{\code{Night}, night time duration, in decimal hours}
 }}
 
 \item{noct_activity}{Nocturnal flight activity level, expressed as a #
@@ -39,7 +39,7 @@ avoiding action.
 }
 \details{
 The flux factor is used for other model calculations (e.g.
-   \code{get_rotor_transits}). Methodology and assumptions underpinning
-   \code{get_mig_flux_factor} are described in "Stage B" of
-   \href{https://www.bto.org/sites/default/files/u28/downloads/Projects/Final_Report_SOSS02_Band1ModelGuidance.pdf}{Band (2012)}
+\code{get_rotor_transits}). Methodology and assumptions underpinning
+\code{get_mig_flux_factor} are described in "Stage B" of
+\href{https://www.bto.org/sites/default/files/u28/downloads/Projects/Final_Report_SOSS02_Band1ModelGuidance.pdf}{Band (2012)}
 }

@@ -42,6 +42,6 @@ flux rate is simply the number of birds travelling through the windfarm.
 
 Changes in relation to previous top-line function \code{stoch_crm}
 \itemize{
-  \item function will run only option 1 for migratory species
+\item function will run only option 1 for migratory species
 }
 }
