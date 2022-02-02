@@ -7,7 +7,9 @@
 mig_stoch_crm(
   BirdData,
   TurbineData,
+  wf_latitude,
   CountData,
+  chord_profile = chord_prof_5MW,
   iter = 10,
   spp_name = "",
   LargeArrayCorrection = TRUE
@@ -19,6 +21,17 @@ mig_stoch_crm(
 \item{TurbineData}{A data frame. One row of the TurbineData field}
 
 \item{CountData}{A data frame. One row of the Count Data Field.}
+
+\item{chord_profile}{A data frame with the chord taper profile of the rotor
+blade. It must contain the columns:
+\itemize{
+\item \code{pp_radius}, equidistant intervals of radius at bird passage point,
+as a proportion of \code{rotor_radius}, within the range \eqn{[0, 1]}.
+\item \code{chord}, the chord width at \code{pp_radius}, as a proportion of \code{blade_width}.
+}
+
+Defaults to a generic profile for a typical modern 5MW turbine. See
+\code{\link[=chord_prof_5MW]{chord_prof_5MW()}} for details.}
 
 \item{iter}{An integer constant > 0. The number of stochastic draws to take}
 

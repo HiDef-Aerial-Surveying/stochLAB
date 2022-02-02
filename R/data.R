@@ -41,6 +41,21 @@
 
 
 
+#' Start up values for the mCRM
+#'
+#' A dataset of startup values for the app to run
+#'
+#' @format A nested list with 3 upper levels
+#' \describe{
+#'   \item{turbinepars}{Parameters for the wind farm turbines}
+#'   \item{windfarmpars}{Parameters for the wind farms themselves}
+#'   \item{speciespars}{Parameters for species}
+#'   ...
+#' }
+"startUpValues"
+
+
+
 
 #' Summarized flight height profiles from Johnston et al (2014)
 #'
@@ -90,21 +105,6 @@
 #' }
 "chord_prof_5MW"
 
-
-
-
-#' Start up values for the mCRM
-#'
-#' A dataset of startup values for the app to run
-#'
-#' @format A nested list with 3 upper levels
-#' \describe{
-#'   \item{turbinepars}{Parameters for the wind farm turbines}
-#'   \item{windfarmpars}{Parameters for the wind farms themselves}
-#'   \item{speciespars}{Parameters for species}
-#'   ...
-#' }
-"startUpValues"
 
 
 #' Bootstrap samples of generic FHDs of 25 seabird species

@@ -23,6 +23,14 @@
 #' @param TurbineData A data frame. One row of the TurbineData field
 #' @param CountData A data frame. One row of the Count Data Field.
 #' @param iter An integer constant > 0. The number of stochastic draws to take
+#' @param chord_profile A data frame with the chord taper profile of the rotor
+#'   blade. It must contain the columns:
+#'   * `pp_radius`, equidistant intervals of radius at bird passage point,
+#'    as a proportion of `rotor_radius`, within the range \eqn{[0, 1]}.
+#'   * `chord`, the chord width at `pp_radius`, as a proportion of `blade_width`.
+#'
+#'   Defaults to a generic profile for a typical modern 5MW turbine. See
+#'   [chord_prof_5MW()] for details.
 #' @param spp_name A character vector.
 #'
 #' @import msm
@@ -35,7 +43,9 @@
 mig_stoch_crm <- function(
   BirdData,
   TurbineData,
+  wf_latitude,
   CountData,
+  chord_profile = chord_prof_5MW,
   iter = 10,
   spp_name = "",
   LargeArrayCorrection = TRUE) {
@@ -48,17 +58,6 @@ mig_stoch_crm <- function(
   ## This is only for future proofing, 2021 model does not assume day hours have
   ## impact on birds
   daynight_hrs_month <- stochLAB::DayLength(TurbineData$Latitude)
-
-  # Chord taper profile based on the blade of a typical 5 MW turbine used for
-  # offshore generation. Required for `p_single_collision` function
-  chord_profile <- data.frame(
-    # radius at bird passage point, as a proportion of rotor radius (R)
-    pp_radius = seq(0.05, 1, 0.05),
-    # chord width at pp_radius, as a proportion of the maximum chord width
-    chord = c(0.73, 0.79, 0.88, 0.96, 1.00, 0.98, 0.92, 0.85, 0.80, 0.75,
-              0.70, 0.64, 0.58, 0.52, 0.47,0.41, 0.37, 0.30,0.24,0.00)
-  )
-
 
   # Initiate objects to harvest results ----------------------------------------
   sampledBirdParams <- list()
@@ -166,7 +165,6 @@ mig_stoch_crm <- function(
             prop_upwind = TurbineData$Proportionupwindflight/100,
             flap_glide = Flap_Glide,
             rotor_speed = sampTurb$RotorSpeed[i],
-            rotor_radius = sampTurb$RotorRadius[i],
             blade_width = sampTurb$BladeWidth[i],
             blade_pitch = sampTurb$Pitch[i],
             n_blades = TurbineData$Numberofblades
