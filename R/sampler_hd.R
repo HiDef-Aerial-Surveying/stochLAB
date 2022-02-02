@@ -14,26 +14,32 @@
 #'
 
 sampler_hd <- function(dat,mode="rtnorm",n=NULL,mean=NULL,sd=NULL,lower=0,upper=NULL){
-  if(!is.na(dat)){
-    if(mode == "rtnorm"){
-      output <- rtnorm_dmp(n = n,
-                           mean = mean,
-                           sd = sd, lower = lower)
-
-    }else if(mode == "rbeta"){
-      output <- rbeta_dmp(n = n,
-                          p = mean,
-                          sd = sd)
-
-    }else if(mode == "rnorm"){
-      output <- rnorm(n = n,
-                      mean = mean,
-                      sd = sd)
-    }
-
+  if(mean == 0){      ## GH addition, 2/2/22, if mean is 0, then return 0
+    output <- rep(0,n)
   }else{
-    output <- rep(dat,n)
+    if(!is.na(dat)){
+      if(mode == "rtnorm"){
+        output <- rtnorm_dmp(n = n,
+                             mean = mean,
+                             sd = sd, lower = lower)
+
+      }else if(mode == "rbeta"){
+        output <- rbeta_dmp(n = n,
+                            p = mean,
+                            sd = sd)
+
+      }else if(mode == "rnorm"){
+        output <- rnorm(n = n,
+                        mean = mean,
+                        sd = sd)
+      }
+
+    }else{
+      output <- rep(dat,n)
+    }
   }
+
+
 
   return(output)
 

@@ -180,10 +180,11 @@ mig_stoch_crm <- function(
               n_turbines = TurbineData$Numberofturbines,
               rotor_radius = sampTurb$RotorRadius[i],
               avoidance_rate = sampledBirdParams$Avoidance[i],
-              prob_single_collision = p_single_collision,
-              mean_prop_operational = sampTurb[i,paste0(bp,"_OT")],
+              avg_prob_coll = p_single_collision,
+              avg_prop_operational = sampTurb[i,paste0(bp,"_OT")],
               wf_width = TurbineData$Width
             )
+
         } else{
           # set multiplier to 1 to dismiss large array correction
           L_ArrayCF <- 1
@@ -200,10 +201,11 @@ mig_stoch_crm <- function(
         mcrm_outputs[i,bp] <- crm_opt1(
           flux_factor = flux_fct,
           prop_crh_surv = sampledBirdParams$PCH[i],
-          prob_single_collision = p_single_collision,
-          prop_operational = sampTurb[i,paste0(bp,"_OT")],
+          avg_prob_coll = p_single_collision,
+          mth_prop_oper = sampTurb[i,paste0(bp,"_OT")],
           avoidance_rate = sampledBirdParams$Avoidance[i],
           lac_factor = L_ArrayCF)
+
       }
     }
   }
