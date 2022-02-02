@@ -421,7 +421,6 @@ band_crm <- function(model_options = c('1', '2', '3', '4'),
   # STEP 5 - Calculate collisions per month under each model option
 
   band_outputs <- list()
-
   if (any(model_options == '1')){
     band_outputs$opt1 <-
       crm_opt1(

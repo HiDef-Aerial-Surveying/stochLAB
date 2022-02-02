@@ -84,6 +84,9 @@ sample_params <- function(model_options,
 
     # from truncated normal pdf
     for(i in 1:nrow(bird_dens_dt)){
+
+      ## If bird density is 0, then set the value to 0
+
       sampled_pars$dens_mth[, i] <- sampler_hd(dat = bird_dens_dt$sd[i],
                                                mode = 'rtnorm',
                                                n = n_iter,
