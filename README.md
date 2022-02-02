@@ -358,7 +358,7 @@ worksheet. The `stoch_crm()` function wraps around this function, where
 
 Please note the example runs on fictional data.
 
-```
+``` r
 # ------------------------------------------------------
 # Run with arbitrary parameter values, for illustration
 # ------------------------------------------------------
