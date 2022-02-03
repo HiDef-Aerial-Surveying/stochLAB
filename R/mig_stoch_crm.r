@@ -20,50 +20,125 @@
 #'
 #' @param n_turbines integer
 #' @param BirdData A data frame. One row of the BirdData table
+#' @param wing_span_pars A single row data frame with columns `mean` and `sd`,
+#'   the mean and standard deviation of the species wingspan, in metres. Assumed
+#'   to follow a *tnorm-lw0* distribution.
+#' @param bld_pitch_pars A single row data frame with columns `mean` and `sd`,
+#'   the mean and standard deviation of the blade pitch angle,
+#'   i.e. the angle between the blade surface and the rotor plane,
+#'   in degrees. Assumed to follow a *tnorm-lw0* distribution.
+#' @param rtn_speed_pars A single row data frame with columns `mean` and `sd`,
+#'   the mean and standard deviation of the operational rotation speed,
+#'   in revolutions per minute. Assumed to follow a *tnorm-lw0* distribution.
 #' @param TurbineData A data frame. One row of the TurbineData field
-#' @param CountData A data frame. One row of the Count Data Field.
-#' @param iter An integer constant > 0. The number of stochastic draws to take
+#' @param n_iter An integer constant > 0. The number of stochastic draws to take
 #' @param chord_profile A data frame with the chord taper profile of the rotor
 #'   blade. It must contain the columns:
 #'   * `pp_radius`, equidistant intervals of radius at bird passage point,
 #'    as a proportion of `rotor_radius`, within the range \eqn{[0, 1]}.
 #'   * `chord`, the chord width at `pp_radius`, as a proportion of `blade_width`.
-#'
 #'   Defaults to a generic profile for a typical modern 5MW turbine. See
 #'   [chord_prof_5MW()] for details.
 #' @param spp_name A character vector.
+#' @param log_file Path to log file to store session info and main model run
+#'   options. If set to NULL (default value), log file is not created.
+#' @param seed Integer, the random seed for [random number
+#'   generation][base::set.seed()], for analysis reproducibility.
 #'
-#' @import msm
-#' @import dplyr
-#' @import tidyr
-#' @import pracma
 #'
 #' @export
 #'
 mig_stoch_crm <- function(
   BirdData,
+  wing_span_pars,   ## Needs a data check
+  flt_speed_pars,   ## Needs a data check
+  body_lt_pars,     ## Needs a data check
+  prop_crh_pars,    ## Needs a data check
+  avoid_bsc_pars,   ## Needs a data check
   TurbineData,
+  n_turbines,
+  n_blades,
+  rtn_speed_pars,  ### Needs data check and params
+  bld_pitch_pars,  ### Needs data check and params
+  rtr_radius_pars, ### Needs data check and params
+  bld_width_pars,  ### Needs data check and params
+  wf_width,
   wf_latitude,
-  CountData,
+  flight_type,
+  prop_upwind,
+  popn_estim_pars,  ### Needs data check and params
   chord_profile = chord_prof_5MW,
-  iter = 10,
+  n_iter = 10,
   spp_name = "",
-  LargeArrayCorrection = TRUE) {
+  LargeArrayCorrection = TRUE,
+  log_file = NULL,
+  seed = NULL) {
+
+
+  if(verbose) cli::cli_h2("Stochastic CRM for Migratory birds")
+
+  # Setting up logger
+  if(!is.null(log_file)){
+    if(is.character(log_file) & nchar(log_file)>0){
+      logger <- TRUE
+      logger_dir <- dirname(log_file)
+      if(!dir.exists(logger_dir)){
+        dir.create(logger_dir, recursive = TRUE)
+      }
+      # Open logger for run session info
+      lf <- logr::log_open(log_file, show_notes = FALSE)
+      # Send message to log
+      logr::log_print(paste("Migration stochastic CRM run details",
+                            "---------------------------",
+                            paste0("Number of iterations: ", n_iter),
+                            #paste0("Bird density sampling: ", bird_dens_opt),
+                            #paste0("Rotation speed and blade pitch sampling: ",
+                            #       rtn_pitch_opt),
+                            #paste0("Output format: ", out_format),
+                            #paste0("Output period: ", out_period),
+                            sep = "\n"),
+                      console = FALSE)
+    }else{
+      rlang::abort("`log_file` argument must be a non-empty character string.")
+    }
+  }else{
+    if(logr::log_status() == "open") logr::log_close()
+    logger <- FALSE
+  }
+
+
+  # Input management --------------------------------------------------------
+
+  # mandatory_args <- c("flt_speed_pars",  "body_lt_pars",  "wing_span_pars",
+  #                     "noct_act_pars", "bird_dens_dt", "flight_type", "prop_upwind",
+  #                     "n_blades", "air_gap_pars", "rtr_radius_pars", "bld_width_pars",
+  #                     "trb_wind_avbl", "trb_downtime_pars", "wf_n_trbs",
+  #                     "wf_width", "wf_latitude", "tidal_offset")
+  #
+  # for(arg in mandatory_args){
+  #   is_missing <- eval(rlang::expr(missing(!!rlang::sym(arg))))
+  #   if(is_missing){
+  #     rlang::abort(paste0("Argument `", arg, "` is missing with no default."))
+  #   }
+  # }
+  #
+
+
 
   # Global variables   ---------------------------------------------------------
   model_months <- month.abb
-  n_months <- length(model_months)
+  n_months <- length(month.abb)
 
   ## get daylight hours and night hours per month based on the latitude
   ## This is only for future proofing, 2021 model does not assume day hours have
   ## impact on birds
-  daynight_hrs_month <- stochLAB::DayLength(TurbineData$Latitude)
+  daynight_hrs_month <- stochLAB::DayLength(wf_latitude)
 
   # Initiate objects to harvest results ----------------------------------------
   sampledBirdParams <- list()
 
   mcrm_outputs <- data.matrix(
-    matrix(data = NA, ncol = 3, nrow = iter,
+    matrix(data = NA, ncol = 3, nrow = n_iter,
            dimnames = list(NULL, c('PrBMigration','PoBMigration','Omigration')))
   )
 
@@ -78,73 +153,76 @@ mig_stoch_crm <- function(
   ## bird inputs
   species.dat = BirdData
 
-  species.dat$FlightNumeric <- ifelse(species.dat$Flight == 'Flapping', 1, 0)
-  Flap_Glide = ifelse (species.dat$Flight == "Flapping", 1, 2/pi)
+  flight_type <- ifelse(tolower(flight_type) == 'flapping', 1, 0)
+  Flap_Glide = ifelse (tolower(flight_type) == "flapping", 1, 2/pi)
 
   # Generate random draws of parameters  ---------------------------------------
   ## sample bird attributes
 
-  sampledBirdParams$WingSpan <- stochLAB::sampler_hd(dat = species.dat$WingspanSD,
+  # set random seed, if required, for reproducibility
+  if(!is.null(seed)){
+    set.seed(seed)
+  }
+
+
+  sampledBirdParams$WingSpan <- stochLAB::sampler_hd(dat = wing_span_pars$sd,
                                            mode = 'rtnorm',
-                                           n = iter,
-                                           mean=species.dat$Wingspan,
-                                           sd = species.dat$WingspanSD,
+                                           n = n_iter,
+                                           mean=wing_span_pars$mean,
+                                           sd = wing_span_pars$sd,
                                            lower = 0)
 
-  sampledBirdParams$BodyLength <- stochLAB::sampler_hd(dat = species.dat$BodyLengthSD,
+  sampledBirdParams$BodyLength <- stochLAB::sampler_hd(dat = body_lt_pars$sd,
                                              mode = 'rtnorm',
-                                             n = iter,
-                                             mean=species.dat$BodyLength,
-                                             sd = species.dat$BodyLengthSD,
+                                             n = n_iter,
+                                             mean = body_lt_pars$mean,
+                                             sd = body_lt_pars$sd,
                                              lower = 0)
 
 
-  sampledBirdParams$FlightSpeed <- stochLAB::sampler_hd(dat = species.dat$FlightSpeedSD,
+  sampledBirdParams$FlightSpeed <- stochLAB::sampler_hd(dat = flt_speed_pars$sd,
                                               mode = 'rtnorm',
-                                              n = iter,
-                                              mean=species.dat$FlightSpeed,
-                                              sd = species.dat$FlightSpeedSD,
+                                              n = n_iter,
+                                              mean=flt_speed_pars$mean,
+                                              sd = flt_speed_pars$sd,
                                               lower = 0)
 
   ### Sampler deactivated Nov 2021 as PCH is a point estimate
-  #sampledBirdParams$PCH <- #sampler_hd(dat = species.dat$Prop_CRH_ObsSD,
-  #mode = 'rbeta',
-  #n = iter,
-  #mean=species.dat$Prop_CRH_Obs,
-  #sd = species.dat$Prop_CRH_ObsSD)
-
-  sampledBirdParams$PCH <- rep(species.dat$PCH,iter)
+  sampledBirdParams$PCH <- rep(prop_crh_pars$mean,n_iter)
 
 
   ### Nocturnal activity set to 0 for future proofing
-  sampledBirdParams$NocturnalActivity <- rep(0,iter) #sampler_hd(dat = species.dat$Nocturnal_ActivitySD,
-  #          mode = 'rbeta',
-  #          n = iter,
-  #          mean=species.dat$Nocturnal_Activity,
-  #          sd = species.dat$Nocturnal_ActivitySD)
+  sampledBirdParams$NocturnalActivity <- rep(0,n_iter)
 
 
-  sampledBirdParams$Avoidance <- sampler_hd(dat = species.dat$AvoidanceSD,
+  sampledBirdParams$Avoidance <- sampler_hd(dat = avoid_bsc_pars$sd,
                                             mode = 'rbeta',
-                                            n = iter,
-                                            mean=species.dat$Avoidance,
-                                            sd = species.dat$AvoidanceSD)
+                                            n = n_iter,
+                                            mean=avoid_bsc_pars$mean,
+                                            sd = avoid_bsc_pars$sd)
+
+
 
 
 
   ## turbine parameters
   ## function where the row gets passed in for sampling
-  sampledTurbine <- sample_turbine_mCRM(TurbineData,BirdData,iter)
+  sampledTurbine <- sample_turbine_mCRM(TurbineData,
+                                        rtn_speed_pars = rtn_speed_pars,  ### Needs data check and params
+                                        bld_pitch_pars = bld_pitch_pars,  ### Needs data check and params
+                                        rtr_radius_pars = rtr_radius_pars, ### Needs data check and params
+                                        bld_width_pars = bld_width_pars,  ### Needs data check and params
+                                        BirdData,
+                                        n_iter)
 
 
 
   # Sample the counts -------------------------------------------------------
-
-  SampledCounts <- stochLAB::sampler_hd(dat = CountData$`Populationestimate(SD)`,
+  SampledCounts <- stochLAB::sampler_hd(dat = popn_estim_pars$sd,
                               mode = 'rtnorm',
-                              n = iter,
-                              mean=CountData$Populationestimate,
-                              sd = CountData$`Populationestimate(SD)`,
+                              n = n_iter,
+                              mean=popn_estim_pars$mean,
+                              sd = popn_estim_pars$sd,
                               lower = 0)
 
 
@@ -155,19 +233,19 @@ mig_stoch_crm <- function(
     if(ncol(sampTurb)>4){
 
 
-      for(i in 1:iter){
+      for(i in 1:n_iter){
         p_single_collision <-
           get_prob_collision(
             chord_prof = chord_profile,
             flight_speed = sampledBirdParams$FlightSpeed[i],
             body_lt = sampledBirdParams$BodyLength[i],
             wing_span = sampledBirdParams$WingSpan[i],
-            prop_upwind = TurbineData$Proportionupwindflight/100,
+            prop_upwind = prop_upwind,
             flap_glide = Flap_Glide,
             rotor_speed = sampTurb$RotorSpeed[i],
             blade_width = sampTurb$BladeWidth[i],
             blade_pitch = sampTurb$Pitch[i],
-            n_blades = TurbineData$Numberofblades
+            n_blades = n_blades
           )
 
 
@@ -177,12 +255,12 @@ mig_stoch_crm <- function(
         if (LargeArrayCorrection == TRUE) {
           L_ArrayCF <-
             get_lac_factor(
-              n_turbines = TurbineData$Numberofturbines,
+              n_turbines = n_turbines,
               rotor_radius = sampTurb$RotorRadius[i],
               avoidance_rate = sampledBirdParams$Avoidance[i],
               avg_prob_coll = p_single_collision,
               avg_prop_operational = sampTurb[i,paste0(bp,"_OT")],
-              wf_width = TurbineData$Width
+              wf_width = wf_width
             )
 
         } else{
@@ -190,9 +268,9 @@ mig_stoch_crm <- function(
           L_ArrayCF <- 1
         }
 
-        flux_fct <- get_mig_flux_factor(n_turbines = TurbineData$Numberofturbines,
+        flux_fct <- get_mig_flux_factor(n_turbines = n_turbines,
                                         rotor_radius = sampTurb$RotorRadius[i],
-                                        wf_width = TurbineData$Width,
+                                        wf_width = wf_width,
                                         popn_est = SampledCounts[i])
 
 

@@ -216,7 +216,7 @@ sample_params <- function(model_options,
 
       n_loops <- n_loops + 1
       if(n_loops > 1e5){
-        stop("Unable to randonmly generate required size of wind speed values greater
+        stop("Unable to randomly generate required size of wind speed values greater
          than the rotation speed threshold. Please check your input parameters
          for wind speed and rotation speed")
       }

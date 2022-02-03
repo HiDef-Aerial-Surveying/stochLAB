@@ -11,26 +11,32 @@
 #' @importFrom dplyr select
 #' @export
 
-sample_turbine_mCRM <- function(TurbineData,BirdData,iter){
+sample_turbine_mCRM <- function(TurbineData,
+                                rtn_speed_pars,  ### Needs data check and params
+                                bld_pitch_pars,  ### Needs data check and params
+                                rtr_radius_pars, ### Needs data check and params
+                                bld_width_pars,  ### Needs data check and params
+                                BirdData,
+                                n_iter){
 
   ### CREATE TURBINE DATA FRAME###
-  sampledTurbine = data.frame(matrix(data = 0, ncol = 4, nrow = iter))
+  sampledTurbine = data.frame(matrix(data = 0, ncol = 4, nrow = n_iter))
   names(sampledTurbine) = c("RotorRadius", "BladeWidth", "RotorSpeed", "Pitch")
 
   rotorSpeed <- numeric()
   rotorPitch <- numeric()
 
-  sampledTurbine$RotorSpeed<- rtnorm(iter, TurbineData$RotationSpeed, TurbineData$RotationSpeedSD, lower = 0)
-  sampledTurbine$Pitch<- rtnorm(iter, TurbineData$BladePitch, TurbineData$BladePitchSD, lower = 0)
+  sampledTurbine$RotorSpeed<- rtnorm(n_iter, rtn_speed_pars$mean, rtn_speed_pars$sd, lower = 0)
+  sampledTurbine$Pitch<- rtnorm(n_iter, bld_pitch_pars$mean, bld_pitch_pars$sd, lower = 0)
   #### Transform Pitch from degrees to radians, needed for Collision Risk Sheet
   sampledTurbine$Pitch = sampledTurbine$Pitch*pi / 180
 
 
   # Radius  -----------------------------------------------------------------
-  sampledTurbine$RotorRadius <- rep(TurbineData$Rotorradius,iter)
+  sampledTurbine$RotorRadius <- rep(rtr_radius_pars$mean,n_iter)
 
   # Blade width -------------------------------------------------------------
-  sampledTurbine$BladeWidth <- rep(TurbineData$Bladewidth,iter)
+  sampledTurbine$BladeWidth <- rep(bld_width_pars$mean,n_iter)
 
 
   for(bp in c('PrBMigration','PoBMigration','OMigration')){
@@ -53,8 +59,8 @@ sample_turbine_mCRM <- function(TurbineData,BirdData,iter){
       downtimenm <- paste0(bp,"_DT")
       Opttimenm <- paste0(bp,"_OT")
 
-      sampledTurbine[downtimenm] <- rtnorm(iter, TurbineData$RotationSpeed, TurbineData$RotationSpeedSD, lower = 0)/100
-      sampledTurbine[Opttimenm] <- rep(mnOpTi,iter)/100
+      sampledTurbine[downtimenm] <- rtnorm(n_iter, TurbineData$RotationSpeed, TurbineData$RotationSpeedSD, lower = 0)/100
+      sampledTurbine[Opttimenm] <- rep(mnOpTi,n_iter)/100
     }
 
   }
