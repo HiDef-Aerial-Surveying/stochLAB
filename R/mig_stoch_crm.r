@@ -16,21 +16,13 @@
 #' }
 #'
 #'
-#' @return Estimates of number of collisions per migratory season for the number of iters specified
+#' @return Estimates of number of collisions per migratory season for the n
+#'   number of iterations specified
 #'
-#' @param n_turbines integer
-#' @param BirdData A data frame. One row of the BirdData table
+#' @param n_turbines An integer. The number of turbines expected to be installed
 #' @param wing_span_pars A single row data frame with columns `mean` and `sd`,
 #'   the mean and standard deviation of the species wingspan, in metres. Assumed
 #'   to follow a *tnorm-lw0* distribution.
-#' @param bld_pitch_pars A single row data frame with columns `mean` and `sd`,
-#'   the mean and standard deviation of the blade pitch angle,
-#'   i.e. the angle between the blade surface and the rotor plane,
-#'   in degrees. Assumed to follow a *tnorm-lw0* distribution.
-#' @param rtn_speed_pars A single row data frame with columns `mean` and `sd`,
-#'   the mean and standard deviation of the operational rotation speed,
-#'   in revolutions per minute. Assumed to follow a *tnorm-lw0* distribution.
-#' @param TurbineData A data frame. One row of the TurbineData field
 #' @param n_iter An integer constant > 0. The number of stochastic draws to take
 #' @param chord_profile A data frame with the chord taper profile of the rotor
 #'   blade. It must contain the columns:
@@ -40,7 +32,7 @@
 #'   Defaults to a generic profile for a typical modern 5MW turbine. See
 #'   [chord_prof_5MW()] for details.
 #' @param spp_name A character vector.
-#' @param season_specs Only required if `out_period = "seasons"`, a data frame
+#' @param season_specs A data frame
 #'   defining the seasons for aggregating over collision estimates. It must
 #'   comprise the following columns:
 #'   * `season_id`, (unique) season identifier,
@@ -51,11 +43,11 @@
 #' @param seed Integer, the random seed for [random number
 #'   generation][base::set.seed()], for analysis reproducibility.
 #'
+#' @inheritParams sample_turbine_mCRM
 #'
 #' @export
 #'
 mig_stoch_crm <- function(
-  BirdData,
   wing_span_pars,   ## Needs a data check
   flt_speed_pars,   ## Needs a data check
   body_lt_pars,     ## Needs a data check
@@ -131,22 +123,12 @@ mig_stoch_crm <- function(
   #
 
 
-
-  # Global variables   ---------------------------------------------------------
-  model_months <- month.abb
-  n_months <- length(month.abb)
-
-  ## get daylight hours and night hours per month based on the latitude
-  ## This is only for future proofing, 2021 model does not assume day hours have
-  ## impact on birds
-  daynight_hrs_month <- stochLAB::DayLength(wf_latitude)
-
   # Initiate objects to harvest results ----------------------------------------
   sampledBirdParams <- list()
 
   mcrm_outputs <- data.matrix(
-    matrix(data = NA, ncol = 3, nrow = n_iter,
-           dimnames = list(NULL, c('PrBMigration','PoBMigration','Omigration')))
+    matrix(data = NA, ncol = nrow(season_specs), nrow = n_iter,
+           dimnames = list(NULL, season_specs$season_id))
   )
 
   # Prepare inputs  ------------------------------------------------------------
@@ -154,17 +136,21 @@ mig_stoch_crm <- function(
   ## For the migration app we make the assumption to be precautionary, that the animals are
   ## passing through the windfarm area during the day time.
   ## Thus, flux is simply a count of the number of birds passing through the area
-  ## as per the simulation outputs
 
 
-  ## bird inputs
-  species.dat = BirdData
+
+  # Calculate day length ----------------------------------------------------
+
+  ## get daylight hours and night hours per month based on the latitude
+  ## This is only for future proofing, 2021 model does not assume day hours have
+  ## impact on birds
+  daynight_hrs_month <- stochLAB::DayLength(wf_latitude)
+
+
+  # Sample bird attributes --------------------------------------------------
 
   flight_type <- ifelse(tolower(flight_type) == 'flapping', 1, 0)
   Flap_Glide = ifelse (tolower(flight_type) == "flapping", 1, 2/pi)
-
-  # Generate random draws of parameters  ---------------------------------------
-  ## sample bird attributes
 
   # set random seed, if required, for reproducibility
   if(!is.null(seed)){
@@ -194,34 +180,29 @@ mig_stoch_crm <- function(
                                               sd = flt_speed_pars$sd,
                                               lower = 0)
 
-  ### Sampler deactivated Nov 2021 as PCH is a point estimate
-  sampledBirdParams$PCH <- rep(prop_crh_pars$mean,n_iter)
-
-
-  ### Nocturnal activity set to 0 for future proofing
-  sampledBirdParams$NocturnalActivity <- rep(0,n_iter)
-
-
   sampledBirdParams$Avoidance <- sampler_hd(dat = avoid_bsc_pars$sd,
                                             mode = 'rbeta',
                                             n = n_iter,
                                             mean=avoid_bsc_pars$mean,
                                             sd = avoid_bsc_pars$sd)
 
+  ### Sampler deactivated Nov 2021 as PCH is a point estimate
+  sampledBirdParams$PCH <- rep(prop_crh_pars$mean,n_iter)
+
+  ### Nocturnal activity set to 0 for future proofing
+  sampledBirdParams$NocturnalActivity <- rep(0,n_iter)
 
 
 
-
-  ## turbine parameters
-  ## function where the row gets passed in for sampling
-  sampledTurbine <- sample_turbine_mCRM(TurbineData,
-                                        rtn_speed_pars = rtn_speed_pars,  ### Needs data check and params
-                                        bld_pitch_pars = bld_pitch_pars,  ### Needs data check and params
-                                        rtr_radius_pars = rtr_radius_pars, ### Needs data check and params
-                                        bld_width_pars = bld_width_pars,  ### Needs data check and params
-                                        BirdData,
-                                        n_iter)
-
+  # Sample the turbine parameters  ------------------------------------------
+  sampledTurbine <- sample_turbine_mCRM(rtn_speed_pars = rtn_speed_pars,
+                                  bld_pitch_pars = bld_pitch_pars,
+                                  rtr_radius_pars = rtr_radius_pars,
+                                  bld_width_pars = bld_width_pars,
+                                  season_specs = season_specs,
+                                  n_iter = n_iter,
+                                  trb_wind_avbl = trb_wind_avbl,
+                                  trb_downtime_pars = trb_downtime_pars)
 
 
   # Sample the counts -------------------------------------------------------
@@ -235,12 +216,12 @@ mig_stoch_crm <- function(
 
   ### Iterate over seasons, then over sampled parameters
 
-  for(bp in c('PrBMigration','PoBMigration','Omigration')){
+  for(bp in season_specs$season_id){
     sampTurb <- sampledTurbine %>% dplyr::select(RotorRadius,BladeWidth,RotorSpeed,Pitch,contains(bp))
     if(ncol(sampTurb)>4){
 
-
       for(i in 1:n_iter){
+        # STEP 1 - Calculate the probability of collision assuming no avoidance ----
         p_single_collision <-
           get_prob_collision(
             chord_prof = chord_profile,
@@ -255,10 +236,7 @@ mig_stoch_crm <- function(
             n_blades = n_blades
           )
 
-
-
-
-        # STEP 2 - Set up Large Array Correction Factor -----
+        # STEP 2 - Set up Large Array Correction Factor ----
         if (LargeArrayCorrection == TRUE) {
           L_ArrayCF <-
             get_lac_factor(
@@ -275,14 +253,14 @@ mig_stoch_crm <- function(
           L_ArrayCF <- 1
         }
 
+        # STEP 3 - Calculate the flux factor in the wind farm using the popn estimate ----
         flux_fct <- get_mig_flux_factor(n_turbines = n_turbines,
                                         rotor_radius = sampTurb$RotorRadius[i],
                                         wf_width = wf_width,
                                         popn_est = SampledCounts[i])
 
 
-        # Step 3 - Apply option 1 of the sCRM --------------------------------------
-
+        # Step 4 - Apply option 1 of the CRM ----
         mcrm_outputs[i,bp] <- crm_opt1(
           flux_factor = flux_fct,
           prop_crh_surv = sampledBirdParams$PCH[i],
