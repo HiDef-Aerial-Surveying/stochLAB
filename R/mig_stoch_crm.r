@@ -40,6 +40,12 @@
 #'   Defaults to a generic profile for a typical modern 5MW turbine. See
 #'   [chord_prof_5MW()] for details.
 #' @param spp_name A character vector.
+#' @param season_specs Only required if `out_period = "seasons"`, a data frame
+#'   defining the seasons for aggregating over collision estimates. It must
+#'   comprise the following columns:
+#'   * `season_id`, (unique) season identifier,
+#'   * `start_month`, name of the season's first month,
+#'   * `end_month`, name of the season's last month.
 #' @param log_file Path to log file to store session info and main model run
 #'   options. If set to NULL (default value), log file is not created.
 #' @param seed Integer, the random seed for [random number
@@ -67,6 +73,7 @@ mig_stoch_crm <- function(
   flight_type,
   prop_upwind,
   popn_estim_pars,  ### Needs data check and params
+  season_specs,
   chord_profile = chord_prof_5MW,
   n_iter = 10,
   spp_name = "",

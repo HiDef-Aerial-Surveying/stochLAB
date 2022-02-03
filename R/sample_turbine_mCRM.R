@@ -11,15 +11,16 @@
 #' @importFrom dplyr select
 #' @export
 
-sample_turbine_mCRM <- function(TurbineData,
-                                rtn_speed_pars,  ### Needs data check and params
-                                bld_pitch_pars,  ### Needs data check and params
-                                rtr_radius_pars, ### Needs data check and params
-                                bld_width_pars,  ### Needs data check and params
-                                BirdData,
-                                n_iter){
+sample_turbine_mCRM <- function(rtn_speed_pars,
+                                bld_pitch_pars,
+                                rtr_radius_pars,
+                                bld_width_pars,
+                                season_specs,
+                                n_iter = 10,
+                                windavb,
+                                dwntm){
 
-  ### CREATE TURBINE DATA FRAME###
+  ## Create an empty dataframe to store information
   sampledTurbine = data.frame(matrix(data = 0, ncol = 4, nrow = n_iter))
   names(sampledTurbine) = c("RotorRadius", "BladeWidth", "RotorSpeed", "Pitch")
 
@@ -31,7 +32,6 @@ sample_turbine_mCRM <- function(TurbineData,
   #### Transform Pitch from degrees to radians, needed for Collision Risk Sheet
   sampledTurbine$Pitch = sampledTurbine$Pitch*pi / 180
 
-
   # Radius  -----------------------------------------------------------------
   sampledTurbine$RotorRadius <- rep(rtr_radius_pars$mean,n_iter)
 
@@ -39,30 +39,26 @@ sample_turbine_mCRM <- function(TurbineData,
   sampledTurbine$BladeWidth <- rep(bld_width_pars$mean,n_iter)
 
 
-  for(bp in c('PrBMigration','PoBMigration','OMigration')){
-    if(BirdData[bp][[1]] != "NA"){
-      mnths <- get_months(c(BirdData[bp])[[1]],month.abb)
-
-      WTopTime <- foreach(currentMonth=mnths,.combine='rbind')%do%{
-        DTMean <- data.frame(TurbineData %>% dplyr::select(contains(currentMonth)) %>% dplyr::select(contains('mean')))[1,1]
-        DTSD <- data.frame(TurbineData %>% dplyr::select(contains(currentMonth)) %>% dplyr::select(contains('SD')))[1,1]
-        OpTi <- data.frame(TurbineData %>% dplyr::select(contains(currentMonth)) %>% dplyr::select(-contains('SD'), -contains('Mean')))[1,1]
-        return(data.frame(DTMean,DTSD,OpTi))
-      }
-
-      ### Calculate means
-      pooled_sd <- sqrt(mean(sapply(1:nrow(WTopTime),function(x){
-        va <- WTopTime$DTSD[x]^2
+  for(bp in 1:nrow(season_specs)){
+    if(!is.na(season_specs$start_month[bp])){
+      ## Get wind availability for all months in the season
+      windavsamp <- windavb[which(month.abb == season_specs$start_month[bp]):which(month.abb == season_specs$end_month[bp]),]
+      ## Get downtime for all months in the season
+      dwntmsamp <- dwntm[which(month.abb == season_specs$start_month[bp]):which(month.abb == season_specs$end_month[bp]),]
+      ## Calculate pooled standard deviation across the months
+      pooled_sd <- sqrt(mean(sapply(1:nrow(dwntmsamp),function(x){
+        va <- dwntmsamp$sd[x]^2
       })))
-      mnDT <- mean(WTopTime$DTMean)
-      mnOpTi <- mean(WTopTime$OpTi)
-      downtimenm <- paste0(bp,"_DT")
-      Opttimenm <- paste0(bp,"_OT")
-
-      sampledTurbine[downtimenm] <- rtnorm(n_iter, TurbineData$RotationSpeed, TurbineData$RotationSpeedSD, lower = 0)/100
+      ## Calculate mean downtime
+      mnDT <- mean(dwntmsamp$mean)
+      ## Calculate mean operational time
+      mnOpTi <- mean(windavsamp$pctg)
+      downtimenm <- paste0(season_specs$season_id[bp],"_DT")
+      Opttimenm <- paste0(season_specs$season_id[bp],"_OT")
+      sampledTurbine[downtimenm] <- rtnorm(n_iter, mnDT, pooled_sd, lower = 0)/100
       sampledTurbine[Opttimenm] <- rep(mnOpTi,n_iter)/100
     }
-
   }
+
   return(sampledTurbine)
 }
