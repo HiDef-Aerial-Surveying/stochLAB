@@ -494,7 +494,7 @@ mig_stoch_crm(
   n_iter = 1000,
   LargeArrayCorrection = TRUE,
   log_file = NULL,
-  seed = NULL,
+  seed = 1234,
   verbose = TRUE)
 
 
