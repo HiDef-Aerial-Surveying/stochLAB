@@ -154,7 +154,7 @@ mig_stoch_crm <- function(
     prop_crh_pars = prop_crh_pars,
     avoid_bsc_pars = avoid_bsc_pars,
     n_turbines = n_turbines,
-    n_blades = 3,
+    n_blades = n_blades,
     rtn_speed_pars = rtn_speed_pars,
     bld_pitch_pars = bld_pitch_pars,
     rtr_radius_pars = rtr_radius_pars,

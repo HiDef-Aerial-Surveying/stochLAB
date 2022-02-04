@@ -23,10 +23,10 @@ mig_stoch_crm(
   season_specs,
   chord_profile = chord_prof_5MW,
   n_iter = 10,
-  spp_name = "",
   LargeArrayCorrection = TRUE,
   log_file = NULL,
-  seed = NULL
+  seed = NULL,
+  verbose = TRUE
 )
 }
 \arguments{
@@ -107,14 +107,14 @@ Defaults to a generic profile for a typical modern 5MW turbine. See
 
 \item{n_iter}{An integer > 0. The number of iterations for the model simulation.}
 
-\item{spp_name}{A character vector.}
-
 \item{LargeArrayCorrection}{A boolean. Should the large array correction be calculated}
 
 \item{log_file}{Path to log file to store session info and main model run
 options. If set to NULL (default value), log file is not created.}
 
 \item{seed}{Integer, the random seed for \link[base:Random]{random number generation}, for analysis reproducibility.}
+
+\item{verbose}{boolean. TRUE for a verbose output}
 }
 \value{
 Estimates of number of collisions per migratory season for the n
