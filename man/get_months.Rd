@@ -4,7 +4,7 @@
 \alias{get_months}
 \title{Gets a list of months from a month range}
 \usage{
-get_months(Mrange, month.abb)
+get_months(Mrange)
 }
 \arguments{
 \item{Mrange}{A character string. The month range in the format "XXX - XXX"}

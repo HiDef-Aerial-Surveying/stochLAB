@@ -3,7 +3,9 @@
 #' @inheritParams band_crm
 #' @param fn a character string specifying the parent function whose inputs are being checked:
 #' * `"scrm"`: checks [stoch_crm()] inputs
-#' * `"crm"`: checks [band_crm()] input
+#' * `"crm"`: checks [band_crm()] inputs
+#' * `"mcrm"`: checks [mig_stoch_crm()] inputs
+
 validate_inputs <- function(model_options,
                             n_iter = NULL,
                             flt_speed_pars = NULL,
@@ -60,6 +62,7 @@ validate_inputs <- function(model_options,
                             out_sampled_pars = NULL,
                             out_period = NULL,
                             season_specs = NULL,
+                            popn_estim_pars = NULL,
                             fn = "scrm"){
 
   # Non-specific CRM function inputs --------------------------------------------------------
@@ -353,6 +356,45 @@ validate_inputs <- function(model_options,
         )
       }
     }
+  }
+
+
+  # MCRM specific inputs ----------------------------------------------------
+  if(fn == "mcrm"){
+
+    # ------ Bird features ------------
+    ## probability distribution parameters
+    if(!is.null(wing_span_pars)) val_pars_df(wing_span_pars)
+    if(!is.null(flt_speed_pars)) val_pars_df(flt_speed_pars)
+    if(!is.null(body_lt_pars)) val_pars_df(body_lt_pars)
+    if(!is.null(prop_crh_pars)) val_pars_df(prop_crh_pars)
+    if(!is.null(avoid_bsc_pars)) val_pars_df(avoid_bsc_pars)
+    if(!is.null(popn_estim_pars)) val_pars_df(popn_estim_pars)
+
+    # ---- Turbine features --------
+    if(!is.null(rtr_radius_pars)) val_pars_df(rtr_radius_pars)
+    if(!is.null(bld_width_pars)) val_pars_df(bld_width_pars)
+    if(!is.null(rtn_speed_pars)) val_pars_df(rtn_speed_pars)
+    if(!is.null(bld_pitch_pars)) val_pars_df(bld_pitch_pars)
+
+
+    if(!is.null(n_turbines)) val_constant(n_turbines,min=1,check_whole=TRUE)
+
+    if(!is.null(trb_wind_avbl)){
+      val_pars_df(trb_wind_avbl,
+                  dt_type = "dstn_pars",
+                  exp_colnames = c("month", "pctg"),
+                  single_row = FALSE)
+    }
+
+    if(!is.null(trb_downtime_pars)){
+      val_pars_df(trb_downtime_pars,
+                  dt_type = "dstn_pars",
+                  exp_colnames = c("month", "mean", "sd"),
+                  single_row = FALSE)
+    }
+    if(!is.null(verbose)) val_logical(verbose)
+    if(!is.null(seed)) val_constant(seed, min = 1, check_whole = TRUE)
   }
 }
 

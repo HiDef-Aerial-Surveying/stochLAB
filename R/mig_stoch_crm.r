@@ -19,11 +19,27 @@
 #' @return Estimates of number of collisions per migratory season for the n
 #'   number of iterations specified
 #'
-#' @param n_turbines An integer. The number of turbines expected to be installed
+
 #' @param wing_span_pars A single row data frame with columns `mean` and `sd`,
 #'   the mean and standard deviation of the species wingspan, in metres. Assumed
 #'   to follow a *tnorm-lw0* distribution.
-#' @param n_iter An integer constant > 0. The number of stochastic draws to take
+#' @param flt_speed_pars A single row data frame with columns `mean` and `sd`,
+#'   the mean and standard deviation of the species flying speed, in metres/sec.
+#'   Assumed to follow a Truncated Normal with lower bound at 0 (*tnorm-lw0*).
+#' @param body_lt_pars A single row data frame with columns `mean` and `sd`, the
+#'   mean and standard deviation of the species body length, in metres. Assumed
+#'   to follow a *tnorm-lw0* distribution.
+#' @param prop_crh_pars  A single row data frame with columns `mean` and `sd`.
+#'   The mean and standard deviation of the proportion of flights at
+#'   collision risk height.
+#' @param avoid_bsc_pars Single row data frame with columns
+#'   `mean` and `sd`, the mean and standard deviation of the species avoidance
+#'   rate to be used. Avoidance rate expresses the probability that a bird
+#'   flying on a collision course with a turbine will take evading action
+#'   to avoid collision, and it is assumed to follow a Beta distribution.
+#' @param n_blades An integer. The number of blades per turbine (defaults to 3)
+#' @param n_turbines An integer. The number of turbines expected to be installed
+#' @param n_iter An integer > 0. The number of iterations for the model simulation.
 #' @param chord_profile A data frame with the chord taper profile of the rotor
 #'   blade. It must contain the columns:
 #'   * `pp_radius`, equidistant intervals of radius at bird passage point,
@@ -31,47 +47,51 @@
 #'   * `chord`, the chord width at `pp_radius`, as a proportion of `blade_width`.
 #'   Defaults to a generic profile for a typical modern 5MW turbine. See
 #'   [chord_prof_5MW()] for details.
-#' @param spp_name A character vector.
 #' @param season_specs A data frame
 #'   defining the seasons for aggregating over collision estimates. It must
 #'   comprise the following columns:
 #'   * `season_id`, (unique) season identifier,
 #'   * `start_month`, name of the season's first month,
 #'   * `end_month`, name of the season's last month.
+#' @param popn_estim_pars A single row data frame with columns `mean` and `sd`.
+#'   The population estimate of the species expected to fly through the wind farm
+#'   area.
+#' @param LargeArrayCorrection A boolean. Should the large array correction be calculated
 #' @param log_file Path to log file to store session info and main model run
 #'   options. If set to NULL (default value), log file is not created.
 #' @param seed Integer, the random seed for [random number
 #'   generation][base::set.seed()], for analysis reproducibility.
+#' @param verbose boolean. TRUE for a verbose output
 #'
 #' @inheritParams sample_turbine_mCRM
-#'
+#' @inheritParams get_lac_factor
+#' @inheritParams get_prob_collision
+#' @inheritParams DayLength
 #' @export
 #'
 mig_stoch_crm <- function(
-  wing_span_pars,   ## Needs a data check
-  flt_speed_pars,   ## Needs a data check
-  body_lt_pars,     ## Needs a data check
-  prop_crh_pars,    ## Needs a data check
-  avoid_bsc_pars,   ## Needs a data check
-  TurbineData,
+  wing_span_pars,
+  flt_speed_pars,
+  body_lt_pars,
+  prop_crh_pars,
+  avoid_bsc_pars,
   n_turbines,
-  n_blades,
-  rtn_speed_pars,  ### Needs data check and params
-  bld_pitch_pars,  ### Needs data check and params
-  rtr_radius_pars, ### Needs data check and params
-  bld_width_pars,  ### Needs data check and params
+  n_blades = 3,
+  rtn_speed_pars,
+  bld_pitch_pars,
+  rtr_radius_pars,
+  bld_width_pars,
   wf_width,
   wf_latitude,
-  flight_type,
-  prop_upwind,
-  popn_estim_pars,  ### Needs data check and params
+  prop_upwind = 0.5,
+  popn_estim_pars,
   season_specs,
   chord_profile = chord_prof_5MW,
   n_iter = 10,
-  spp_name = "",
   LargeArrayCorrection = TRUE,
   log_file = NULL,
-  seed = NULL) {
+  seed = NULL,
+  verbose = TRUE) {
 
 
   if(verbose) cli::cli_h2("Stochastic CRM for Migratory birds")
@@ -107,20 +127,52 @@ mig_stoch_crm <- function(
 
 
   # Input management --------------------------------------------------------
+  if(verbose) cli::cli_h2("Checking for manditory arguments")
 
-  # mandatory_args <- c("flt_speed_pars",  "body_lt_pars",  "wing_span_pars",
-  #                     "noct_act_pars", "bird_dens_dt", "flight_type", "prop_upwind",
-  #                     "n_blades", "air_gap_pars", "rtr_radius_pars", "bld_width_pars",
-  #                     "trb_wind_avbl", "trb_downtime_pars", "wf_n_trbs",
-  #                     "wf_width", "wf_latitude", "tidal_offset")
-  #
-  # for(arg in mandatory_args){
-  #   is_missing <- eval(rlang::expr(missing(!!rlang::sym(arg))))
-  #   if(is_missing){
-  #     rlang::abort(paste0("Argument `", arg, "` is missing with no default."))
-  #   }
-  # }
-  #
+  mandatory_args <- c("flt_speed_pars",  "body_lt_pars",  "wing_span_pars",
+                      "prop_crh_pars", "avoid_bsc_pars","n_turbines",
+                      "n_blades","rtn_speed_pars", "bld_pitch_pars",
+                      "rtr_radius_pars","bld_width_pars","wf_width",
+                      "wf_latitude", "prop_upwind", "popn_estim_pars",
+                      "season_specs", "chord_profile", "n_iter", "LargeArrayCorrection")
+
+  for(arg in mandatory_args){
+    is_missing <- eval(rlang::expr(missing(!!rlang::sym(arg))))
+    if(is_missing){
+      rlang::abort(paste0("Argument `", arg, "` is missing with no default."))
+    }
+  }
+
+
+  # Validate inputs ---------------------------------------------------------
+  if(verbose) cli::cli_h2("Data validation")
+
+  validate_inputs(
+    wing_span_pars = wing_span_pars,
+    flt_speed_pars = flt_speed_pars,
+    body_lt_pars = body_lt_pars,
+    prop_crh_pars = prop_crh_pars,
+    avoid_bsc_pars = avoid_bsc_pars,
+    n_turbines = n_turbines,
+    n_blades = 3,
+    rtn_speed_pars = rtn_speed_pars,
+    bld_pitch_pars = bld_pitch_pars,
+    rtr_radius_pars = rtr_radius_pars,
+    bld_width_pars = bld_width_pars,
+    wf_width = wf_width,
+    wf_latitude = wf_latitude,
+    prop_upwind = prop_upwind,
+    popn_estim_pars = popn_estim_pars,
+    season_specs = season_specs,
+    chord_profile = chord_profile,
+    n_iter = n_iter,
+    lrg_arr_corr = LargeArrayCorrection,
+    log_file = log_file,
+    seed = seed,
+    verbose = verbose
+  )
+
+
 
 
   # Initiate objects to harvest results ----------------------------------------
@@ -148,9 +200,6 @@ mig_stoch_crm <- function(
 
 
   # Sample bird attributes --------------------------------------------------
-
-  flight_type <- ifelse(tolower(flight_type) == 'flapping', 1, 0)
-  Flap_Glide = ifelse (tolower(flight_type) == "flapping", 1, 2/pi)
 
   # set random seed, if required, for reproducibility
   if(!is.null(seed)){
