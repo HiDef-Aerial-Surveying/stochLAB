@@ -406,7 +406,7 @@ turb_oper <- data.frame(
 )
 
 
-stochLAB::band_crm(
+band_crm(
   model_options = c(1,2,3),
   flight_speed = params$flight_speed,
   body_lt = params$body_lt,
