@@ -19,11 +19,14 @@ to incorporate variability and uncertainty in the avian collision risk
 model originally developed by [Band
 (2012)](https://www.bto.org/sites/default/files/u28/downloads/Projects/Final_Report_SOSS02_Band1ModelGuidance.pdf).
 
+The `{stochLAB}` package was compiled and curated by DMP Statistics and 
+HiDef Aerial Surveying. 
+
 Code developed under `{stochLAB}` substantially re-factored and
 re-structured Masden’s (heavily script-based) implementation into a
 user-friendly, streamlined, well documented and easily distributed tool.
 Furthermore, the package lays down the code infrastructure for easier
-incorporation of new functionality, e.g. extra parameter sampling
+incorporation of new functionality, e.g. extra parameter sampling
 features, model expansions, etc.
 
 In addition, previous code underpinning core calculations for the
