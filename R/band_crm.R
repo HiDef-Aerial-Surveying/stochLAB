@@ -148,6 +148,7 @@
 #'    \item list object, if called inside `stoch_crm()`.
 #' }
 #'
+#' @example examples/band_crm_example.r
 #'
 #' @export
 band_crm <- function(model_options = c('1', '2', '3', '4'),

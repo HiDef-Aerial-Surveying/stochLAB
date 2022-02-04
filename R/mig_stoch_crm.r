@@ -1,4 +1,4 @@
-#' Stochastic migration collision risk model for a single species and one turbine scenario
+#' Stochastic migration collision risk model
 #'
 #' Run migration stochastic collision risk model for a single species and one turbine scenario
 #'
@@ -19,7 +19,6 @@
 #' @return Estimates of number of collisions per migratory season for the n
 #'   number of iterations specified
 #'
-
 #' @param wing_span_pars A single row data frame with columns `mean` and `sd`,
 #'   the mean and standard deviation of the species wingspan, in metres. Assumed
 #'   to follow a *tnorm-lw0* distribution.
@@ -68,7 +67,10 @@
 #' @inheritParams get_prob_collision
 #' @inheritParams DayLength
 #' @export
-#'
+#
+#' @example examples/mig_stoch_crm_example.r
+
+
 mig_stoch_crm <- function(
   wing_span_pars,
   flt_speed_pars,
