@@ -18,10 +18,13 @@ mig_stoch_crm(
   bld_width_pars,
   wf_width,
   wf_latitude,
+  flight_type,
   prop_upwind = 0.5,
   popn_estim_pars,
   season_specs,
   chord_profile = chord_prof_5MW,
+  trb_wind_avbl,
+  trb_downtime_pars,
   n_iter = 10,
   LargeArrayCorrection = TRUE,
   log_file = NULL,
@@ -55,10 +58,6 @@ to avoid collision, and it is assumed to follow a Beta distribution.}
 \item{n_turbines}{An integer. The number of turbines expected to be installed}
 
 \item{n_blades}{An integer. The number of blades per turbine (defaults to 3)}
-
-\item{rtn_speed_pars}{A single row data frame with columns \code{mean} and \code{sd},
-the mean and standard deviation of the operational rotation speed,
-in revolutions per minute. Assumed to follow a \emph{tnorm-lw0} distribution.}
 
 \item{bld_pitch_pars}{A single row data frame with columns \code{mean} and \code{sd},
 the mean and standard deviation of the blade pitch angle,
@@ -103,6 +102,24 @@ as a proportion of \code{rotor_radius}, within the range \eqn{[0, 1]}.
 \item \code{chord}, the chord width at \code{pp_radius}, as a proportion of \code{blade_width}.
 Defaults to a generic profile for a typical modern 5MW turbine. See
 \code{\link[=chord_prof_5MW]{chord_prof_5MW()}} for details.
+}}
+
+\item{trb_wind_avbl}{A data frame with the monthly estimates of operational
+wind availability. It must contain the columns:
+\itemize{
+\item \code{month}, (unique) month names,
+\item \code{pctg}, the percentage of time wind conditions allow for turbine operation
+per month.
+}}
+
+\item{trb_downtime_pars}{A data frame with monthly estimates of maintenance
+downtime, assumed to follow a \emph{tnorm-lw0} distribution. It
+must contain the following columns:
+\itemize{
+\item \code{month}, (unique) month names,
+\item \code{mean}, numeric, the mean percentage of time in each month when turbines
+are not operating due to maintenance,
+\item \code{sd}, the standard deviation of monthly maintenance downtime.
 }}
 
 \item{n_iter}{An integer > 0. The number of iterations for the model simulation.}

@@ -3,9 +3,6 @@
 #' Samples and aggregates appropriate data for a single wind turbine
 #'
 #'
-#' @param rtn_speed_pars A single row data frame with columns `mean` and `sd`,
-#'   the mean and standard deviation of the operational rotation speed,
-#'   in revolutions per minute. Assumed to follow a *tnorm-lw0* distribution.
 #' @param bld_pitch_pars A single row data frame with columns `mean` and `sd`,
 #'   the mean and standard deviation of the blade pitch angle,
 #'   i.e. the angle between the blade surface and the rotor plane,

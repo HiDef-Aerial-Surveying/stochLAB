@@ -16,10 +16,6 @@ sample_turbine_mCRM(
 )
 }
 \arguments{
-\item{rtn_speed_pars}{A single row data frame with columns \code{mean} and \code{sd},
-the mean and standard deviation of the operational rotation speed,
-in revolutions per minute. Assumed to follow a \emph{tnorm-lw0} distribution.}
-
 \item{bld_pitch_pars}{A single row data frame with columns \code{mean} and \code{sd},
 the mean and standard deviation of the blade pitch angle,
 i.e. the angle between the blade surface and the rotor plane,

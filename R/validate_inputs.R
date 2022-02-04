@@ -370,6 +370,7 @@ validate_inputs <- function(model_options,
     if(!is.null(prop_crh_pars)) val_pars_df(prop_crh_pars)
     if(!is.null(avoid_bsc_pars)) val_pars_df(avoid_bsc_pars)
     if(!is.null(popn_estim_pars)) val_pars_df(popn_estim_pars)
+    if(!is.null(flight_type)) val_option(flight_type, valid_opts = c("gliding", "flapping"))
 
     # ---- Turbine features --------
     if(!is.null(rtr_radius_pars)) val_pars_df(rtr_radius_pars)
@@ -395,6 +396,7 @@ validate_inputs <- function(model_options,
     }
     if(!is.null(verbose)) val_logical(verbose)
     if(!is.null(seed)) val_constant(seed, min = 1, check_whole = TRUE)
+
   }
 }
 

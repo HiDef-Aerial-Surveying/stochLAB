@@ -83,10 +83,13 @@ mig_stoch_crm <- function(
   bld_width_pars,
   wf_width,
   wf_latitude,
+  flight_type,
   prop_upwind = 0.5,
   popn_estim_pars,
   season_specs,
   chord_profile = chord_prof_5MW,
+  trb_wind_avbl,
+  trb_downtime_pars,
   n_iter = 10,
   LargeArrayCorrection = TRUE,
   log_file = NULL,
@@ -127,7 +130,7 @@ mig_stoch_crm <- function(
 
 
   # Input management --------------------------------------------------------
-  if(verbose) cli::cli_h2("Checking for manditory arguments")
+  if(verbose) cli::cli_progress_step("Checking for manditory arguments")
 
   mandatory_args <- c("flt_speed_pars",  "body_lt_pars",  "wing_span_pars",
                       "prop_crh_pars", "avoid_bsc_pars","n_turbines",
@@ -145,9 +148,11 @@ mig_stoch_crm <- function(
 
 
   # Validate inputs ---------------------------------------------------------
-  if(verbose) cli::cli_h2("Data validation")
+
+  if(verbose) cli::cli_progress_step("Data validation")
 
   validate_inputs(
+    model_options = 1,
     wing_span_pars = wing_span_pars,
     flt_speed_pars = flt_speed_pars,
     body_lt_pars = body_lt_pars,
@@ -155,6 +160,7 @@ mig_stoch_crm <- function(
     avoid_bsc_pars = avoid_bsc_pars,
     n_turbines = n_turbines,
     n_blades = n_blades,
+    flight_type = flight_type,
     rtn_speed_pars = rtn_speed_pars,
     bld_pitch_pars = bld_pitch_pars,
     rtr_radius_pars = rtr_radius_pars,
@@ -164,12 +170,14 @@ mig_stoch_crm <- function(
     prop_upwind = prop_upwind,
     popn_estim_pars = popn_estim_pars,
     season_specs = season_specs,
-    chord_profile = chord_profile,
+    chord_prof = chord_profile,
+    trb_wind_avbl = trb_wind_avbl,
+    trb_downtime_pars = trb_downtime_pars,
     n_iter = n_iter,
     lrg_arr_corr = LargeArrayCorrection,
-    log_file = log_file,
     seed = seed,
-    verbose = verbose
+    verbose = verbose,
+    fn="mcrm"
   )
 
 
@@ -198,9 +206,10 @@ mig_stoch_crm <- function(
   ## impact on birds
   daynight_hrs_month <- stochLAB::DayLength(wf_latitude)
 
-
+  if(verbose) cli::cli_progress_step("Sampling data")
   # Sample bird attributes --------------------------------------------------
 
+  Flap_Glide = ifelse (flight_type == "flapping", 1, 2/pi)
   # set random seed, if required, for reproducibility
   if(!is.null(seed)){
     set.seed(seed)
@@ -264,7 +273,7 @@ mig_stoch_crm <- function(
 
 
   ### Iterate over seasons, then over sampled parameters
-
+  if(verbose) cli::cli_progress_step("Running simulation...")
   for(bp in season_specs$season_id){
     sampTurb <- sampledTurbine %>% dplyr::select(RotorRadius,BladeWidth,RotorSpeed,Pitch,contains(bp))
     if(ncol(sampTurb)>4){
@@ -273,16 +282,17 @@ mig_stoch_crm <- function(
         # STEP 1 - Calculate the probability of collision assuming no avoidance ----
         p_single_collision <-
           get_prob_collision(
-            chord_prof = chord_profile,
             flight_speed = sampledBirdParams$FlightSpeed[i],
             body_lt = sampledBirdParams$BodyLength[i],
             wing_span = sampledBirdParams$WingSpan[i],
             prop_upwind = prop_upwind,
             flap_glide = Flap_Glide,
             rotor_speed = sampTurb$RotorSpeed[i],
+            rotor_radius = sampTurb$RotorRadius[i],
             blade_width = sampTurb$BladeWidth[i],
             blade_pitch = sampTurb$Pitch[i],
-            n_blades = n_blades
+            n_blades = n_blades,
+            chord_prof = chord_profile
           )
 
         # STEP 2 - Set up Large Array Correction Factor ----
@@ -321,6 +331,9 @@ mig_stoch_crm <- function(
       }
     }
   }
+
+  if(verbose) cli::cli_progress_step("Creating outputs")
+
   return(mcrm_outputs)
 }
 
