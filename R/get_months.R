@@ -8,7 +8,7 @@
 #' @examples
 #' get_months("Jan - Apr")
 #'
-get_months <- function(Mrange,month.abb){
+get_months <- function(Mrange){
   Mspl <- strsplit(Mrange," - ")
   Mst <- which(month.abb == Mspl[[1]][1])
   Men <- which(month.abb == Mspl[[1]][2])

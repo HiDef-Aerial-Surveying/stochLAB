@@ -5,22 +5,94 @@
 \title{Stochastic migration collision risk model for a single species and one turbine scenario}
 \usage{
 mig_stoch_crm(
-  BirdData,
-  TurbineData,
+  wing_span_pars,
+  flt_speed_pars,
+  body_lt_pars,
+  prop_crh_pars,
+  avoid_bsc_pars,
+  n_turbines,
+  n_blades = 3,
+  rtn_speed_pars,
+  bld_pitch_pars,
+  rtr_radius_pars,
+  bld_width_pars,
+  wf_width,
   wf_latitude,
-  CountData,
+  flight_type,
+  prop_upwind = 0.5,
+  popn_estim_pars,
+  season_specs,
   chord_profile = chord_prof_5MW,
-  iter = 10,
-  spp_name = "",
-  LargeArrayCorrection = TRUE
+  trb_wind_avbl,
+  trb_downtime_pars,
+  n_iter = 10,
+  LargeArrayCorrection = TRUE,
+  log_file = NULL,
+  seed = NULL,
+  verbose = TRUE
 )
 }
 \arguments{
-\item{BirdData}{A data frame. One row of the BirdData table}
+\item{wing_span_pars}{A single row data frame with columns \code{mean} and \code{sd},
+the mean and standard deviation of the species wingspan, in metres. Assumed
+to follow a \emph{tnorm-lw0} distribution.}
 
-\item{TurbineData}{A data frame. One row of the TurbineData field}
+\item{flt_speed_pars}{A single row data frame with columns \code{mean} and \code{sd},
+the mean and standard deviation of the species flying speed, in metres/sec.
+Assumed to follow a Truncated Normal with lower bound at 0 (\emph{tnorm-lw0}).}
 
-\item{CountData}{A data frame. One row of the Count Data Field.}
+\item{body_lt_pars}{A single row data frame with columns \code{mean} and \code{sd}, the
+mean and standard deviation of the species body length, in metres. Assumed
+to follow a \emph{tnorm-lw0} distribution.}
+
+\item{prop_crh_pars}{A single row data frame with columns \code{mean} and \code{sd}.
+The mean and standard deviation of the proportion of flights at
+collision risk height.}
+
+\item{avoid_bsc_pars}{Single row data frame with columns
+\code{mean} and \code{sd}, the mean and standard deviation of the species avoidance
+rate to be used. Avoidance rate expresses the probability that a bird
+flying on a collision course with a turbine will take evading action
+to avoid collision, and it is assumed to follow a Beta distribution.}
+
+\item{n_turbines}{An integer. The number of turbines expected to be installed}
+
+\item{n_blades}{An integer. The number of blades per turbine (defaults to 3)}
+
+\item{bld_pitch_pars}{A single row data frame with columns \code{mean} and \code{sd},
+the mean and standard deviation of the blade pitch angle,
+i.e. the angle between the blade surface and the rotor plane,
+in degrees. Assumed to follow a \emph{tnorm-lw0} distribution.}
+
+\item{rtr_radius_pars}{A single row data frame with columns \code{mean} and \code{sd},
+the mean and standard deviation of the radius of the rotor, in metres.
+Assumed to follow a \emph{tnorm-lw0} distribution.}
+
+\item{bld_width_pars}{A single row data frame with columns \code{mean} and \code{sd},
+the mean and standard deviation of the maximum blade width, in metres.
+Assumed to be \emph{tnorm-lw0} distribution.}
+
+\item{wf_width}{Numeric value, the approximate longitudinal width of the
+wind farm, in kilometres (\eqn{w}).}
+
+\item{wf_latitude}{A decimal value. The latitude of the centroid of the
+windfarm, in degrees.}
+
+\item{prop_upwind}{A value between 0-1 bounded as proportion of flights
+upwind - default of 0.5.}
+
+\item{popn_estim_pars}{A single row data frame with columns \code{mean} and \code{sd}.
+The population estimate of the species expected to fly through the wind farm
+area.}
+
+\item{season_specs}{A data frame
+defining the seasons for aggregating over collision estimates. It must
+comprise the following columns:
+\itemize{
+\item \code{season_id}, (unique) season identifier,
+\item \code{start_month}, name of the season's first month,
+\item \code{end_month}, name of the season's last month.
+}}
 
 \item{chord_profile}{A data frame with the chord taper profile of the rotor
 blade. It must contain the columns:
@@ -28,19 +100,42 @@ blade. It must contain the columns:
 \item \code{pp_radius}, equidistant intervals of radius at bird passage point,
 as a proportion of \code{rotor_radius}, within the range \eqn{[0, 1]}.
 \item \code{chord}, the chord width at \code{pp_radius}, as a proportion of \code{blade_width}.
-}
-
 Defaults to a generic profile for a typical modern 5MW turbine. See
-\code{\link[=chord_prof_5MW]{chord_prof_5MW()}} for details.}
+\code{\link[=chord_prof_5MW]{chord_prof_5MW()}} for details.
+}}
 
-\item{iter}{An integer constant > 0. The number of stochastic draws to take}
+\item{trb_wind_avbl}{A data frame with the monthly estimates of operational
+wind availability. It must contain the columns:
+\itemize{
+\item \code{month}, (unique) month names,
+\item \code{pctg}, the percentage of time wind conditions allow for turbine operation
+per month.
+}}
 
-\item{spp_name}{A character vector.}
+\item{trb_downtime_pars}{A data frame with monthly estimates of maintenance
+downtime, assumed to follow a \emph{tnorm-lw0} distribution. It
+must contain the following columns:
+\itemize{
+\item \code{month}, (unique) month names,
+\item \code{mean}, numeric, the mean percentage of time in each month when turbines
+are not operating due to maintenance,
+\item \code{sd}, the standard deviation of monthly maintenance downtime.
+}}
 
-\item{n_turbines}{integer}
+\item{n_iter}{An integer > 0. The number of iterations for the model simulation.}
+
+\item{LargeArrayCorrection}{A boolean. Should the large array correction be calculated}
+
+\item{log_file}{Path to log file to store session info and main model run
+options. If set to NULL (default value), log file is not created.}
+
+\item{seed}{Integer, the random seed for \link[base:Random]{random number generation}, for analysis reproducibility.}
+
+\item{verbose}{boolean. TRUE for a verbose output}
 }
 \value{
-Estimates of number of collisions per migratory season for the number of iters specified
+Estimates of number of collisions per migratory season for the n
+number of iterations specified
 }
 \description{
 Run migration stochastic collision risk model for a single species and one turbine scenario

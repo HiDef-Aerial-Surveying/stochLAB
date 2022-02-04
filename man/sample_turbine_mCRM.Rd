@@ -4,17 +4,62 @@
 \alias{sample_turbine_mCRM}
 \title{Sampling function for a single turbine in the mCRM}
 \usage{
-sample_turbine_mCRM(TurbineData, BirdData, iter)
+sample_turbine_mCRM(
+  rtn_speed_pars,
+  bld_pitch_pars,
+  rtr_radius_pars,
+  bld_width_pars,
+  season_specs,
+  n_iter = 10,
+  trb_wind_avbl,
+  trb_downtime_pars
+)
 }
 \arguments{
-\item{TurbineData}{A data frame. The Turbine data formatted as per the "TurbineData" data object}
+\item{bld_pitch_pars}{A single row data frame with columns \code{mean} and \code{sd},
+the mean and standard deviation of the blade pitch angle,
+i.e. the angle between the blade surface and the rotor plane,
+in degrees. Assumed to follow a \emph{tnorm-lw0} distribution.}
 
-\item{BirdData}{A data frame. The bird data for getting migratory seasons}
+\item{rtr_radius_pars}{A single row data frame with columns \code{mean} and \code{sd},
+the mean and standard deviation of the radius of the rotor, in metres.
+Assumed to follow a \emph{tnorm-lw0} distribution.}
 
-\item{iter}{An integer value. The number of samples to generate}
+\item{bld_width_pars}{A single row data frame with columns \code{mean} and \code{sd},
+the mean and standard deviation of the maximum blade width, in metres.
+Assumed to be \emph{tnorm-lw0} distribution.}
+
+\item{season_specs}{A data frame
+defining the seasons for aggregating over collision estimates. It must
+comprise the following columns:
+\itemize{
+\item \code{season_id}, (unique) season identifier,
+\item \code{start_month}, name of the season's first month,
+\item \code{end_month}, name of the season's last month.
+}}
+
+\item{n_iter}{An integer value. The number of samples to generate}
+
+\item{trb_wind_avbl}{A data frame with the monthly estimates of operational
+wind availability. It must contain the columns:
+\itemize{
+\item \code{month}, (unique) month names,
+\item \code{pctg}, the percentage of time wind conditions allow for turbine operation
+per month.
+}}
+
+\item{trb_downtime_pars}{A data frame with monthly estimates of maintenance
+downtime, assumed to follow a \emph{tnorm-lw0} distribution. It
+must contain the following columns:
+\itemize{
+\item \code{month}, (unique) month names,
+\item \code{mean}, numeric, the mean percentage of time in each month when turbines
+are not operating due to maintenance,
+\item \code{sd}, the standard deviation of monthly maintenance downtime.
+}}
 }
 \value{
-A data frame of all the information sampled for the turbine with nrow = iter
+A data frame of all the information sampled for the turbine with nrow = n_iter
 }
 \description{
 Samples and aggregates appropriate data for a single wind turbine

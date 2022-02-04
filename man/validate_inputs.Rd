@@ -61,6 +61,7 @@ validate_inputs(
   out_sampled_pars = NULL,
   out_period = NULL,
   season_specs = NULL,
+  popn_estim_pars = NULL,
   fn = "scrm"
 )
 }
@@ -402,7 +403,8 @@ comprise the following columns:
 \item{fn}{a character string specifying the parent function whose inputs are being checked:
 \itemize{
 \item \code{"scrm"}: checks \code{\link[=stoch_crm]{stoch_crm()}} inputs
-\item \code{"crm"}: checks \code{\link[=band_crm]{band_crm()}} input
+\item \code{"crm"}: checks \code{\link[=band_crm]{band_crm()}} inputs
+\item \code{"mcrm"}: checks \code{\link[=mig_stoch_crm]{mig_stoch_crm()}} inputs
 }}
 }
 \description{
