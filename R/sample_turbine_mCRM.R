@@ -67,10 +67,11 @@ sample_turbine_mCRM <- function(rtn_speed_pars,
 
   for(bp in 1:nrow(season_specs)){
     if(!is.na(season_specs$start_month[bp])){
+      mnths <- get_months(paste0(season_specs$start_month[bp]," - ",season_specs$end_month[bp]))
       ## Get wind availability for all months in the season
-      windavsamp <- trb_wind_avbl[which(month.abb == season_specs$start_month[bp]):which(month.abb == season_specs$end_month[bp]),]
+      windavsamp <- trb_wind_avbl %>% dplyr::filter(month %in% mnths)
       ## Get downtime for all months in the season
-      dwntmsamp <- trb_downtime_pars[which(month.abb == season_specs$start_month[bp]):which(month.abb == season_specs$end_month[bp]),]
+      dwntmsamp <- trb_downtime_pars %>% dplyr::filter(month %in% mnths)
       ## Calculate pooled standard deviation across the months
       pooled_sd <- sqrt(mean(sapply(1:nrow(dwntmsamp),function(x){
         va <- dwntmsamp$sd[x]^2

@@ -3,7 +3,7 @@
 # ------------------------------------------------------
 season_specs <- data.frame(
   season_id = c("PrBMigration", "PoBMigration", "Omigration"),
-  start_month = c("Jan", "May", "Oct"), end_month = c("Apr", "Sep", "Dec")
+  start_month = c("Mar", "May", "Oct"), end_month = c("Apr", "Sep", "Feb")
 )
 
 # wind availability
