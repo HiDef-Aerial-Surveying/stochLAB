@@ -58,17 +58,14 @@ format_months <- function(months){
 #' @param start_month character string, the name of the starting month.
 #' @param end_month character string, the name of the finishing month.
 seq_months <- function(start_month, end_month){
-
   Mst <- which(month.abb == start_month)
   Men <- which(month.abb == end_month)
   if(Mst > Men){
-    Mnths <- month.abb[c(1:Men,Mst:12)]
-    c(month.abb[Mst:12],month.abb[1:Men])
+    Mnths <- c(month.abb[Mst:12],month.abb[1:Men])
   }else{
     Mnths <- month.abb[Mst:Men]
   }
   return(Mnths)
-
 }
 
 
