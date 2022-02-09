@@ -58,28 +58,14 @@ format_months <- function(months){
 #' @param start_month character string, the name of the starting month.
 #' @param end_month character string, the name of the finishing month.
 seq_months <- function(start_month, end_month){
-
-  # convert to numeric
-  start_m <- match(start_month, month.abb)
-  end_m <- match(end_month, month.abb)
-
-  # arbitrary starting year
-  start_y <- as.numeric(format(Sys.Date(), "%Y"))
-
-  # end year
-  if(end_m > start_m) {
-    end_y <- start_y
+  Mst <- which(month.abb == start_month)
+  Men <- which(month.abb == end_month)
+  if(Mst > Men){
+    Mnths <- c(month.abb[Mst:12],month.abb[1:Men])
   }else{
-    end_y <- start_y + 1
+    Mnths <- month.abb[Mst:Men]
   }
-
-  # sequence of dates
-  date_seq <- seq(from = ISOdate(start_y, start_m, 1),
-                  to = ISOdate(end_y, end_m, 1),
-                  by = "month")
-
-  # extract months
-  format(date_seq, "%b")
+  return(Mnths)
 }
 
 

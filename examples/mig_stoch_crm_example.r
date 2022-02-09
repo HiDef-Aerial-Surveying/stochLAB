@@ -2,7 +2,7 @@
 # Run with arbitrary parameter values, for illustration
 # ------------------------------------------------------
 season_specs <- data.frame(
-  season_id = c("PrBMigration", "PoBMigration", "Omigration"),
+  season_id = c("PrBMigration", "PoBMigration"),
   start_month = c("Mar", "May", "Oct"), end_month = c("Apr", "Sep", "Feb")
 )
 
