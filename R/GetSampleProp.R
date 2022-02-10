@@ -1,6 +1,6 @@
 #' Sample lines in a windfarm area
 #'
-#' @description A function to sample n number of lines from a full set of polylines and get the proportion of those linee
+#' @description A function to sample n number of lines from a full set of polylines and get the proportion of those lines
 #'  that intersect the windfarm. Used to calculate the population size in migration CRM
 #'
 #' @param maskedlines An sf object. The full set of lines sampled within the migration corridor for a species

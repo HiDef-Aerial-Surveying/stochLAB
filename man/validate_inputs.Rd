@@ -400,6 +400,10 @@ comprise the following columns:
 \item \code{end_month}, name of the season's last month.
 }}
 
+\item{popn_estim_pars}{A single row data frame with columns \code{mean} and \code{sd}.
+The population estimate of the species expected to fly through the wind farm
+area.}
+
 \item{fn}{a character string specifying the parent function whose inputs are being checked:
 \itemize{
 \item \code{"scrm"}: checks \code{\link[=stoch_crm]{stoch_crm()}} inputs

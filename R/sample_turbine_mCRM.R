@@ -2,7 +2,8 @@
 #'
 #' Samples and aggregates appropriate data for a single wind turbine
 #'
-#'
+#' @param rtn_speed_pars A single row data frame with columns `mean` and `sd`,
+#'   the mean and standard deviation of the rotation speed.
 #' @param bld_pitch_pars A single row data frame with columns `mean` and `sd`,
 #'   the mean and standard deviation of the blade pitch angle,
 #'   i.e. the angle between the blade surface and the rotor plane,
@@ -13,7 +14,6 @@
 #' @param bld_width_pars A single row data frame with columns `mean` and `sd`,
 #'   the mean and standard deviation of the maximum blade width, in metres.
 #'   Assumed to be *tnorm-lw0* distribution.
-#'
 #' @param season_specs A data frame
 #'   defining the seasons for aggregating over collision estimates. It must
 #'   comprise the following columns:

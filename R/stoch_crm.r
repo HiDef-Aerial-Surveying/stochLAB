@@ -181,7 +181,12 @@
 #' stochastic model parameters.
 #'
 #' @example examples/stoch_crm_example.r
-#'
+#' @importFrom rlang .data
+#' @importFrom stats median
+#' @importFrom stats quantile
+#' @importFrom stats rnorm
+#' @importFrom stats runif
+#' @importFrom stats sd
 #' @export
 stoch_crm <- function(model_options = c('1', '2', '3', '4'),
                       n_iter = 1000,

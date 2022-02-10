@@ -61,11 +61,15 @@
 #' @param seed Integer, the random seed for [random number
 #'   generation][base::set.seed()], for analysis reproducibility.
 #' @param verbose boolean. TRUE for a verbose output
+#' @param flight_type A character. Either "flying" or "gliding" representing
+#'   the type of flight most commonly used by the species
 #'
 #' @inheritParams sample_turbine_mCRM
 #' @inheritParams get_lac_factor
 #' @inheritParams get_prob_collision
 #' @inheritParams DayLength
+#'
+#' @importFrom rlang .data
 #' @export
 #
 #' @example examples/mig_stoch_crm_example.r

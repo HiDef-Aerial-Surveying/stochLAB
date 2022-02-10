@@ -1,2 +1,1 @@
-utils::globalVariables(c("Bird_Data", "Turbine_Data", "Count_Data", "Flight_Data",
-                         "startUpValues", "referenceProbs"))
+utils::globalVariables(c("chord_prof_5MW", "referenceProbs"))

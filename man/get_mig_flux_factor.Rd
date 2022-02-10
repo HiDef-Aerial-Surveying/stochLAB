@@ -14,17 +14,6 @@ get_mig_flux_factor(n_turbines, rotor_radius, wf_width, popn_est)
 \item{wf_width}{An integer. The width (in km) of the}
 
 \item{popn_est}{An integer. The population estimate from the spatial line sampling technique}
-
-\item{daynight_hrs}{Two-column data frame with the total number of daylight
-hours and night hours at the wind farm site's location, in each month.
-Expected column names:
-\itemize{
-\item{\code{Day}, daylight duration, in decimal hours}
-\item{\code{Night}, night time duration, in decimal hours}
-}}
-
-\item{noct_activity}{Nocturnal flight activity level, expressed as a #
-proportion of observed levels of daytime activity (\eqn{f_night})}
 }
 \value{
 The number of bird flights potentially transiting through rotors

@@ -1,6 +1,7 @@
 #' Input validator
 #' @inheritParams stoch_crm
 #' @inheritParams band_crm
+#' @inheritParams mig_stoch_crm
 #' @param fn a character string specifying the parent function whose inputs are being checked:
 #' * `"scrm"`: checks [stoch_crm()] inputs
 #' * `"crm"`: checks [band_crm()] inputs

@@ -14,15 +14,6 @@
 #' @param rotor_radius An integer. The radius of the rotor (\eqn{R}), in metres
 #' @param wf_width An integer. The width (in km) of the
 #' @param popn_est An integer. The population estimate from the spatial line sampling technique
-#' @param daynight_hrs Two-column data frame with the total number of daylight
-#'   hours and night hours at the wind farm site's location, in each month.
-#'   Expected column names:
-#'   \itemize{
-#'    \item{\code{Day}, daylight duration, in decimal hours}
-#'    \item{\code{Night}, night time duration, in decimal hours}
-#'   }
-#' @param noct_activity Nocturnal flight activity level, expressed as a #
-#'   proportion of observed levels of daytime activity (\eqn{f_night})
 #'
 #' @return
 #' The number of bird flights potentially transiting through rotors

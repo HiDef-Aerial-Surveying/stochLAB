@@ -59,6 +59,9 @@ to avoid collision, and it is assumed to follow a Beta distribution.}
 
 \item{n_blades}{An integer. The number of blades per turbine (defaults to 3)}
 
+\item{rtn_speed_pars}{A single row data frame with columns \code{mean} and \code{sd},
+the mean and standard deviation of the rotation speed.}
+
 \item{bld_pitch_pars}{A single row data frame with columns \code{mean} and \code{sd},
 the mean and standard deviation of the blade pitch angle,
 i.e. the angle between the blade surface and the rotor plane,
@@ -77,6 +80,9 @@ wind farm, in kilometres (\eqn{w}).}
 
 \item{wf_latitude}{A decimal value. The latitude of the centroid of the
 windfarm, in degrees.}
+
+\item{flight_type}{A character. Either "flying" or "gliding" representing
+the type of flight most commonly used by the species}
 
 \item{prop_upwind}{A value between 0-1 bounded as proportion of flights
 upwind - default of 0.5.}
@@ -178,22 +184,32 @@ head(dwntm)
 
 
 mig_stoch_crm(
-  wing_span_pars = data.frame(mean = 1.08, sd = 0.04),      # Wing span in m,
-  flt_speed_pars = data.frame(mean = 7.26, sd = 1.5),       # Flight speed in m/s
-  body_lt_pars = data.frame(mean = 0.39, sd = 0.005),       # Body length in m,
-  prop_crh_pars = data.frame(mean = 0.06, sd = 0.009),      # Proportion of birds at CRH
-  avoid_bsc_pars = data.frame(mean = 0.99, sd = 0.001),     # avoidance rate
+  # Wing span in m,
+  wing_span_pars = data.frame(mean = 1.08, sd = 0.04),
+  # Flight speed in m/s
+  flt_speed_pars = data.frame(mean = 7.26, sd = 1.5),
+  # Body length in m,
+  body_lt_pars = data.frame(mean = 0.39, sd = 0.005),
+  # Proportion of birds at CRH
+  prop_crh_pars = data.frame(mean = 0.06, sd = 0.009),
+  # avoidance rate
+  avoid_bsc_pars = data.frame(mean = 0.99, sd = 0.001),
   n_turbines = 150,
   n_blades = 3,
-  rtn_speed_pars = data.frame(mean = 13.1, sd = 4),         # rotation speed in m/s of turbine blades
-  bld_pitch_pars = data.frame(mean = 3, sd = 0.3),          # pitch in degrees of turbine blades
-  rtr_radius_pars = data.frame(mean = 80, sd = 0),          # sd = 0, rotor radius is fixed
-  bld_width_pars = data.frame(mean = 8, sd = 0),            # sd = 0, blade width is fixed
+  # rotation speed in m/s of turbine blades
+  rtn_speed_pars = data.frame(mean = 13.1, sd = 4),
+  # pitch in degrees of turbine blades
+  bld_pitch_pars = data.frame(mean = 3, sd = 0.3),
+  # sd = 0, rotor radius is fixed
+  rtr_radius_pars = data.frame(mean = 80, sd = 0),
+  # sd = 0, blade width is fixed
+  bld_width_pars = data.frame(mean = 8, sd = 0),
   wf_width = 100,
   wf_latitude = 54.1,
   prop_upwind = 0.5,
   flight_type = "flapping",
-  popn_estim_pars = data.frame(mean = 21584, sd = 2023),    # population flying through windfarm,
+  # population flying through windfarm,
+  popn_estim_pars = data.frame(mean = 21584, sd = 2023),
   season_specs = season_specs,
   chord_profile = chord_prof_5MW,
   trb_wind_avbl = windavb,
