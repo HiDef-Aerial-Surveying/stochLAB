@@ -33,10 +33,10 @@ b_dens <- data.frame(
 )
 
 # flight height distribution from Johnston et al
-gen_fhd_dat <- data.frame(
-  height = Johnston_Flight_heights_SOSS$Height,
-  prop = Johnston_Flight_heights_SOSS$Gannet.est
-)
+gen_fhd_dat <- Johnston_Flight_heights_SOSS %>%
+  dplyr::filter(variable=="Gannet.est") %>%
+  dplyr::select(height,prop)
+
 
 # monthly operational time of the wind farm
 turb_oper <- data.frame(
