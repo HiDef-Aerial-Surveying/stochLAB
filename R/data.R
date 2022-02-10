@@ -1,48 +1,3 @@
-#' Bird parameters for the CRM
-#'
-#' A dataframe of species biological parameters for the model
-#'
-#' @format A dataframe
-#' \describe{
-#'   \item{Species}{Species name}
-#'   \item{AvoidanceBasic}{Basic avoidance rate}
-#'   \item{AvoidanceBasicSD}{Basic avoidance rate SD}
-#'   ...
-#' }
-"Bird_Data"
-
-
-
-#' Bird parameters for the CRM
-#'
-#' A dataframe of species biological parameters for the model
-#'
-#' @format A dataframe
-#' \describe{
-#'   \item{Species}{Species name}
-#'   \item{AvoidanceBasic}{Basic avoidance rate}
-#'   \item{AvoidanceBasicSD}{Basic avoidance rate SD}
-#'   ...
-#' }
-"Turbine_Data"
-
-
-
-#' Start up values for the mCRM
-#'
-#' A dataset of startup values for the app to run
-#'
-#' @format A nested list with 3 upper levels
-#' \describe{
-#'   \item{turbinepars}{Parameters for the wind farm turbines}
-#'   \item{windfarmpars}{Parameters for the wind farms themselves}
-#'   \item{speciespars}{Parameters for species}
-#'   ...
-#' }
-"startUpValues"
-
-
-
 
 #' Summarized flight height profiles from Johnston et al (2014)
 #'
@@ -50,19 +5,18 @@
 #' et al. (2014). Values are expressed as the proportion
 #' of birds in 1 metre height intervals.
 #'
-#' @format A data frame object with 102 columns containing the maximum likelihood,
+#' @format A data frame object with 3 columns containing the maximum likelihood,
 #' the median, and Upper/Lower confidence limits of flight height distributions.
 #' Flight height bands go from 1 - 300m ASL.
 #'
 #' \describe{
-#'   \item{Height}{Height above sea level, in metres. First element represents the
+#'   \item{height}{Height above sea level, in metres. First element represents the
 #'   0-1 meters height band, and height interval is 1 metre.}
-#'   \item{ArcticSkua.est}{Maximum likelihood estimation of the flight height distribution for Arctic Skua}
-#'   \item{ArcticSkua.lcl}{Lower confidence limit of the estimation of the flight height distribution for Arctic Skua}
-#'   \item{ArcticSkua.ucl}{Upper confidence limit of the estimation of the flight height distribution for Arctic Skua}
-#'   \item{ArcticSkua.med}{Median estimation of the flight height distribution for Arctic Skua}
-#'   ...
-#'   \item{Shag.med}{Meidan estimation of the flight height distribution for Shag}
+#'   \item{variable}{The species name and variable from Johnston et al 2014 estimates.
+#'   E.G., ArcticSkua.est is the maximum likelihood estimate from  those models.
+#'   .est = maximum likelihood, .lcl and .ucl are the lower and upper 95% CLs, and
+#'   .med is the median estimate.}
+#'   \item{prop}{The proportion of birds within the 1m flight height bands.}
 #' }
 #' @source <https://www.bto.org/our-science/wetland-and-marine/soss/projects>
 "Johnston_Flight_heights_SOSS"

@@ -5,19 +5,18 @@
 \alias{Johnston_Flight_heights_SOSS}
 \title{Summarized flight height profiles from Johnston et al (2014)}
 \format{
-A data frame object with 102 columns containing the maximum likelihood,
+A data frame object with 3 columns containing the maximum likelihood,
 the median, and Upper/Lower confidence limits of flight height distributions.
 Flight height bands go from 1 - 300m ASL.
 
 \describe{
-\item{Height}{Height above sea level, in metres. First element represents the
+\item{height}{Height above sea level, in metres. First element represents the
 0-1 meters height band, and height interval is 1 metre.}
-\item{ArcticSkua.est}{Maximum likelihood estimation of the flight height distribution for Arctic Skua}
-\item{ArcticSkua.lcl}{Lower confidence limit of the estimation of the flight height distribution for Arctic Skua}
-\item{ArcticSkua.ucl}{Upper confidence limit of the estimation of the flight height distribution for Arctic Skua}
-\item{ArcticSkua.med}{Median estimation of the flight height distribution for Arctic Skua}
-...
-\item{Shag.med}{Meidan estimation of the flight height distribution for Shag}
+\item{variable}{The species name and variable from Johnston et al 2014 estimates.
+E.G., ArcticSkua.est is the maximum likelihood estimate from  those models.
+.est = maximum likelihood, .lcl and .ucl are the lower and upper 95\% CLs, and
+.med is the median estimate.}
+\item{prop}{The proportion of birds within the 1m flight height bands.}
 }
 }
 \source{

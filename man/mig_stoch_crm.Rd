@@ -158,7 +158,7 @@ Changes in relation to previous top-line function \code{stoch_crm}
 # Run with arbitrary parameter values, for illustration
 # ------------------------------------------------------
 season_specs <- data.frame(
-  season_id = c("PrBMigration", "PoBMigration"),
+  season_id = c("PrBMigration", "PoBMigration","OMigration"),
   start_month = c("Mar", "May", "Oct"), end_month = c("Apr", "Sep", "Feb")
 )
 
