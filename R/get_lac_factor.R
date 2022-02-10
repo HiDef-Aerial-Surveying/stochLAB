@@ -29,16 +29,16 @@ get_lac_factor <- function(n_turbines,
                            avg_prop_operational,
                            wf_width){
 
-  NTurbRows = n_turbines^0.5
+  NTurbRows <- n_turbines^0.5
 
   if(NTurbRows == 0){stop("Error: There are no turbines in your WFArea, please check your input data")}
 
 
   # the collision risk for a single bird due to any one turbine (i.e. disregarding risks by other turbines)
-  CollRiskSinglePassage = n_turbines * (pi * rotor_radius^2)/(2 * rotor_radius * wf_width * 1000) *
+  CollRiskSinglePassage <- n_turbines * (pi * rotor_radius^2)/(2 * rotor_radius * wf_width * 1000) *
     avg_prob_coll * avg_prop_operational * (1-avoidance_rate)
 
-  L_ArrayCF = 1 - (NTurbRows - 1) / (2*NTurbRows) * CollRiskSinglePassage +
+  L_ArrayCF <- 1 - (NTurbRows - 1) / (2*NTurbRows) * CollRiskSinglePassage +
     (NTurbRows - 1) * (NTurbRows - 2)/(6 * NTurbRows^2) * (CollRiskSinglePassage ^2)
 
 

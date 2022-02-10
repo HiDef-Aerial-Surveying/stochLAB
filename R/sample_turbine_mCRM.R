@@ -47,8 +47,8 @@ sample_turbine_mCRM <- function(rtn_speed_pars,
                                 trb_downtime_pars){
 
   ## Create an empty dataframe to store information
-  sampledTurbine = data.frame(matrix(data = 0, ncol = 4, nrow = n_iter))
-  names(sampledTurbine) = c("RotorRadius", "BladeWidth", "RotorSpeed", "Pitch")
+  sampledTurbine <- data.frame(matrix(data = 0, ncol = 4, nrow = n_iter))
+  names(sampledTurbine) <- c("RotorRadius", "BladeWidth", "RotorSpeed", "Pitch")
 
   rotorSpeed <- numeric()
   rotorPitch <- numeric()
@@ -56,7 +56,7 @@ sample_turbine_mCRM <- function(rtn_speed_pars,
   sampledTurbine$RotorSpeed<- rtnorm(n_iter, rtn_speed_pars$mean, rtn_speed_pars$sd, lower = 0)
   sampledTurbine$Pitch<- rtnorm(n_iter, bld_pitch_pars$mean, bld_pitch_pars$sd, lower = 0)
   #### Transform Pitch from degrees to radians, needed for Collision Risk Sheet
-  sampledTurbine$Pitch = sampledTurbine$Pitch*pi / 180
+  sampledTurbine$Pitch <- sampledTurbine$Pitch*pi / 180
 
   # Radius  -----------------------------------------------------------------
   sampledTurbine$RotorRadius <- rep(rtr_radius_pars$mean,n_iter)

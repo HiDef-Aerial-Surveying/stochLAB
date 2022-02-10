@@ -14,11 +14,11 @@
 #' @param xinc numeric
 #'
 #' @export
-xrisksum2 = function (y, xinc, direction, pars) {
+xrisksum2 <- function (y, xinc, direction, pars) {
 
-  xmax = (1- y * y) ^ 0.5
+  xmax <- (1- y * y) ^ 0.5
 
-  imax = as.integer (xmax/xinc)
+  imax <- as.integer (xmax/xinc)
 
   # avoid repeating calcs - once here for use later
   pcollxy_imax <- pcollxy (imax * xinc, y, direction, pars)
@@ -27,14 +27,14 @@ xrisksum2 = function (y, xinc, direction, pars) {
   pcollxy_0 <- pcollxy(0, y, direction, pars)
 
   #
-  risk = (pcollxy_imax/2 + pcollxy_xmax/2) * (xmax - imax * xinc)
-  risk2 = risk + (pcollxy_0/2 + pcollxy_imax/2) * xinc
+  risk <- (pcollxy_imax/2 + pcollxy_xmax/2) * (xmax - imax * xinc)
+  risk2 <- risk + (pcollxy_0/2 + pcollxy_imax/2) * xinc
 
   # loop over k
   for (k in 1: (imax - 1)) {
 
 
-    risk2 = risk2 + pcollxy(k*xinc, y, direction, pars) * xinc
+    risk2 <- risk2 + pcollxy(k*xinc, y, direction, pars) * xinc
 
 
   } # end of k loop
@@ -55,9 +55,9 @@ xrisksum2 = function (y, xinc, direction, pars) {
 #' sampledBirdParams `[ith row]`
 #' @param x,y,direction,pars numeric
 
-pcollxy = function(x, y, direction, pars) {
+pcollxy <- function(x, y, direction, pars) {
 
-  r = (x * x + y * y) ^ 0.5
+  r <- (x * x + y * y) ^ 0.5
 
   #if(r > 1) browser()
 
@@ -92,21 +92,21 @@ pcollxy = function(x, y, direction, pars) {
 #' @param blade_width,rotor_speed numeric TODO
 #' @param blade_pitch,flight_type_num numeric TODO
 #' @param wing_span,flight_speed,body_lt,n_blades numeric TODO
-pcoll = function (r, phi, direction, rotor_radius, blade_width, rotor_speed,
+pcoll <- function (r, phi, direction, rotor_radius, blade_width, rotor_speed,
                   blade_pitch, flight_type_num, wing_span, flight_speed,
                   body_lt, n_blades) {
 
-  inputRad = round(seq(0,1,0.05),2)
-  inputCirc = c(0.69,0.73,0.79,0.88,0.96,1,0.98,0.92,0.85,0.8,0.75,0.7,0.64,0.58,0.52,0.47,0.41,0.37,0.3,0.24,0)
+  inputRad <- round(seq(0,1,0.05),2)
+  inputCirc <- c(0.69,0.73,0.79,0.88,0.96,1,0.98,0.92,0.85,0.8,0.75,0.7,0.64,0.58,0.52,0.47,0.41,0.37,0.3,0.24,0)
 
   #cell_val <- ifelse (r > 1, 21, which(inputRad == (round(ceiling(r*100)/5) * 5)/100) ) # ERROR!
   cell_val <- ifelse (r > 1, 21, which(inputRad == round(ceiling(r/0.05)*0.05, 2)))
-  upper = inputRad[cell_val]
-  lower = inputRad[cell_val - 1]
+  upper <- inputRad[cell_val]
+  lower <- inputRad[cell_val - 1]
 
-  p = (r - lower) / (upper-lower)
+  p <- (r - lower) / (upper-lower)
 
-  c = inputCirc[cell_val-1] + p * (inputCirc[cell_val] - inputCirc[cell_val-1])
+  c <- inputCirc[cell_val-1] + p * (inputCirc[cell_val] - inputCirc[cell_val-1])
 
   radius <- rotor_radius * r
   chord <- blade_width * c

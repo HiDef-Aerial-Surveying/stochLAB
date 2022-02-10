@@ -21,8 +21,8 @@ sample_turbine <- function(TurbineData = TurbineData,
                            iter=iter){
     ### GH Created function to take in a single row from the Turbine data (1 turbine at a time)
     ### CREATE TURBINE DATA FRAME###
-    sampledTurbine = data.frame(matrix(data = 0, ncol = 18, nrow = iter))
-    names(sampledTurbine) = c("RotorRadius", "HubHeight", "BladeWidth", "WindSpeed", "RotorSpeed", "Pitch", ### BC CHANGE ### -- windSpeed added
+    sampledTurbine <- data.frame(matrix(data = 0, ncol = 18, nrow = iter))
+    names(sampledTurbine) <- c("RotorRadius", "HubHeight", "BladeWidth", "WindSpeed", "RotorSpeed", "Pitch", ### BC CHANGE ### -- windSpeed added
                               as.vector(sapply(month.abb,function(x)paste0(x,"Op"))))  ### GH change -- streamlined to an sapply instead of a hard-coded vector
 
     rotorSpeed <- numeric()
@@ -61,15 +61,15 @@ sample_turbine <- function(TurbineData = TurbineData,
       sampledTurbine$RotorSpeed <- rotorSpeed[randomSample]
       # Pitch
       sampledTurbine$Pitch <- rotorPitch[randomSample]
-      sampledTurbine$Pitch = sampledTurbine$Pitch*pi / 180 #### Transform Pitch from degrees to radians, needed for Collision Risk Sheet
+      sampledTurbine$Pitch <- sampledTurbine$Pitch*pi / 180 #### Transform Pitch from degrees to radians, needed for Collision Risk Sheet
 
     }else{
       if(TurbineData$RotorSpeedAndPitch_SimOption == "probDist"){
         # Rotor speed ### GH - Removed these custom functions as they were all wrappers for the same function
         sampledTurbine$RotorSpeed<- rtnorm(iter, TurbineData$RotationSpeed, TurbineData$RotationSpeedSD, lower = 0)
         # Pitch ### GH - Removed these custom functions as they were all wrappers for the same function
-        sampledTurbine$Pitch<- rtnorm(iter, TurbineData$Pitch, TurbineData$PitchSD, lower = 0)
-        sampledTurbine$Pitch = sampledTurbine$Pitch*pi / 180 #### Transform Pitch from degrees to radians, needed for Collision Risk Sheet
+        sampledTurbine$Pitch <- rtnorm(iter, TurbineData$Pitch, TurbineData$PitchSD, lower = 0)
+        sampledTurbine$Pitch <- sampledTurbine$Pitch*pi / 180 #### Transform Pitch from degrees to radians, needed for Collision Risk Sheet
       }
     }
 

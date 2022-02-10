@@ -17,12 +17,12 @@ large_array_correction <- function(NTurbines=NTurbines,
                                    MeanOperational=MeanOperational,
                                    WFWidth=WFWidth){
 
-  NTurbRows = NTurbines ^ 0.5
+  NTurbRows <- NTurbines ^ 0.5
 
-  CollRiskSinglePassage = NTurbines * (pi * sampledTurbine$RotorRadius^2)/(2 * sampledTurbine$RotorRadius * WFWidth * 1000) *
+  CollRiskSinglePassage <- NTurbines * (pi * sampledTurbine$RotorRadius^2)/(2 * sampledTurbine$RotorRadius * WFWidth * 1000) *
     (P_Collision/100) * (MeanOperational/100) * (1-sampledBirdParams$AvoidanceBasic)
 
-  L_ArrayCF = 1 - (NTurbRows - 1) / (2*NTurbRows) * CollRiskSinglePassage +
+  L_ArrayCF <- 1 - (NTurbRows - 1) / (2*NTurbRows) * CollRiskSinglePassage +
     (NTurbRows - 1) * (2*NTurbRows)/(6 * NTurbRows^2) * (CollRiskSinglePassage ^2)
 
   return(L_ArrayCF)

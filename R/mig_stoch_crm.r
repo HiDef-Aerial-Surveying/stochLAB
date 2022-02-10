@@ -215,7 +215,7 @@ mig_stoch_crm <- function(
   if(verbose) cli::cli_progress_step("Sampling data")
   # Sample bird attributes --------------------------------------------------
 
-  Flap_Glide = ifelse (flight_type == "flapping", 1, 2/pi)
+  Flap_Glide <- ifelse (flight_type == "flapping", 1, 2/pi)
   # set random seed, if required, for reproducibility
   if(!is.null(seed)){
     set.seed(seed)

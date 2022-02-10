@@ -96,7 +96,7 @@ get_avg_prob_collision <- function(flight_speed,
   Total_Down_Wind_P <- 2 * (sum(chord_prof$pp_radius[1:(lt_p-1)] * Down_P[1:(lt_p-1)]) +
                               Down_P[lt_p]/2) * intgr_int
 
-  P_Collision = (prop_upwind * Total_Up_Wind_P) + ((1-prop_upwind) * Total_Down_Wind_P)
+  P_Collision <- (prop_upwind * Total_Up_Wind_P) + ((1-prop_upwind) * Total_Down_Wind_P)
 
   P_Collision
 }

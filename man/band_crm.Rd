@@ -167,9 +167,9 @@ the function is called:
 }
 }
 \description{
-Core function of the Collision Risk Model (CRM). Calculates the expected number of
-in-flight collisions per month of a seabird species on a given offshore wind
-farm, for a choice of model options.
+Core function of the Collision Risk Model (CRM). Calculates the expected
+number of in-flight collisions per month of a seabird species on a given
+offshore windfarm, for a choice of model options.
 
 Calculations are equivalent to those performed on the original CRM
 \href{https://www.bto.org/sites/default/files/u28/downloads/Projects/Final_Report_SOSS02_Band2Tool.xlsm}{spreadsheet},
@@ -225,7 +225,7 @@ simulation loop to maximize performance. \item Furthermore,
 \section{Code revision and optimization}{
 
 
-Core code performing Band calculations in \href{http://www.scotland.gov.uk/Resource/0048/00486433.pdf}{Masden (2015)} implementation
+Core code performing Band calculations in \href{https://www.gov.scot/publications/scottish-marine-freshwater-science-vol-6-14-developing-avian-collision/}{Masden (2015)} implementation
 was substantially re-factored, re-structured and streamlined to conform with
 conventional R packages requirements.
 

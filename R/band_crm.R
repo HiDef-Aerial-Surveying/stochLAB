@@ -1,9 +1,9 @@
 #' Collision risk model, for a single species and one turbine scenario
 #'
 #' @description
-#' Core function of the Collision Risk Model (CRM). Calculates the expected number of
-#' in-flight collisions per month of a seabird species on a given offshore wind
-#' farm, for a choice of model options.
+#' Core function of the Collision Risk Model (CRM). Calculates the expected
+#' number of in-flight collisions per month of a seabird species on a given
+#' offshore windfarm, for a choice of model options.
 #'
 #' Calculations are equivalent to those performed on the original CRM
 #' [spreadsheet](https://www.bto.org/sites/default/files/u28/downloads/Projects/Final_Report_SOSS02_Band2Tool.xlsm),
@@ -127,7 +127,7 @@
 #' @section Code revision and optimization:
 #'
 #' Core code performing Band calculations in [Masden
-#' (2015)](http://www.scotland.gov.uk/Resource/0048/00486433.pdf) implementation
+#' (2015)](https://www.gov.scot/publications/scottish-marine-freshwater-science-vol-6-14-developing-avian-collision/) implementation
 #' was substantially re-factored, re-structured and streamlined to conform with
 #' conventional R packages requirements.
 #'

@@ -17,11 +17,11 @@ initial_flux <- function(NTurbines=NTurbines,
                          TPower=TPower,
                          hours=hours){
 
-  TotalFrontalArea = NTurbines * pi * sampledTurbine$RotorRadius^2
+  TotalFrontalArea <- NTurbines * pi * sampledTurbine$RotorRadius^2
 
   #### Calculate the total number of birds passing through the wind farm in each month
   for (h in 1:nrow(hours)) {
-    hours$Flux[h] = sampledBirdParams$FlightSpeed * sampledSpeciesCount[, h]/ (2 * sampledTurbine$RotorRadius) * TotalFrontalArea *
+    hours$Flux[h] <- sampledBirdParams$FlightSpeed * sampledSpeciesCount[, h]/ (2 * sampledTurbine$RotorRadius) * TotalFrontalArea *
       (hours$Day[h] + sampledBirdParams$NocturnalActivity * hours$Night[h]) * 3600/1000000
   }
   return(hours)

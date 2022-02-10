@@ -1,39 +1,43 @@
-Package: stochLAB
 Type: Package
+Package: stochLAB
 Title: Stochastic Collision Risk Model
 Version: 0.3.1
 Authors@R: c(
-    person("Bruno", "Caneco", email = "bruno@dmpstats.com", role = c("aut", "cre")),
-    person("Grant", "Humphries", email = "grant.humphries@hidefsurveying.co.uk", role = c("aut")),
+    person("Grant", "Humphries", , "grant.humphries@hidefsurveying.co.uk", role = c("aut", "cre")),
+    person("Bruno", "Caneco", , "bruno@dmpstats.com", role = "aut"),
     person("Marine Scotland", role = c("fnd", "cph")),
     person("HiDef", role = "cph"),
-    person("DMPstats", role = "cph"))
-Description: Tool for running Collision Risk Models for seabirds on offshore wind farms.
+    person("DMPstats", role = "cph")
+  )
+Description: Tool for running Collision Risk Models for seabirds on
+    offshore wind farms.
 License: GPL (>= 3) + file LICENSE
-Encoding: UTF-8
-LazyData: true
-LazyDataCompression: bzip2
-Imports: 
-    msm,
-    dplyr,
-    tidyr,
-    pracma,
-    data.table,
-    tibble,
-    purrr,
-    cli,
-    rlang,
-    magrittr,
-    logr,
-    glue,
-    stats,
-    foreach
-RoxygenNote: 7.1.2
+URL: www.github.com/HiDef-Aerial-Surveying/stochLAB
+BugReports: www.github.com/HiDef-Aerial-Surveying/stochLAB/issues
 Depends: 
     R (>= 2.10)
+Imports: 
+    cli,
+    data.table,
+    dplyr,
+    foreach,
+    glue,
+    logr,
+    magrittr,
+    msm,
+    pracma,
+    purrr,
+    rlang,
+    stats,
+    tibble,
+    tidyr
 Suggests: 
     spelling,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
-Roxygen: list(markdown = TRUE)
+Encoding: UTF-8
 Language: en-GB
+LazyData: true
+LazyDataCompression: bzip2
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.2

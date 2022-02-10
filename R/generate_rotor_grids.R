@@ -82,7 +82,7 @@ generate_rotor_grids <- function(yinc = 0.05, xinc = 0.05, chord_prof) {
     upper <- chord_prof$pp_radius[cell_val]
     lower <- chord_prof$pp_radius[cell_val - 1]
 
-    p = (r - lower) / (upper-lower)
+    p <- (r - lower) / (upper-lower)
 
     # linearly interpolate the chord at current r
     chord_at_r <- chord_prof$chord[cell_val-1] +
