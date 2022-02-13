@@ -269,15 +269,20 @@ sample_params <- function(model_options,
     sampled_pars$prop_crh <- NULL
   }
 
-
-
-
   ## Flight height distributions, for Options 2, 3, and 4 ----------------------
   if(any(model_options %in% c('2', '3'))){
     if(!is.null(gen_fhd_boots)){
-      sampled_pars$gen_fhd <- data.matrix(
-        gen_fhd_boots[, sample(2:ncol(gen_fhd_boots), n_iter, replace = TRUE)]
-      )
+      ### A little hack in case a user wants to use a single bootstrap replicate
+      ### for testing
+      if(ncol(gen_fhd_boots) == 2){
+        sampled_pars$gen_fhd <- data.matrix(
+          gen_fhd_boots[, sample(c(2,2), n_iter, replace = TRUE)]
+        )
+      }else if(ncol(gen_fhd_boots)>2){
+        sampled_pars$gen_fhd <- data.matrix(
+          gen_fhd_boots[, sample(2:ncol(gen_fhd_boots), n_iter, replace = TRUE)]
+        )
+      }
     } else {
       stop("`gen_fhd_boots` argument is NULL while model options 2 and/or 3 are",
            " requested in `model_options`.\n",

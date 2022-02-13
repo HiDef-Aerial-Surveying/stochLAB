@@ -493,7 +493,6 @@ stoch_crm <- function(model_options = c('1', '2', '3', '4'),
     lrg_arr_corr = lrg_arr_corr
   )
 
-
   # n_iterating over sampled parameters  -----------------------------------------
 
   if(verbose) cli::cli_progress_step("Calculating collisions | {i}/{n_iter} iterations",
