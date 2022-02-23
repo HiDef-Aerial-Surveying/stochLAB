@@ -12,8 +12,6 @@ Authors@R: c(
 Description: Tool for running Collision Risk Models for seabirds on
     offshore wind farms.
 License: GPL (>= 3) + file LICENSE
-URL: www.github.com/HiDef-Aerial-Surveying/stochLAB
-BugReports: www.github.com/HiDef-Aerial-Surveying/stochLAB/issues
 Depends: 
     R (>= 2.10)
 Imports: 
@@ -35,6 +33,8 @@ Suggests:
     spelling,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
+URL: www.github.com/HiDef-Aerial-Surveying/stochLAB
+BugReports: www.github.com/HiDef-Aerial-Surveying/stochLAB/issues
 Encoding: UTF-8
 Language: en-GB
 LazyData: true
