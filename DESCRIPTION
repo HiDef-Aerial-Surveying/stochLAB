@@ -13,7 +13,7 @@ Description: Tool for running Collision Risk Models for seabirds on
     offshore wind farms.
 License: GPL (>= 3) + file LICENSE
 Depends: 
-    R (>= 2.10)
+    R (>= 4.0)
 Imports: 
     cli,
     data.table,
@@ -30,14 +30,16 @@ Imports:
     tibble,
     tidyr
 Suggests: 
+    knitr,
     spelling,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
-URL: www.github.com/HiDef-Aerial-Surveying/stochLAB
-BugReports: www.github.com/HiDef-Aerial-Surveying/stochLAB/issues
 Encoding: UTF-8
 Language: en-GB
 LazyData: true
 LazyDataCompression: bzip2
 Roxygen: list(markdown = TRUE)
+URL: https://www.github.com/HiDef-Aerial-Surveying/stochLAB
+BugReports: https://www.github.com/HiDef-Aerial-Surveying/stochLAB/issues
 RoxygenNote: 7.1.2
+VignetteBuilder: knitr
