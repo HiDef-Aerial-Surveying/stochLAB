@@ -7,6 +7,8 @@
 #'   windfarm, in degrees.
 #' @return data frame with total number of daylight hours and night hours in each
 #' month at the specified latitude.
+#' @examples
+#'     x <- DayLength(54.6)
 #'
 #' @export
 DayLength <- function(wf_latitude){
