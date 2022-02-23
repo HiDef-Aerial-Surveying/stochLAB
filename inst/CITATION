@@ -1,0 +1,17 @@
+citHeader("To cite stochLAB in publications use:")
+
+citEntry(entry = "Manual",
+  title        = "Estimating bird collisions at offshore windfarms with {stochLAB}",
+  author       = personList(as.person("Bruno Caneco"),
+                   as.person("Grant Humphries"),
+                   as.person("Aonghais Cook"),
+                   as.person("Elizabeth Masden")),
+  institution  = "Marine Scotland Science",
+  year         = "2022",
+  url          = "https://hidef-aerial-surveying.github.io/stochLAB",
+
+  textVersion  =
+  paste("Bruno Caneco, Grant Humphries, Aonghais Cook, Elizabeth Masden (2022).",
+        "Estimating bird collisions at offshore windfarms with stochLAB",
+        "URL https://hidef-aerial-surveying.github.io/stochLAB.")
+)
