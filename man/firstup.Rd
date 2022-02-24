@@ -12,3 +12,6 @@ firstup(x)
 \description{
 Upper-case conversion of the first character of a string
 }
+\examples{
+   firstup("hello")
+}

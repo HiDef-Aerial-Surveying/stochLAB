@@ -18,3 +18,7 @@ month at the specified latitude.
 Taken from Forsythe et al.(1995) A model comparison for daylength as a
 function of latitude and day of year.  Ecological Modelling. 80: 87 - 95
 }
+\examples{
+    x <- DayLength(54.6)
+
+}

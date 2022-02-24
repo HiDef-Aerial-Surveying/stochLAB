@@ -13,3 +13,6 @@ if parent frame is the Global environment.
 \description{
 Helper to get the name of the parent function.
 }
+\examples{
+    parent_fn_name()
+}

@@ -30,6 +30,7 @@ Imports:
     tibble,
     tidyr
 Suggests: 
+    rmarkdown,
     knitr,
     spelling,
     testthat (>= 3.0.0)

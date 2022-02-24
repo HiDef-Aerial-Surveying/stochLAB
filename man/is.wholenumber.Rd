@@ -14,3 +14,6 @@ is.wholenumber(x, tol = .Machine$double.eps^0.5)
 \description{
 check if a number is whole
 }
+\examples{
+    is.wholenumber(2)
+}

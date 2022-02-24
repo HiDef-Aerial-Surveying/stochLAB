@@ -1,17 +1,21 @@
 ---
-title: "How to run the stochLAB functions"
-output: html_document
+title: "Running stochLAB"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Running_stochLAB}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
-
-<!-- README.md is generated from README.Rmd. Please edit that file -->
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>",
-  fig.path = "../man/figures/README-",
-  out.width = "100%"
+  comment = "#>"
 )
+```
+
+```{r setup}
+library(stochLAB)
 ```
 
 
@@ -68,8 +72,6 @@ seabird species and one turbine/wind-farm scenario, with fictional input
 parameter data.
 
 ```r
-library(stochLAB)
-
 # ------------------------------------------------------
 # Setting some of the required inputs upfront
 
@@ -164,8 +166,6 @@ species and wind-farm/turbines features.
 Please note the example runs on fictional data.
 
 ```r
-library(stochLAB)
-
 # --------------------------------------------------------- #
 # ----      Reshaping into list-column data frames       ----
 # --------------------------------------------------------- #
@@ -445,4 +445,3 @@ stochLAB::band_crm(
   lrg_arr_corr = params$lrg_arr_corr
   )
 ```
-

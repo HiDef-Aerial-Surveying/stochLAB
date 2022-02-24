@@ -7,10 +7,13 @@
 seq_months(start_month, end_month)
 }
 \arguments{
-\item{start_month}{character string, the name of the starting month.}
+\item{start_month}{character string, the three-letter name of the starting month.}
 
-\item{end_month}{character string, the name of the finishing month.}
+\item{end_month}{character string, the three-letter name of the finishing month.}
 }
 \description{
 Generate sequence of months
+}
+\examples{
+   seq_months("Jan", "Apr")
 }

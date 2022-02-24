@@ -17,3 +17,6 @@ a numeric value
 \description{
 Calculate the coefficient of variation of a single value
 }
+\examples{
+ CV(mean=10,sd=3)
+}

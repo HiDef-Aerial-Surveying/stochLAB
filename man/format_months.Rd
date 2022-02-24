@@ -12,3 +12,6 @@ format_months(months)
 \description{
 Formats a character vector with month names to their 3-letter abbreviation
 }
+\examples{
+   format_months(c("Jan","Feb"))
+}

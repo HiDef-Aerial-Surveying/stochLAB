@@ -15,6 +15,7 @@
 #'
 #' @return a numeric vector, with random draws of the approximated distribution
 #' underpinning the provided quantiles
+#' @export
 #' @examples
 #'  sample_qtls(10,c(0.1,0.2,0.3),qtls=c(0.05,0.1,0.95))
 sample_qtls <- function(n, probs, qtls){
@@ -32,8 +33,9 @@ sample_qtls <- function(n, probs, qtls){
 #'
 #' @param mean numeric, mean of the random variable
 #' @param sd numeric, standard deviation of the random variable
+#' @export
 #' @examples
-#'   CV(mean=10,sd=3)
+#'  CV(mean=10,sd=3)
 CV <- function(mean, sd){
   (sd/mean)*100
 }
@@ -95,10 +97,7 @@ parent_fn_name <- function(){
 }
 
 
-#' Upper-case conversion of the first character of a string
-#' @param x a character string
-#' @examples
-#'    firstup("hello")
+### Upper-case conversion of the first character of a string
 firstup <- function(x) {
   substr(x, 1, 1) <- toupper(substr(x, 1, 1))
   x

@@ -28,3 +28,6 @@ random probabilities from a uniform distribution and interpolate (cubic)
 the count samples from the percentiles provided by the user (taken as the
 empirical cumulative density function)
 }
+\examples{
+ sample_qtls(10,c(0.1,0.2,0.3),qtls=c(0.05,0.1,0.95))
+}
