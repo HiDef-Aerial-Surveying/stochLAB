@@ -25,38 +25,15 @@ sample_qtls <- function(n, probs, qtls){
 }
 
 
-
-#' Coefficient of Variation
-#'
-#' Calculate the coefficient of variation of a single value
-#' @return a numeric value
-#'
-#' @param mean numeric, mean of the random variable
-#' @param sd numeric, standard deviation of the random variable
-#' @export
-#' @examples
-#'  CV(mean=10,sd=3)
-CV <- function(mean, sd){
-  (sd/mean)*100
-}
-
-
 # The inverse of %in%, returning elements absent from a vector
 "%nin%" <- Negate("%in%")
 
 
-#' Format month names
-#'
-#' Formats a character vector with month names to their 3-letter abbreviation
-#'
-#' @param months a character vector with month names
-#' @examples
-#'    format_months(c("Jan","Feb"))
+# Format month names
 format_months <- function(months){
   substr(months, 1, 1) <- toupper(substr(months, 1, 1))
   substr(months, 1, 3)
 }
-
 
 
 #' Generate sequence of months
@@ -65,6 +42,7 @@ format_months <- function(months){
 #' @param end_month character string, the three-letter name of the finishing month.
 #' @examples
 #'    seq_months("Jan", "Apr")
+#' @export
 seq_months <- function(start_month, end_month){
   Mst <- which(month.abb == start_month)
   Men <- which(month.abb == end_month)
@@ -77,16 +55,10 @@ seq_months <- function(start_month, end_month){
 }
 
 
-
-#' Name of parent function
-#'
-#' Helper to get the name of the parent function.
-#'
-#' @return
-#' The name of the parent function relative to current evaluation. Returns "GlobalEnv"
-#' if parent frame is the Global environment.
-#' @examples
-#'     parent_fn_name()
+# Name of parent function
+#
+# Returns the name of the parent function relative to current evaluation. Returns "GlobalEnv"
+# if parent frame is the Global environment.
 parent_fn_name <- function(){
   grandparent_call <- sys.call(-2)
   if(is.null(grandparent_call)){
@@ -97,18 +69,7 @@ parent_fn_name <- function(){
 }
 
 
-### Upper-case conversion of the first character of a string
-firstup <- function(x) {
-  substr(x, 1, 1) <- toupper(substr(x, 1, 1))
-  x
-}
-
-
-#' check if a number is whole
-#' @param x a numeric value
-#' @param tol a numeric value
-#' @examples
-#'     is.wholenumber(2)
+# check if a number is whole
 is.wholenumber <- function(x, tol = .Machine$double.eps^0.5){
   abs(x - round(x)) < tol
 }
