@@ -93,6 +93,8 @@
 #' also be used alone, providing backward compatibility with the original Band
 #' spreadsheet outputs.
 #'
+#' @example examples/band_crm_example.r
+#'
 #' @seealso
 #' Useful links:
 #' * <https://github.com/HiDef-Aerial-Surveying/stochLAB>

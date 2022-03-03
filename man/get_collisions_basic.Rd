@@ -61,7 +61,7 @@ turb_oper <- data.frame(
  get_collisions_basic(
    n_transits = n_transits_opt1,
    avg_prob_coll = 0.1494609,
-   mth_prop_oper = mth_prop_oper,
+   mth_prop_oper = mth_oper_month,
    avoidance_rate = 0.989,
    lac_factor = 0.9998287
  )

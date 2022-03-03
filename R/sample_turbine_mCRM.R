@@ -35,6 +35,16 @@
 #' @param n_iter An integer value. The number of samples to generate
 #'
 #' @return A data frame of all the information sampled for the turbine with nrow = n_iter
+#'
+#' @examples
+#'   #sample_turbine_mCRM(rtn_speed_pars,
+#'                       #bld_pitch_pars,
+#'                       #rtr_radius_pars,
+#'                       #bld_width_pars,
+#'                       #season_specs,
+#'                       #n_iter = 10,
+#'                       #trb_wind_avbl,
+#'                       #trb_downtime_pars)
 #' @export
 
 sample_turbine_mCRM <- function(rtn_speed_pars,

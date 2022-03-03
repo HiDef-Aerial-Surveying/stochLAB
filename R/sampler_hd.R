@@ -10,6 +10,14 @@
 #' @param lower A decimal value. The lower limit for the distribution
 #' @param upper A decimal value. The upper limit for the distribution
 #' @return a vector of samples values from the distribution
+#'
+#' @examples
+#'   sampler_hd(dat=0.1,
+#'        mode='rtnorm',
+#'        n=100,
+#'        mean=9,
+#'        sd=0.1)
+#'
 #' @export
 #'
 
