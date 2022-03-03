@@ -85,7 +85,7 @@ maximum height of the rotor blade)
 }
 }
 \examples{
- library(stochLAB)
+
  rotor_grids <- generate_rotor_grids(yinc = 0.05, xinc = 0.05, chord_prof_5MW)
 
  gen_fhd_dat <- Johnston_Flight_heights_SOSS \%>\%
