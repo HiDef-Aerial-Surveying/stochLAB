@@ -11,6 +11,23 @@
 #' @return The total proportion of birds at collision risk height derived from a flight
 #'   height distribution
 #'
+#' @examples
+#'  gen_fhd_dat <- Johnston_Flight_heights_SOSS %>%
+#'       dplyr::filter(variable=="Gannet.est") %>%
+#'       dplyr::select(height,prop)
+#'
+#'  gen_fhd <- gen_fhd_dat$prop
+#'
+#'  d_y <-
+#'     get_fhd_rotor(
+#'       hub_height = 150,
+#'       fhd = gen_fhd,
+#'       rotor_radius = 120,
+#'       tidal_offset = 2.5,
+#'       yinc = 0.05)
+#'
+#'  prop_chr_fhd <- get_prop_crh_fhd(d_y)
+#'
 #' @export
 get_prop_crh_fhd <- function(d_y) {
 

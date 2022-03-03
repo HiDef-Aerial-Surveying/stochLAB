@@ -5,8 +5,8 @@
 #' occur within the rotor's circle area of all turbines, and assuming birds take no
 #' avoiding action.
 #'
-#' @details The flux factor is used for other model calculations (e.g.
-#'    \code{get_rotor_transits}). Methodology and assumptions underpinning
+#' @details The flux factor is used for other model calculations.
+#'    Methodology and assumptions underpinning
 #'    \code{get_mig_flux_factor} are described in "Stage B" of
 #'    \href{https://www.bto.org/sites/default/files/u28/downloads/Projects/Final_Report_SOSS02_Band1ModelGuidance.pdf}{Band (2012)}
 #'
@@ -19,6 +19,17 @@
 #' The number of bird flights potentially transiting through rotors
 #' at each time period (assuming no avoidance), if all flights occur within the
 #' rotor's circular area
+#'
+#' @examples
+#' get_mig_flux_factor(
+#'      n_turbines = 100,
+#'      rotor_radius = 120,
+#'      wf_width = 51,
+#'      popn_est = 10000
+#' )
+#'
+#'
+#' @export
 
 get_mig_flux_factor <- function(n_turbines, rotor_radius, wf_width,
                             popn_est){#, daynight_hrs, noct_activity){

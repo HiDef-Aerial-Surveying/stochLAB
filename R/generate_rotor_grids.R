@@ -131,6 +131,10 @@ generate_rotor_grids <- function(yinc = 0.05, xinc = 0.05, chord_prof) {
 #'   vertical axis, expressed as the proportion of rotor radius (i.e. \eqn{[0,
 #'   1]}), for the left-half of the rotor circle area.
 #'
+#' @examples
+#' get_x_grid(xinc=0.05,yinc=0.05)
+#'
+#' @export
 get_x_grid <- function(xinc = 0.05, yinc = 0.05){
 
   # horizontal grid size
@@ -185,7 +189,11 @@ get_x_grid <- function(xinc = 0.05, yinc = 0.05){
 #'   horizontal axis, expressed as the proportion of rotor radius, for
 #'   the left-half of the rotor circle area. Negative values represent distances
 #'   from the bottom half of the rotor circle.
+#' @examples
+#'  x_grid <- get_x_grid(yinc=0.05, xinc=0.05)
+#'  get_y_grid(x_grid,yinc=0.05)
 #'
+#' @export
 get_y_grid <- function(x_grid, yinc = 0.05){
 
   y <- seq(-1, 1, yinc)
@@ -218,6 +226,11 @@ get_y_grid <- function(x_grid, yinc = 0.05){
 #'
 #' @seealso [get_x_grid()], [get_y_grid()]
 #'
+#' @examples
+#'  x_grid <- get_x_grid(yinc=0.05, xinc=0.05)
+#'  y_grid <- get_y_grid(x_grid,yinc=0.05)
+#'  get_phi_grid(x_grid,y_grid)
+#' @export
 get_phi_grid <- function(x_grid, y_grid){
 
   phi_grid <- atan(x_grid/y_grid)

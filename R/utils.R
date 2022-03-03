@@ -29,7 +29,11 @@ sample_qtls <- function(n, probs, qtls){
 "%nin%" <- Negate("%in%")
 
 
-# Format month names
+#' Format any month name to three letter code
+#' @param months character string or vector. The name of the month
+#' @examples
+#'   format_months("January")
+#' @export
 format_months <- function(months){
   substr(months, 1, 1) <- toupper(substr(months, 1, 1))
   substr(months, 1, 3)

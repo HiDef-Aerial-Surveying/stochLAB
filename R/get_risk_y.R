@@ -14,6 +14,30 @@
 #'   horizontal chord of the rotor circle at height band \eqn{y}
 #'
 #' @seealso [get_x_grid()], [get_pcoll_grid()]
+#'
+#' @examples
+#'   rotor_grids <- generate_rotor_grids(yinc = 0.05, xinc = 0.05, chord_prof_5MW)
+#'
+#'   y_lt <- dim(rotor_grids$r_grid)[1]
+#'
+#'   pcollxy_grid_up <- get_pcoll_grid(
+#'     rotor_grids = rotor_grids,
+#'     direction = 1,
+#'     rotor_radius = 120,
+#'     blade_width = 5,
+#'     rotor_speed = 15,
+#'     blade_pitch = 15,
+#'     flight_type = "flapping",
+#'     n_blades = 3,
+#'     flight_speed = 13.1,
+#'     wing_span = 1.01,
+#'     body_lt = 0.85)
+#'
+#'     risk_up <- rep(NA, y_lt)
+#'     for(i in 1:y_lt){
+#'       risk_up[i] <- get_risk_y(rotor_grids$x_grid[i, ], pcollxy_grid_up[i, ])
+#'     }
+#' @export
 
 get_risk_y <- function(x_at_y, pcoll_doty){
 

@@ -35,3 +35,11 @@ a vector of samples values from the distribution
 \description{
 Samples a dataset based on inputs for either the rtnorm, rbeta or 'rnorm' distributions
 }
+\examples{
+  sampler_hd(dat=0.1,
+       mode='rtnorm',
+       n=100,
+       mean=9,
+       sd=0.1)
+
+}

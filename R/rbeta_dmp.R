@@ -6,6 +6,9 @@
 #' @param p A decimal value. The value used to calculate parameters for the beta distribution
 #' @param sd A decimal value. The standard deviation of the beta distribution to simulate
 #' @return a vector of samples values from the beta distribution
+#'
+#' @examples
+#'     rbeta_dmp(n=100,p=0.14,sd=9.8)
 #' @export
 #'
 

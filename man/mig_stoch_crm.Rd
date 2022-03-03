@@ -84,8 +84,8 @@ windfarm, in degrees.}
 \item{flight_type}{A character. Either "flying" or "gliding" representing
 the type of flight most commonly used by the species}
 
-\item{prop_upwind}{A value between 0-1 bounded as proportion of flights
-upwind - default of 0.5.}
+\item{prop_upwind}{Numeric value between 0-1 giving the proportion of
+flights upwind - defaults to 0.5.}
 
 \item{popn_estim_pars}{A single row data frame with columns \code{mean} and \code{sd}.
 The population estimate of the species expected to fly through the wind farm

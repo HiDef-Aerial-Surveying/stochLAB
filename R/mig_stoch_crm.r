@@ -66,7 +66,7 @@
 #'
 #' @inheritParams sample_turbine_mCRM
 #' @inheritParams get_lac_factor
-#' @inheritParams get_prob_collision
+#' @inheritParams get_avg_prob_collision
 #' @inheritParams DayLength
 #'
 #' @importFrom rlang .data
@@ -287,7 +287,7 @@ mig_stoch_crm <- function(
       for(i in 1:n_iter){
         # STEP 1 - Calculate the probability of collision assuming no avoidance ----
         p_single_collision <-
-          get_prob_collision(
+          get_avg_prob_collision(
             flight_speed = sampledBirdParams$FlightSpeed[i],
             body_lt = sampledBirdParams$BodyLength[i],
             wing_span = sampledBirdParams$WingSpan[i],

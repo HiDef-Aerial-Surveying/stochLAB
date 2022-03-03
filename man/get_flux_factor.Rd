@@ -47,8 +47,8 @@ rotor's circle area of all turbines, i.e. before the proportion at risk
 height and avoidance level are taken into account.
 }
 \details{
-The flux factor is used for other model calculations (e.g.
-\code{get_rotor_transits}). Methodology and assumptions underpinning
+The flux factor is used for other model calculations.
+Methodology and assumptions underpinning
 \code{get_flux_factor} are described in "Stage B" of
 \href{https://www.bto.org/sites/default/files/u28/downloads/Projects/Final_Report_SOSS02_Band1ModelGuidance.pdf}{Band (2012)}
 }

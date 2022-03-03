@@ -417,7 +417,6 @@ band_crm <- function(model_options = c('1', '2', '3', '4'),
         yinc = yinc)
   }
 
-  browser()
   # STEP 5 - Calculate collisions per month under each model option
 
   band_outputs <- list()

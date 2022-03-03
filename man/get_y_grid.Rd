@@ -32,3 +32,8 @@ Returned grid represents the left-half of the rotor's circle.
 Distances are expressed as proportion of rotor radius (i.e. \eqn{y} is
 dimensionless).
 }
+\examples{
+ x_grid <- get_x_grid(yinc=0.05, xinc=0.05)
+ get_y_grid(x_grid,yinc=0.05)
+
+}

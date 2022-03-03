@@ -61,7 +61,7 @@ turb_oper <- data.frame(
    )
 turb_oper_month <- turb_oper$prop_oper
 
-band_outputs$opt1 <- crm_opt1(
+crm_opt1(
  flux_factor = flux_fct,
  prop_crh_surv = 0.13,
  avg_prob_coll = 0.1494609,

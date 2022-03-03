@@ -22,8 +22,8 @@
 #'   expressed as a proportion of daytime activity levels (\eqn{f_night}).
 #'
 #' @details
-#' The flux factor is used for other model calculations (e.g.
-#'    `get_rotor_transits`). Methodology and assumptions underpinning
+#' The flux factor is used for other model calculations.
+#'    Methodology and assumptions underpinning
 #'    `get_flux_factor` are described in "Stage B" of
 #'    [Band (2012)](https://www.bto.org/sites/default/files/u28/downloads/Projects/Final_Report_SOSS02_Band1ModelGuidance.pdf)
 #'

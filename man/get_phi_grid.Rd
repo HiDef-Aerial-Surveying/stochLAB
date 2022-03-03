@@ -27,6 +27,11 @@ calculates the associated radial angles, relative to the rotor vertical axis.
 
 Returned grid represents the left-half of the rotor's circle.
 }
+\examples{
+ x_grid <- get_x_grid(yinc=0.05, xinc=0.05)
+ y_grid <- get_y_grid(x_grid,yinc=0.05)
+ get_phi_grid(x_grid,y_grid)
+}
 \seealso{
 \code{\link[=get_x_grid]{get_x_grid()}}, \code{\link[=get_y_grid]{get_y_grid()}}
 }

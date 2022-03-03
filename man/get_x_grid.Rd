@@ -28,3 +28,7 @@ dimensionless).
 
 Returned grid represents the left-half of the rotor's circle.
 }
+\examples{
+get_x_grid(xinc=0.05,yinc=0.05)
+
+}
