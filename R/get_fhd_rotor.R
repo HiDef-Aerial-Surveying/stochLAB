@@ -25,7 +25,7 @@
 #'  gen_fhd_dat <- Johnston_Flight_heights_SOSS %>%
 #'        dplyr::filter(variable=="Gannet.est") %>%
 #'        dplyr::select(height,prop)
-#'  if(is.data.frame(gen_fhd_dat)) gen_fhd <- gen_fhd$prop
+#'  if(is.data.frame(gen_fhd_dat)) gen_fhd <- gen_fhd_dat$prop
 #'
 #'  get_fhd_rotor(
 #'    hub_height = 150,
