@@ -1,6 +1,8 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 [![test-coverage](https://github.com/HiDef-Aerial-Surveying/stochLAB/actions/workflows/test-coverage.yaml/badge.svg)](https://github.com/HiDef-Aerial-Surveying/stochLAB/actions/workflows/test-coverage.yaml)
+[![pkgdown](https://github.com/HiDef-Aerial-Surveying/stochLAB/actions/workflows/pkgdown.yaml/badge.svg)](https://github.com/HiDef-Aerial-Surveying/stochLAB/actions/workflows/pkgdown.yaml)
+[![R-CMD-check](https://github.com/HiDef-Aerial-Surveying/stochLAB/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/HiDef-Aerial-Surveying/stochLAB/actions/workflows/R-CMD-check.yaml)
 
 # stochLAB <img src='man/figures/logo.png' align="right" height="139" />
 
