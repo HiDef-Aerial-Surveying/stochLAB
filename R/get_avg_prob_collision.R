@@ -41,6 +41,21 @@
 #' @return A numeric value. The average collision probability (risk) for a bird
 #'   flying through any point of the rotor circle area.
 #'
+#' @examples
+#'        get_avg_prob_collision(
+#'            flight_speed = 13.1,
+#'            body_lt = 0.85,
+#'            wing_span = 1.01,
+#'            prop_upwind = 0.5,
+#'            flap_glide = 1,
+#'            rotor_speed = 15,
+#'            rotor_radius = 120,
+#'            blade_width = 5,
+#'            blade_pitch = 15,
+#'            n_blades = 3,
+#'            chord_prof = chord_prof_5MW
+#'            )
+#'
 #' @export
 get_avg_prob_collision <- function(flight_speed,
                                    body_lt,

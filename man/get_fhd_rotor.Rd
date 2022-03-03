@@ -34,3 +34,18 @@ height bands between the lowest and highest points of the rotor. In other
 words, returns the flight height distribution at collision risk
 (\eqn{d(y)}).
 }
+\examples{
+
+ gen_fhd_dat <- Johnston_Flight_heights_SOSS \%>\%
+       dplyr::filter(variable=="Gannet.est") \%>\%
+       dplyr::select(height,prop)
+ if(is.data.frame(gen_fhd_dat)) gen_fhd <- gen_fhd$prop
+
+ get_fhd_rotor(
+   hub_height = 150,
+   fhd = gen_fhd,
+   rotor_radius = 120,
+   tidal_offset = 2.5,
+   yinc = 0.05)
+
+}

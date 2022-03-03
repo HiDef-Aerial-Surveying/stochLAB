@@ -27,9 +27,23 @@
 #'    `get_flux_factor` are described in "Stage B" of
 #'    [Band (2012)](https://www.bto.org/sites/default/files/u28/downloads/Projects/Final_Report_SOSS02_Band1ModelGuidance.pdf)
 #'
+#'
 #' @return The number of bird flights potentially transiting through rotors at
 #'   each time period (assuming no avoidance), if all flights occur within the
 #'   rotor's circular area.
+#'
+#' @examples
+#'   get_flux_factor(
+#'       n_turbines = 100,
+#'       rotor_radius = 120,
+#'       flight_speed = 13.1,
+#'       bird_dens = c(1.19,0.85,1.05,1.45,1.41,1.45,1.12,1.45,0.93,0.902,1.06,1.23),
+#'       daynight_hrs = DayLength(52),
+#'       noct_activity = 0.5
+#'       )
+#' @export
+
+
 
 get_flux_factor <- function(n_turbines, rotor_radius, flight_speed,
                             bird_dens, daynight_hrs, noct_activity){

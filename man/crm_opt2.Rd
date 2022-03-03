@@ -45,6 +45,63 @@ distributed
 distribution (\eqn{Q'_2R})
 }
 }
+\examples{
+
+avg_collision_risk <-
+ get_avg_prob_collision(
+   flight_speed = 13.1,
+   body_lt = 0.85,
+   wing_span = 1.01,
+   prop_upwind = 0.5,
+   flap_glide = 1,
+   rotor_speed = 15,
+   rotor_radius = 120,
+   blade_width = 5,
+   blade_pitch = 15,
+   n_blades = 3,
+   chord_prof = chord_prof_5MW
+ )
+
+
+ gen_fhd_dat <- Johnston_Flight_heights_SOSS \%>\%
+      dplyr::filter(variable=="Gannet.est") \%>\%
+      dplyr::select(height,prop)
+
+ gen_fhd <- gen_fhd_dat$prop
+
+ gen_fhd_at_rotor <-
+    get_fhd_rotor(
+      hub_height = 150,
+      fhd = gen_fhd,
+      rotor_radius = 120,
+      tidal_offset = 2.5,
+      yinc = 0.05)
+
+
+ flux_fct <- get_flux_factor(
+      n_turbines = 100,
+      rotor_radius = 120,
+      flight_speed = 13.1,
+      bird_dens = c(1.19,0.85,1.05,1.45,1.41,1.45,1.12,1.45,0.93,0.902,1.06,1.23),
+      daynight_hrs = DayLength(52),
+      noct_activity = 0.5
+      )
+
+turb_oper <- data.frame(
+   month = month.abb,
+   prop_oper = runif(12,0.5,0.8)
+   )
+turb_oper_month <- turb_oper$prop_oper
+
+crm_opt2(
+    flux_factor = flux_fct,
+    d_y = gen_fhd_at_rotor,
+    avg_prob_coll = avg_collision_risk,
+    mth_prop_oper = turb_oper_month,
+    avoidance_rate = 0.989,
+   lac_factor = 0.9998299)
+
+}
 \seealso{
 \code{get_fhd_rotor()}, \code{get_flux_factor()}
 }

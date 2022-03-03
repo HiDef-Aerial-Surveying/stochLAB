@@ -72,3 +72,19 @@ Methodology and assumptions underpinning \code{get_avg_prob_collision}
 are described in "Stage C" of
 \href{https://www.bto.org/sites/default/files/u28/downloads/Projects/Final_Report_SOSS02_Band1ModelGuidance.pdf}{Band (2012)}.
 }
+\examples{
+       get_avg_prob_collision(
+           flight_speed = 13.1,
+           body_lt = 0.85,
+           wing_span = 1.01,
+           prop_upwind = 0.5,
+           flap_glide = 1,
+           rotor_speed = 15,
+           rotor_radius = 120,
+           blade_width = 5,
+           blade_pitch = 15,
+           n_blades = 3,
+           chord_prof = chord_prof_5MW
+           )
+
+}

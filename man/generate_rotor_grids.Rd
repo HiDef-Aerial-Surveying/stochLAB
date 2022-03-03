@@ -69,6 +69,10 @@ thence substantially reduced, leading to significant gains in computational
 speed - over 30x faster than Masden's implementation for a 1000 iterations
 run.
 }
+\examples{
+rotor_grids <- generate_rotor_grids(yinc = 0.05, xinc = 0.05, chord_prof_5MW)
+
+}
 \seealso{
 \code{\link[=get_x_grid]{get_x_grid()}}, \code{\link[=get_y_grid]{get_y_grid()}},
 \code{\link[=get_phi_grid]{get_phi_grid()}}

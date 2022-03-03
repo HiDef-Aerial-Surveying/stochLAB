@@ -51,6 +51,11 @@
 #'
 #' @seealso [get_x_grid()], [get_y_grid()],
 #'   [get_phi_grid()]
+#'
+#' @examples
+#' rotor_grids <- generate_rotor_grids(yinc = 0.05, xinc = 0.05, chord_prof_5MW)
+#'
+#' @export
 
 generate_rotor_grids <- function(yinc = 0.05, xinc = 0.05, chord_prof) {
 

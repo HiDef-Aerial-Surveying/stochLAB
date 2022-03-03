@@ -21,6 +21,16 @@
 #'
 #' @return The large array correction factor to be applied
 #'
+#' @examples
+#'   get_lac_factor(
+#'      n_turbines = 100,
+#'      rotor_radius = 120,
+#'      avoidance_rate = 0.989,
+#'      avg_prob_coll = 0.1494609,
+#'      avg_prop_operational = 0.6388292,
+#'      wf_width = 52
+#'      )
+#'
 #' @export
 get_lac_factor <- function(n_turbines,
                            rotor_radius,

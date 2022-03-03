@@ -344,7 +344,6 @@ band_crm <- function(model_options = c('1', '2', '3', '4'),
   ## proportion of time operational over the year
   avg_prop_oper <- mean(turb_oper_month)
 
-
   # Collision risk steps -----------------------------------------------------
 
   # STEP 1 - Calculate average collision probability for a single transit at
@@ -418,7 +417,7 @@ band_crm <- function(model_options = c('1', '2', '3', '4'),
         yinc = yinc)
   }
 
-
+  browser()
   # STEP 5 - Calculate collisions per month under each model option
 
   band_outputs <- list()

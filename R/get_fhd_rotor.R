@@ -20,7 +20,22 @@
 #'
 #' @return A numeric vector, the flight height distribution at collision risk,
 #'   i.e. between minimum and maximum rotor height.
+#' @examples
 #'
+#'  gen_fhd_dat <- Johnston_Flight_heights_SOSS %>%
+#'        dplyr::filter(variable=="Gannet.est") %>%
+#'        dplyr::select(height,prop)
+#'  if(is.data.frame(gen_fhd_dat)) gen_fhd <- gen_fhd$prop
+#'
+#'  get_fhd_rotor(
+#'    hub_height = 150,
+#'    fhd = gen_fhd,
+#'    rotor_radius = 120,
+#'    tidal_offset = 2.5,
+#'    yinc = 0.05)
+#'
+#' @export
+
 get_fhd_rotor <- function(hub_height,
                           fhd,
                           rotor_radius,

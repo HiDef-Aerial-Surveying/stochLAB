@@ -44,6 +44,32 @@ uniformly distributed.
 \item Proportion at collision risk height derived from site survey.
 }
 }
+\examples{
+
+ flux_fct <- get_flux_factor(
+      n_turbines = 100,
+      rotor_radius = 120,
+      flight_speed = 13.1,
+      bird_dens = c(1.19,0.85,1.05,1.45,1.41,1.45,1.12,1.45,0.93,0.902,1.06,1.23),
+      daynight_hrs = DayLength(52),
+      noct_activity = 0.5
+      )
+
+turb_oper <- data.frame(
+   month = month.abb,
+   prop_oper = runif(12,0.5,0.8)
+   )
+turb_oper_month <- turb_oper$prop_oper
+
+band_outputs$opt1 <- crm_opt1(
+ flux_factor = flux_fct,
+ prop_crh_surv = 0.13,
+ avg_prob_coll = 0.1494609,
+ mth_prop_oper = turb_oper_month,
+ avoidance_rate = 0.989,
+ lac_factor = 0.9998287)
+
+}
 \seealso{
 \code{\link[=get_flux_factor]{get_flux_factor()}} for calculating the flux factor
 }
