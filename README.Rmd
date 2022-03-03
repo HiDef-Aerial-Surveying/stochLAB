@@ -17,6 +17,7 @@ knitr::opts_chunk$set(
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/HiDef-Aerial-Surveying/stochLAB/workflows/R-CMD-check/badge.svg)](https://github.com/HiDef-Aerial-Surveying/stochLAB/actions)
+[![Codecov test coverage](https://codecov.io/gh/HiDef-Aerial-Surveying/stochLAB/branch/master/graph/badge.svg)](https://app.codecov.io/gh/HiDef-Aerial-Surveying/stochLAB?branch=master)
 <!-- badges: end -->
 
 `{stochLAB}` is a tool to run Collision Risk Models (CRMs) for seabirds on offshore wind farms.

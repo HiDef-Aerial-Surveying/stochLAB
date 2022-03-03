@@ -18,6 +18,33 @@
 #'
 #' @return A numeric vector. The expected number of collisions at each time
 #'   periods
+#' @examples
+#' turb_oper <- data.frame(
+#'  month = month.abb,
+#'  prop_oper = runif(12,0.5,0.8)
+#'  )
+#'  mth_oper_month <- turb_oper$prop_oper
+#'
+#'  flux_factor <- get_flux_factor(
+#'    n_turbines = 100,
+#'    rotor_radius = 120,
+#'    flight_speed = 13.1,
+#'    bird_dens = c(1.19,0.85,1.05,1.45,1.41,1.45,1.12,1.45,0.93,0.902,1.06,1.23),
+#'    daynight_hrs = DayLength(52),
+#'    noct_activity = 0.5
+#'  )
+#'
+#'  prop_crh_surv <- 0.13
+#'
+#'  n_transits_opt1 <- flux_factor * prop_crh_surv
+#'
+#'  get_collisions_basic(
+#'    n_transits = n_transits_opt1,
+#'    avg_prob_coll = 0.1494609,
+#'    mth_prop_oper = mth_prop_oper,
+#'    avoidance_rate = 0.989,
+#'    lac_factor = 0.9998287
+#'  )
 #'
 #' @export
 get_collisions_basic <- function(n_transits,
