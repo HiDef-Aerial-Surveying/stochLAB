@@ -41,7 +41,8 @@ Language: en-GB
 LazyData: true
 LazyDataCompression: bzip2
 Roxygen: list(markdown = TRUE)
-URL: https://www.github.com/HiDef-Aerial-Surveying/stochLAB
+URL: https://www.github.com/HiDef-Aerial-Surveying/stochLAB,
+    https://hidef-aerial-surveying.github.io/stochLAB/
 BugReports: https://www.github.com/HiDef-Aerial-Surveying/stochLAB/issues
 RoxygenNote: 7.1.2
 VignetteBuilder: knitr

@@ -1,3 +1,10 @@
+#' Sample rotor grids for generated_rotor_grids unit test
+#'
+#' @format list of data frames
+#'
+"rotor_grids_test"
+
+
 
 #' Summarized flight height profiles from Johnston et al (2014)
 #'
