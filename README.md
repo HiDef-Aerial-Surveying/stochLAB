@@ -1,5 +1,6 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+[![test-coverage](https://github.com/HiDef-Aerial-Surveying/stochLAB/actions/workflows/test-coverage.yaml/badge.svg)](https://github.com/HiDef-Aerial-Surveying/stochLAB/actions/workflows/test-coverage.yaml)
 
 # stochLAB <img src='man/figures/logo.png' align="right" height="139" />
 
