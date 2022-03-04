@@ -20,5 +20,5 @@ a vector of samples values from the beta distribution
 generate random samples from a beta distribution, parameterized as mean and sd, and returning NAs if conditions are not met
 }
 \examples{
-    rbeta_dmp(n=100,p=0.14,sd=9.8)
+    rbeta_dmp(n=100,p=0.9,sd=0.01)
 }

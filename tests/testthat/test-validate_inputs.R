@@ -1,10 +1,21 @@
-test_that("val_chord_prof finds invalid inputs in chord_prof", {
+test_that("validate inputs returns nothing", {
 
   # # No error raised if chord_prof meets expectations
-  # expect_silent(
-  #   val_chord_prof(chord_prof = chord_prof_5MW)
-  #   )
-  #
+  expect_silent(
+    validate_inputs(model_options=c(1),
+                    avoid_bsc_pars=data.frame(mean=0.99,sd=0.001),
+                    prop_crh_pars=data.frame(mean=0.01,sd=0.01),
+                    air_gap_pars = data.frame(mean=21,sd=0),
+                    rtr_radius_pars = data.frame(mean=100,sd=0),
+                    bld_pitch_pars = data.frame(mean=15,sd=0),
+                    rtn_pitch_opt = "probDist",
+                    rtn_speed_pars = data.frame(mean=14,sd=5),
+                    out_period = "months",
+                    lrg_arr_corr = TRUE,
+                    fn="scrm")
+    )
+
+
   # # missing columns or wrong column names  -------------------------------------
   # inval_chord <- chord_prof_5MW
   # names(inval_chord) <- c("pp_radiu", "chord")
