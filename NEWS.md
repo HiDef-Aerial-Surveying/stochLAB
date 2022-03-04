@@ -1,5 +1,11 @@
 # stochLAB 1.0.0
-
+* First full launch of package ready for submission to CRAN and ROpenSci
+* Package work:
+  * Major push with unit tests updated for all major functions through the package
+  * Continuous integration tests incorporated through Github actions
+  * Badges added for continuous integration
+  * Unit tests run and passed
+  
 
 # stochLAB 0.3.1
 * Bug fixes:
