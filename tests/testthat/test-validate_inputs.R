@@ -15,6 +15,17 @@ test_that("validate inputs returns nothing", {
                     fn="scrm")
     )
 
+  expect_error(
+    val_logical(12)
+  )
+
+  expect_error(
+    val_constant("test")
+  )
+
+  expect_error(
+    val_model_opts(data.frame(1,5,6))
+  )
 
   # # missing columns or wrong column names  -------------------------------------
   # inval_chord <- chord_prof_5MW
