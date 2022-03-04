@@ -25,22 +25,7 @@ Wrapper of the msm::rtnorm() function, improving on outputs management and
 user feedback on edge cases
 }
 \examples{
-\donttest{
-## Example case one:  mean < lower while sd = 0
-##
-## original function freezes the R session
-msm::rtnorm(n = 1, mean = 1, sd = 0, lower = 0)
-## this version returns NA and issues a warning
-rtnorm_dmp(n = 1, mean = 1, sd = 0, lower = 0)
-
-
-## Example case two: mean = lower while sd = 0
-##
-## original function returns NA with no warning
-msm::rtnorm(n = 1, mean = 1, sd = 0, lower = 1)
-## this version returns NA and issues a warning
-rtnorm_dmp(n = 1, mean = 1, sd = 0, lower = 1)
-}
+rtnorm_dmp(n=10,mean=0.4,sd=0.2)
 
 
 }
