@@ -577,7 +577,7 @@ stoch_crm <- function(model_options = c('1', '2', '3', '4'),
         summ_dt <- dt %>%
           as.data.frame() %>%
           dplyr::summarise(
-            across(everything(),
+            dplyr::across(dplyr::everything(),
                    list(mean=mean, sd=sd, median = median, #iqr = IQR,
                         `pctl_2.5` = ~quantile(.x, 0.025),
                         `pctl_25` = ~quantile(.x, 0.25),
