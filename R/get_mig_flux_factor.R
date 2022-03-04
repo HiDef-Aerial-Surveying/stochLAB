@@ -27,10 +27,7 @@
 #'      wf_width = 51,
 #'      popn_est = 10000
 #' )
-#'
-#'
 #' @export
-
 get_mig_flux_factor <- function(n_turbines, rotor_radius, wf_width,
                             popn_est){#, daynight_hrs, noct_activity){
 
