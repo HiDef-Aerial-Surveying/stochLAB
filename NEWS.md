@@ -1,3 +1,5 @@
+# stochLAB 1.0.0
+
 
 # stochLAB 0.3.1
 * Bug fixes:
