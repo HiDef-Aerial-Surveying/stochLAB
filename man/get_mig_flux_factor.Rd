@@ -39,6 +39,4 @@ get_mig_flux_factor(
      wf_width = 51,
      popn_est = 10000
 )
-
-
 }

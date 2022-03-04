@@ -14,4 +14,6 @@ test_that("Sampled quantiles are returned",{
     expected = 0.103586294
   )
 
+  testthat::expect_error(sample_qtls(10,c(0.1,0.2),qtls=c(0.05,0.1,0.95)))
+
 })
