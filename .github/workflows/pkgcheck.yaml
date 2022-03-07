@@ -11,10 +11,10 @@ on:
   # Run on every push to main
   push:
     branches:
-      - master
+      - main
 
 jobs:
   check:
     runs-on: ubuntu-latest
     steps:
-      - uses: ropensci-review-tools/pkgcheck-action@main
+      - uses: ropensci-review-tools/pkgcheck-action@master
