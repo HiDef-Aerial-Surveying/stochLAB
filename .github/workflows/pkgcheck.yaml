@@ -17,4 +17,4 @@ jobs:
   check:
     runs-on: ubuntu-latest
     steps:
-      - uses: ropensci-review-tools/pkgcheck-action@master
+      - uses: ropensci-review-tools/pkgcheck-action@main
