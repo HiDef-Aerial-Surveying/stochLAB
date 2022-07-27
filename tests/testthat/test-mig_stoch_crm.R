@@ -56,7 +56,7 @@ test_that("Migration collision risk model runs", {
     verbose = TRUE)
 
   expect_equal(
-    mean(out[,1]),
+    mean(out$collisions[,1]),
     expected = 0.224047655
   )
 
