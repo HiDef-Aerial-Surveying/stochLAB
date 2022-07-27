@@ -121,3 +121,6 @@ test_that("stoch_crm without stochasticity is same as band_crm",{
   expect_equal(as.numeric(stoch_output$collisions$opt3$mean),expected=band_output$opt3)
 
 })
+
+
+
