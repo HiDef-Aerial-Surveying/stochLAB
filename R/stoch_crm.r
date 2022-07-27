@@ -434,7 +434,7 @@ stoch_crm <- function(model_options = c('1', '2', '3', '4'),
   }
 
   ## ----- Daylight and night hours per month from latitude  ------ #
-  wf_daynight_hrs_month <- DayLength(wf_latitude)
+  wf_daynight_hrs_month <- Day_Length(wf_latitude)
   # subset for modelling months
   wf_daynight_hrs_month <- subset(wf_daynight_hrs_month, Month %in% mod_mths)
 
@@ -465,7 +465,7 @@ stoch_crm <- function(model_options = c('1', '2', '3', '4'),
     set.seed(seed)
   }
 
-  param_draws <- sample_params(
+  param_draws <- sample_parameters(
     model_options = model_options,
     n_iter = n_iter,
     mod_mths = mod_mths,

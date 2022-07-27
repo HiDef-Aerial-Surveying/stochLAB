@@ -37,7 +37,7 @@ test_that("Param draws return expected", {
 
   mod_mths <- mod_mths[order(match(mod_mths, month.abb))]
 
-  param_draws <- sample_params(
+  param_draws <- sample_parameters(
        model_options = c(1,2,3),
        n_iter = 10,
        mod_mths = mod_mths,

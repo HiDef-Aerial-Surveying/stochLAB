@@ -76,7 +76,7 @@
 #' @inheritParams get_fhd_rotor
 #' @inheritParams crm_opt1
 #' @inheritParams crm_opt3
-#' @inheritParams DayLength
+#' @inheritParams Day_Length
 #'
 #'
 #' @details
@@ -294,7 +294,7 @@ band_crm <- function(model_options = c('1', '2', '3', '4'),
     }
 
     ## Daylight hours and night hours per month based on the windfarm's latitude
-    wf_daynight_hrs_month <- DayLength(wf_latitude)
+    wf_daynight_hrs_month <- Day_Length(wf_latitude)
 
 
     ## check consistency between monthly data sets

@@ -67,7 +67,7 @@
 #' @inheritParams sample_turbine_mCRM
 #' @inheritParams get_lac_factor
 #' @inheritParams get_avg_prob_collision
-#' @inheritParams DayLength
+#' @inheritParams Day_Length
 #'
 #' @importFrom rlang .data
 #' @export
@@ -215,7 +215,7 @@ mig_stoch_crm <- function(
   ## get daylight hours and night hours per month based on the latitude
   ## This is only for future proofing, 2021 model does not assume day hours have
   ## impact on birds
-  daynight_hrs_month <- stochLAB::DayLength(wf_latitude)
+  daynight_hrs_month <- stochLAB::Day_Length(wf_latitude)
 
   if(verbose) cli::cli_progress_step("Sampling data")
   # Sample bird attributes --------------------------------------------------

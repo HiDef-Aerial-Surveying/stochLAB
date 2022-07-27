@@ -38,7 +38,7 @@
 #'       rotor_radius = 120,
 #'       flight_speed = 13.1,
 #'       bird_dens = c(1.19,0.85,1.05,1.45,1.41,1.45,1.12,1.45,0.93,0.902,1.06,1.23),
-#'       daynight_hrs = DayLength(52),
+#'       daynight_hrs = Day_Length(52),
 #'       noct_activity = 0.5
 #'       )
 #' @export

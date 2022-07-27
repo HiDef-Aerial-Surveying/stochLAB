@@ -51,7 +51,7 @@
 #'   ### Order chronologically
 #'   mod_mths <- mod_mths[order(match(mod_mths, month.abb))]
 #'
-#'   param_draws <- sample_params(
+#'   param_draws <- sample_parameters(
 #'     model_options = c(1,2,3),
 #'     n_iter = 10,
 #'     mod_mths = mod_mths,
@@ -81,7 +81,7 @@
 #'
 #' @export
 #'
-sample_params <- function(model_options,
+sample_parameters <- function(model_options,
                           mod_mths,
                           n_iter = 10,
                           flt_speed_pars,
