@@ -1,3 +1,5 @@
+# stochLAB 1.1.0
+
 # stochLAB 1.0.0
 * First full launch of package ready for submission to CRAN and ROpenSci
 * Package work:
