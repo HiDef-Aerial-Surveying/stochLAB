@@ -1,9 +1,9 @@
 pandoc: 2.7.3
-pkgdown: 2.0.2
+pkgdown: 2.0.6
 pkgdown_sha: ~
 articles:
   Running_stochLAB: Running_stochLAB.html
-last_built: 2022-03-07T11:56Z
+last_built: 2022-07-27T13:53Z
 urls:
   reference: https://hidef-aerial-surveying.github.io/stochLAB/reference
   article: https://hidef-aerial-surveying.github.io/stochLAB/articles
