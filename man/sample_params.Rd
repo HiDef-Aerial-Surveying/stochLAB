@@ -52,15 +52,7 @@ to follow a \emph{tnorm-lw0} distribution.}
 the mean and standard deviation of the species wingspan, in metres. Assumed
 to follow a \emph{tnorm-lw0} distribution.}
 
-\item{avoid_bsc_pars}{Single row data frames with columns
-\code{mean} and \code{sd}, the mean and standard deviation of the species avoidance
-rate to be used in the basic model (Options 1 and 2) and extended model
-(Options 3 and 4) calculations (see \strong{Details} section). Avoidance rate
-expresses the probability that a bird flying on a collision course with a
-turbine will take evading action to avoid collision, and it is assumed to
-follow a Beta distribution.}
-
-\item{avoid_ext_pars}{Single row data frames with columns
+\item{avoid_bsc_pars, avoid_ext_pars}{Single row data frames with columns
 \code{mean} and \code{sd}, the mean and standard deviation of the species avoidance
 rate to be used in the basic model (Options 1 and 2) and extended model
 (Options 3 and 4) calculations (see \strong{Details} section). Avoidance rate

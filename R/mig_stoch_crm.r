@@ -197,6 +197,11 @@ mig_stoch_crm <- function(
            dimnames = list(NULL, season_specs$season_id))
   )
 
+  mcrm_flux <- data.matrix(
+    matrix(data = NA, ncol = nrow(season_specs), nrow = n_iter,
+           dimnames = list(NULL, season_specs$season_id))
+  )
+
   # Prepare inputs  ------------------------------------------------------------
 
   ## For the migration app we make the assumption to be precautionary, that the animals are
@@ -324,7 +329,7 @@ mig_stoch_crm <- function(
                                         wf_width = wf_width,
                                         popn_est = SampledCounts[i])
 
-
+        mcrm_flux[i,bp] <- flux_fct
         # Step 4 - Apply option 1 of the CRM ----
         mcrm_outputs[i,bp] <- crm_opt1(
           flux_factor = flux_fct,
@@ -334,12 +339,13 @@ mig_stoch_crm <- function(
           avoidance_rate = sampledBirdParams$Avoidance[i],
           lac_factor = L_ArrayCF)
 
-      }
+      } # i in 1:niter end
+
     }
   }
 
   if(verbose) cli::cli_progress_step("Creating outputs")
 
-  return(mcrm_outputs)
+  return(list(collisions=mcrm_outputs,flux_rates=mcrm_flux))
 }
 

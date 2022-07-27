@@ -91,7 +91,7 @@ to follow a \emph{tnorm-lw0} distribution.}
 \item{wing_span}{Numeric value. The wingspan of the bird (\eqn{W}), in
 metres.}
 
-\item{avoid_bsc_pars}{Single row data frames with columns
+\item{avoid_bsc_pars, avoid_ext_pars}{Single row data frames with columns
 \code{mean} and \code{sd}, the mean and standard deviation of the species avoidance
 rate to be used in the basic model (Options 1 and 2) and extended model
 (Options 3 and 4) calculations (see \strong{Details} section). Avoidance rate
@@ -99,21 +99,7 @@ expresses the probability that a bird flying on a collision course with a
 turbine will take evading action to avoid collision, and it is assumed to
 follow a Beta distribution.}
 
-\item{avoid_rt_basic}{Numeric values. The avoidance rate for,
-respectively, the basic model (i.e. required for model Options 1 and 2) and
-the extended model (i.e. required for Options 3 and 4). Avoidance rate
-expresses the probability that a bird flying on a collision course with a
-turbine will take evading action to avoid collision.}
-
-\item{avoid_ext_pars}{Single row data frames with columns
-\code{mean} and \code{sd}, the mean and standard deviation of the species avoidance
-rate to be used in the basic model (Options 1 and 2) and extended model
-(Options 3 and 4) calculations (see \strong{Details} section). Avoidance rate
-expresses the probability that a bird flying on a collision course with a
-turbine will take evading action to avoid collision, and it is assumed to
-follow a Beta distribution.}
-
-\item{avoid_rt_ext}{Numeric values. The avoidance rate for,
+\item{avoid_rt_basic, avoid_rt_ext}{Numeric values. The avoidance rate for,
 respectively, the basic model (i.e. required for model Options 1 and 2) and
 the extended model (i.e. required for Options 3 and 4). Avoidance rate
 expresses the probability that a bird flying on a collision course with a
@@ -314,27 +300,7 @@ windfarm, in degrees.}
 \item{tidal_offset}{A numeric value, the tidal offset, the difference between
 HAT and mean sea level, in metres.}
 
-\item{gen_fhd}{Data frame objects, with flight height distributions
-(fhd) of the species - the relative frequency distribution of bird flights
-at 1-metre height intervals from sea surface.
-Specifically:
-
-\itemize{
-\item{\code{gen_fhd}, Data frame with the species' generic fhd derived
-from combining wider survey data. Only required for model Options 2 and 3}
-\item{\code{site_fhd}, Data frame with the species' site-specific fhd
-derived from local survey data. Only required for model Option 4}
-}
-
-Data frames must contain the following named columns:
-\itemize{
-\item{\code{height}, integers representing height bands from sea surface,
-in metres. Function expects 0 as the first value, representing the 0-1m
-band.}
-\item{\code{prop}, the proportion of flights at each height band.}
-}}
-
-\item{site_fhd}{Data frame objects, with flight height distributions
+\item{gen_fhd, site_fhd}{Data frame objects, with flight height distributions
 (fhd) of the species - the relative frequency distribution of bird flights
 at 1-metre height intervals from sea surface.
 Specifically:
@@ -358,13 +324,7 @@ band.}
 be applied. This is a correction factor to account for the decay in
 bird density at later rows in wind farms with a large array of turbines.}
 
-\item{xinc}{numeric values, the increments along the y-axis and x-axis
-for numerical integration across segments of the rotor circle. Chosen
-values express proportion of rotor radius. By default these are set to
-0.05, i.e. integration will be performed at a resolution of one twentieth
-of the rotor radius.}
-
-\item{yinc}{numeric values, the increments along the y-axis and x-axis
+\item{yinc, xinc}{numeric values, the increments along the y-axis and x-axis
 for numerical integration across segments of the rotor circle. Chosen
 values express proportion of rotor radius. By default these are set to
 0.05, i.e. integration will be performed at a resolution of one twentieth

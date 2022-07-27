@@ -44,5 +44,5 @@ Roxygen: list(markdown = TRUE)
 URL: https://www.github.com/HiDef-Aerial-Surveying/stochLAB,
     https://hidef-aerial-surveying.github.io/stochLAB/
 BugReports: https://www.github.com/HiDef-Aerial-Surveying/stochLAB/issues
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.0
 VignetteBuilder: knitr

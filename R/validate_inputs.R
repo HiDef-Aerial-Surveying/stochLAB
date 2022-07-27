@@ -536,9 +536,9 @@ val_pars_df <- function(df,
 
   df_name <- deparse(substitute(df))
 
-  if(!is.data.frame(df)){ # is df?
+  if("data.frame" %in% class(df)){ # is df or tbl?
 
-    rlang::abort(paste0("`", df_name, "` must be a data frame."))
+    rlang::abort(paste0("`", df_name, "` must be a data frame or tbl."))
 
   } else {
 

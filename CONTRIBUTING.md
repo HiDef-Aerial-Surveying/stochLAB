@@ -79,3 +79,7 @@ We try to follow the [GitHub flow](https://guides.github.com/introduction/flow/)
     * Check your code with `devtools::check()` and aim for 0 errors and warnings.
 5. Commit and push your changes.
 6. Submit a [pull request](https://guides.github.com/activities/forking/#making-a-pull-request).
+
+## Life cycle statement
+This package is in a stable state of development, with minimal subsequent development envisioned.
+
