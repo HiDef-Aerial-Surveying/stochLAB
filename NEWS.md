@@ -1,4 +1,8 @@
 # stochLAB 1.1.0
+* Change function name (DayLength() changed to Day_Length())
+* Change function name (sample_params() changed to sample_parameters())
+* Package work:
+  * Cleaning for srr package standards
 
 # stochLAB 1.0.0
 * First full launch of package ready for submission to CRAN and ROpenSci
