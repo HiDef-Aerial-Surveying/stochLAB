@@ -61,7 +61,14 @@
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="search.json" id="search-input" placeholder="Search for" autocomplete="off">
 </form>
 
-      <ul class="navbar-nav"></ul>
+      <ul class="navbar-nav">
+<li class="nav-item">
+  <a class="external-link nav-link" href="https://github.com/HiDef-Aerial-Surveying/stochLAB/" aria-label="github">
+    <span class="fab fa fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
 </div>
 
     
@@ -74,13 +81,13 @@
 <img src="logo.png" class="logo" alt=""><h1 id="stochlab-">stochLAB <a class="anchor" aria-label="anchor" href="#stochlab-"></a>
 </h1>
 </div>
-<!-- badges: start --><!-- badges: end --><p><a href="https://www.github.com/HiDef-Aerial-Surveying/stochLAB" class="external-link">stochLAB</a> is a tool to run Collision Risk Models (CRMs) for seabirds on offshore wind farms.</p>
+<!-- badges: start --><!-- badges: end --><p><a href="https://github.com/HiDef-Aerial-Surveying/stochLAB" class="external-link">stochLAB</a> is a tool to run Collision Risk Models (CRMs) for seabirds on offshore wind farms.</p>
 <div class="section level2">
 <h2 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
 </h2>
-<p>The <a href="https://www.github.com/HiDef-Aerial-Surveying/stochLAB" class="external-link">stochLAB</a> package is an adaptation of the <a href="https://data.marine.gov.scot/dataset/developing-avian-collision-risk-model-incorporate-variability-and-uncertainty-r-code-0" class="external-link">R code</a> developed by <a href="https://data.marine.gov.scot/dataset/developing-avian-collision-risk-model-incorporate-variability-and-uncertainty" class="external-link">Masden (2015)</a> to incorporate variability and uncertainty in the avian collision risk model originally developed by <a href="https://www.bto.org/sites/default/files/u28/downloads/Projects/Final_Report_SOSS02_Band1ModelGuidance.pdf" class="external-link">Band (2012)</a>.</p>
-<p>The <a href="https://www.github.com/HiDef-Aerial-Surveying/stochLAB" class="external-link">stochLAB</a> package was compiled and curated by DMP Statistics and HiDef Aerial Surveying.</p>
-<p>Code developed under <a href="https://www.github.com/HiDef-Aerial-Surveying/stochLAB" class="external-link">stochLAB</a> substantially re-factored and re-structured Masden’s (heavily script-based) implementation into a user-friendly, streamlined, well documented and easily distributed tool. Furthermore, the package lays down the code infrastructure for easier incorporation of new functionality, e.g. extra parameter sampling features, model expansions, etc.</p>
+<p>The <a href="https://github.com/HiDef-Aerial-Surveying/stochLAB" class="external-link">stochLAB</a> package is an adaptation of the <a href="https://data.marine.gov.scot/dataset/developing-avian-collision-risk-model-incorporate-variability-and-uncertainty-r-code-0" class="external-link">R code</a> developed by <a href="https://data.marine.gov.scot/dataset/developing-avian-collision-risk-model-incorporate-variability-and-uncertainty" class="external-link">Masden (2015)</a> to incorporate variability and uncertainty in the avian collision risk model originally developed by <a href="https://www.bto.org/sites/default/files/u28/downloads/Projects/Final_Report_SOSS02_Band1ModelGuidance.pdf" class="external-link">Band (2012)</a>.</p>
+<p>The <a href="https://github.com/HiDef-Aerial-Surveying/stochLAB" class="external-link">stochLAB</a> package was compiled and curated by DMP Statistics and HiDef Aerial Surveying.</p>
+<p>Code developed under <a href="https://github.com/HiDef-Aerial-Surveying/stochLAB" class="external-link">stochLAB</a> substantially re-factored and re-structured Masden’s (heavily script-based) implementation into a user-friendly, streamlined, well documented and easily distributed tool. Furthermore, the package lays down the code infrastructure for easier incorporation of new functionality, e.g. extra parameter sampling features, model expansions, etc.</p>
 <p>In addition, previous code underpinning core calculations for the extended model has been replaced by an alternative approach, resulting in significant gains in computational speed - over 30x faster than Masden’s code. This optimization is particularly beneficial under a stochastic context, when core calculations are called repeatedly during simulations.</p>
 <p>For a more detailed overview type <code><a href="reference/stochLAB.html">?stochLAB</a></code>, once installed!</p>
 </div>
@@ -100,7 +107,7 @@
 </h3>
 <p>This is a basic example of running the stochastic collision model for one seabird species and one turbine/wind-farm scenario, with fictional input parameter data.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://www.github.com/HiDef-Aerial-Surveying/stochLAB" class="external-link">stochLAB</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/HiDef-Aerial-Surveying/stochLAB" class="external-link">stochLAB</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># ------------------------------------------------------</span></span>
 <span><span class="co"># Setting some of the required inputs upfront</span></span>
@@ -187,7 +194,7 @@
 </ol>
 <p>Please note the example runs on fictional data.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://www.github.com/HiDef-Aerial-Surveying/stochLAB" class="external-link">stochLAB</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/HiDef-Aerial-Surveying/stochLAB" class="external-link">stochLAB</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># --------------------------------------------------------- #</span></span>
 <span><span class="co"># ----      Reshaping into list-column data frames       ----</span></span>
@@ -525,7 +532,8 @@
   </main><aside class="col-md-3"><div class="links">
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li><a href="https://www.github.com/HiDef-Aerial-Surveying/stochLAB/issues" class="external-link">Report a bug</a></li>
+<li><a href="https://github.com/HiDef-Aerial-Surveying/stochLAB/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/HiDef-Aerial-Surveying/stochLAB/issues" class="external-link">Report a bug</a></li>
 </ul>
 </div>
 
