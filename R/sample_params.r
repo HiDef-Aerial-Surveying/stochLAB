@@ -181,7 +181,7 @@ sample_parameters <- function(model_options,
 
     # formatting month names
     # (no need for chronological sorting, as mod_mths takes care of it)
-    bird_dens_dt <- dplyr::rename_with(bird_dens_dt, .fn = format_months, .cols = -p)
+    bird_dens_dt <- dplyr::rename_with(bird_dens_dt, .fn = format_months, .cols = -("p"))
 
     # from quantiles, based on the empirical cumulative distribution function
     for(m in mod_mths){

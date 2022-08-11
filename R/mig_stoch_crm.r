@@ -286,7 +286,7 @@ mig_stoch_crm <- function(
   ### Iterate over seasons, then over sampled parameters
   if(verbose) cli::cli_progress_step("Running simulation...")
   for(bp in season_specs$season_id){
-    sampTurb <- sampledTurbine %>% dplyr::select(RotorRadius,BladeWidth,RotorSpeed,Pitch,contains(bp))
+    sampTurb <- sampledTurbine %>% dplyr::select(RotorRadius,BladeWidth,RotorSpeed,Pitch,dplyr::contains(bp))
     if(ncol(sampTurb)>4){
 
       for(i in 1:n_iter){

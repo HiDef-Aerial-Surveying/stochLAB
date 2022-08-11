@@ -586,9 +586,9 @@ stoch_crm <- function(model_options = c('1', '2', '3', '4'),
                         `pctl_99` = ~quantile(.x, 0.999)),
                    .names = "{.col}---{.fn}")
           ) %>%
-          tidyr::pivot_longer(cols = everything()) %>%
-          tidyr::separate(name, sep = "---", into = c("period", "stat")) %>%
-          tidyr::pivot_wider(id_cols = period, names_from = stat)
+          tidyr::pivot_longer(cols = dplyr::everything()) %>%
+          tidyr::separate("name", sep = "---", into = c("period", "stat")) %>%
+          tidyr::pivot_wider(id_cols = "period", names_from = "stat")
 
         if(out_period == "annum") summ_dt$period <- "annum"
         if(out_period == "seasons"){
@@ -613,18 +613,18 @@ stoch_crm <- function(model_options = c('1', '2', '3', '4'),
           summ_dt <- dt %>%
             as.data.frame() %>%
             dplyr::summarise(
-              dplyr::across(everything(),
+              dplyr::across(dplyr::everything(),
                             list(mean=mean, sd=sd, median = median,
                                  `pctl_2.5` = ~quantile(.x, 0.025),
                                  `pctl_97.5` = ~quantile(.x, 0.975)),
                             .names = "{.col}---{.fn}")
             ) %>%
-            tidyr::pivot_longer(cols = everything()) %>%
-            tidyr::separate(name, sep = "---", into = c("period", "stat")) %>%
-            tidyr::pivot_wider(id_cols = period, names_from = stat)
+            tidyr::pivot_longer(cols = dplyr::everything()) %>%
+            tidyr::separate("name", sep = "---", into = c("period", "stat")) %>%
+            tidyr::pivot_wider(id_cols = "period", names_from = "stat")
 
           if(any(summ_dt$period == ".")){
-            summ_dt <- dplyr::select(summ_dt, -period)
+            summ_dt <- dplyr::select(summ_dt, -c("period"))
           }
         }else{
           if(param == "gen_fhd"){

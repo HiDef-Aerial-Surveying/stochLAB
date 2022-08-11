@@ -8,10 +8,10 @@ citEntry(entry = "Manual",
                    as.person("Elizabeth Masden")),
   institution  = "Marine Scotland Science",
   year         = "2022",
-  url          = "https://hidef-aerial-surveying.github.io/stochLAB",
+  url          = "https://hidef-aerial-surveying.github.io/stochLAB/",
 
   textVersion  =
   paste("Bruno Caneco, Grant Humphries, Aonghais Cook, Elizabeth Masden (2022).",
         "Estimating bird collisions at offshore windfarms with stochLAB",
-        "URL https://hidef-aerial-surveying.github.io/stochLAB.")
+        "URL https://hidef-aerial-surveying.github.io/stochLAB/")
 )

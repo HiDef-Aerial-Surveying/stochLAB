@@ -25,7 +25,7 @@
 #'   .med is the median estimate.}
 #'   \item{prop}{The proportion of birds within the 1m flight height bands.}
 #' }
-#' @source <https://www.bto.org/our-science/wetland-and-marine/soss/projects>
+#' @source \url{https://www.bto.org/our-science/wetland-and-marine/soss/projects}
 "Johnston_Flight_heights_SOSS"
 
 
@@ -73,7 +73,7 @@
 #' \item{bootId_200}{200th bootstrap sample of the proportion of birds flights
 #' within each height interval}
 #' }
-#' @source <https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/1365-2664.12191>
+#' @source \url{https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/1365-2664.12191}
 "generic_fhd_bootstraps"
 
 

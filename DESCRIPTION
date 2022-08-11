@@ -16,9 +16,7 @@ Depends:
     R (>= 4.0)
 Imports: 
     cli,
-    data.table,
     dplyr,
-    foreach,
     glue,
     logr,
     magrittr,
@@ -41,8 +39,8 @@ Language: en-GB
 LazyData: true
 LazyDataCompression: bzip2
 Roxygen: list(markdown = TRUE)
-URL: https://www.github.com/HiDef-Aerial-Surveying/stochLAB,
+URL: https://github.com/HiDef-Aerial-Surveying/stochLAB,
     https://hidef-aerial-surveying.github.io/stochLAB/
-BugReports: https://www.github.com/HiDef-Aerial-Surveying/stochLAB/issues
+BugReports: https://github.com/HiDef-Aerial-Surveying/stochLAB/issues
 RoxygenNote: 7.2.0
 VignetteBuilder: knitr

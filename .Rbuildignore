@@ -10,3 +10,7 @@
 ^_pkgdown\.yml$
 ^docs$
 ^pkgdown$
+^CONDUCT\.md
+^CONTRIBUTING\.md
+^codemeta\.json
+^examples
