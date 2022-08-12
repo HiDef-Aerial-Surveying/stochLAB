@@ -10,7 +10,12 @@ Authors@R: c(
     person("DMPstats", role = "cph")
   )
 Description: Tool for running Collision Risk Models for seabirds on
-    offshore wind farms.
+    offshore wind farms. The base deterministic model is derived from 
+    Band (2012) Using a Collision Risk Model to Assess Bird Collision Risks 
+    for Offshore Wind Farms. This was further expanded on by 
+    Masden (2015) <doi:10.7489/1659-1> and code used here is heavily derived
+    from this work with input from Dr A. Cook at the British Trust for
+    Ornithology. 
 License: GPL (>= 3)
 Depends: 
     R (>= 4.0)
