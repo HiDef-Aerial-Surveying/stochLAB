@@ -11,7 +11,7 @@ Authors@R: c(
   )
 Description: Tool for running Collision Risk Models for seabirds on
     offshore wind farms.
-License: GPL (>= 3) + file LICENSE
+License: GPL (>= 3)
 Depends: 
     R (>= 4.0)
 Imports: 
