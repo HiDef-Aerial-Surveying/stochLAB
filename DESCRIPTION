@@ -1,7 +1,7 @@
 Type: Package
 Package: stochLAB
 Title: Stochastic Collision Risk Model
-Version: 1.1.0
+Version: 1.1.1
 Authors@R: c(
     person("Grant", "Humphries", , "grant.humphries@hidefsurveying.co.uk", role = c("aut", "cre")),
     person("Bruno", "Caneco", , "bruno@dmpstats.com", role = "aut"),
@@ -18,7 +18,8 @@ Description: Tool for running Collision Risk Models for seabirds on
     Ornithology. 
 License: GPL (>= 3)
 Depends: 
-    R (>= 4.0)
+    R (>= 4.0),
+    tidyverse
 Imports: 
     cli,
     dplyr,

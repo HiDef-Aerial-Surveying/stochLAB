@@ -1,3 +1,5 @@
+# stochLAB 1.1.1
+
 # stochLAB 1.1.0
 * Change function name (DayLength() changed to Day_Length())
 * Change function name (sample_params() changed to sample_parameters())
