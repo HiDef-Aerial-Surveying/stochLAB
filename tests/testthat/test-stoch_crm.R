@@ -69,6 +69,32 @@ test_that("stoch_crm without stochasticity is same as band_crm",{
     out_period = "months"
   )
 
+  expect_equal(length(stoch_output$collisions),3)
+  expect_equal(dim(stoch_output$collisions$opt1),c(12,9))
+  expect_equal(dim(stoch_output$collisions$opt2),c(12,9))
+  expect_equal(dim(stoch_output$collisions$opt3),c(12,9))
+  expect_equal(class(stoch_output$collisions$opt1),c("tbl_df","tbl","data.frame"))
+  expect_equal(class(stoch_output$collisions$opt2),c("tbl_df","tbl","data.frame"))
+  expect_equal(class(stoch_output$collisions$opt3),c("tbl_df","tbl","data.frame"))
+
+  expect_equal(names(stoch_output$collisions$opt1),
+               c("period","mean","sd","median",
+                "pctl_2.5", "pctl_25", "pctl_75",
+                "pctl_97.5", "pctl_99")
+               )
+  expect_equal(class(stoch_output$collisions$opt1$period),"character")
+  expect_equal(class(stoch_output$collisions$opt1$mean),"numeric")
+  expect_equal(class(stoch_output$collisions$opt1$sd),"numeric")
+  expect_equal(class(stoch_output$collisions$opt1$median),"numeric")
+  expect_equal(class(stoch_output$collisions$opt1$pctl_2.5),"numeric")
+  expect_equal(class(stoch_output$collisions$opt1$pctl_25),"numeric")
+  expect_equal(class(stoch_output$collisions$opt1$pctl_75),"numeric")
+  expect_equal(class(stoch_output$collisions$opt1$pctl_97.5),"numeric")
+  expect_equal(class(stoch_output$collisions$opt1$pctl_99),"numeric")
+
+
+
+
 
   # Run Band model ----------------------------------------------------------
 

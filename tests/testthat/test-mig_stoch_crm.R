@@ -56,8 +56,27 @@ test_that("Migration collision risk model runs", {
     verbose = TRUE)
 
   expect_equal(
-    mean(out$collisions[,1]),
+    mean(unlist(out$collisions[,1])),
     expected = 0.224047655
+  )
+  ## Expect output to have 2 in the list
+  expect_equal(
+    length(out),2
+  )
+  ## Make sure table output has expected dimensions
+  expect_equal(
+    dim(out$collisions),
+    c(1000,nrow(season_specs))
+  )
+
+  expect_equal(
+    dim(out$flux_rates),
+    c(1000,nrow(season_specs))
+  )
+
+  expect_equal(
+    names(out$collisions),
+    c("PrBMigration", "PoBMigration","OMigration")
   )
 
 })

@@ -1,4 +1,6 @@
 # stochLAB 1.1.1
+* Add new unit tests for `srr` standards
+* Changed output of `mig_stoch_crm` to be a tibble 
 
 # stochLAB 1.1.0
 * Change function name (DayLength() changed to Day_Length())

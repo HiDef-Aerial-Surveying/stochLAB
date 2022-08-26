@@ -56,6 +56,40 @@
 #' @srrstats {G5.8d} *Data outside the scope of the algorithm (for example, data with more fields (columns) than observations (rows) for some regression algorithms)*
 #' @srrstats {G5.9} **Noise susceptibility tests** *Packages should test for expected stochastic behaviour, such as through the following conditions:*
 #' @srrstats {G5.9b} *Running under different random seeds or initial conditions does not meaningfully change results*
+#' @srrstats {EA1.0} *Identify one or more target audiences for whom the software is intended*
+#' @srrstats {EA1.1} *Identify the kinds of data the software is capable of analysing (see *Kinds of Data* below).*
+#' @srrstats {EA1.2} *Identify the kinds of questions the software is intended to help explore.*
+#' @srrstats {EA1.3} *Identify the kinds of data each function is intended to accept as input*
+#' @srrstats {EA2.0} *EDA Software which accepts standard tabular data and implements or relies upon extensive table filter and join operations should utilise an **index column** system*
+#' @srrstats {EA2.1} *All values in an index column must be unique, and this uniqueness should be affirmed as a pre-processing step for all input data.*
+#' @srrstats {EA2.2} *Index columns should be explicitly identified, either:*
+#' @srrstats {EA2.2a} *by using an appropriate class system, or*
+#' @srrstats {EA2.2b} *through setting an `attribute` on a table, `x`, of `attr(x, "index") <- <index_col_name>`.*
+#' @srrstats {EA2.3} *Table join operations should not be based on any assumed variable or column names*
+#' Join operations and such within the code are done using tables that are generated within the routines
+#' @srrstats {EA2.6} *Routines should appropriately process vector data regardless of additional attributes*
+#' @srrstats {EA3.0} *The algorithmic components of EDA Software should enable automated extraction and/or reporting of statistics as some sufficiently "meta" level (such as variable or model selection), for which previous or reference implementations require manual intervention.*
+#' @srrstats {EA4.0} *EDA Software should ensure all return results have types which are consistent with input types.*
+#' @srrstats {EA4.1} *EDA Software should implement parameters to enable explicit control of numeric precision*
+#' @srrstats {EA4.2} *The primary routines of EDA Software should return objects for which default `print` and `plot` methods give sensible results. Default `summary` methods may also be implemented.*
+#' @srrstats {EA5.2} *Screen-based output should never rely on default print formatting of `numeric` types, rather should also use some version of `round(., digits)`, `formatC`, `sprintf`, or similar functions for numeric formatting according the parameter described in* **EA4.1**.
+#' @srrstats {EA5.3} *Column-based summary statistics should always indicate the `storage.mode`, `class`, or equivalent defining attribute of each column.*
+#' @srrstats {EA5.4} *All visualisations should ensure values are rounded sensibly (for example, via `pretty()` function).*
+#' @srrstats {EA6.0} *Return values from all functions should be tested, including tests for the following characteristics:*
+#' @srrstats {EA6.0a} *Classes and types of objects*
+#' @srrstats {EA6.0b} *Dimensions of tabular objects*
+#' @srrstats {EA6.0c} *Column names (or equivalent) of tabular objects*
+#' @srrstats {EA6.0d} *Classes or types of all columns contained within `data.frame`-type tabular objects *
+#' @srrstats {EA6.0e} *Values of single-valued objects; for `numeric` values either using `testthat::expect_equal()` or equivalent with a defined value for the `tolerance` parameter, or using `round(..., digits = x)` with some defined value of `x` prior to testing equality.*
+#' @srrstats {PD1.0} *Software should provide references justifying choice and usage of particular probability distributions.*
+#' Choice of distributions should be outlined in Masden (2015) and MacGregor et al (2018), cited in the documentation
+#' @srrstats {PD2.0} *Where possible, software should represent probability distributions using a package for general representation.*
+#' @srrstats {PD3.0} *Manipulation of probability distributions should very generally be analytic, with numeric manipulations only implemented with clear justification (ideally including references).*
+#' @srrstats {PD3.1} *Operations on probability distributions should generally be contained within separate functions which themselves accept the names of the distributions as one input parameter.*
+#' @srrstats {PD4.0} *The numeric outputs of probability distribution functions should be tested, not just output structures. These tests should generally be tests for numeric equality.*
+#' @srrstats {PD4.1} *Tests for numeric equality should compare the output of of probability distribution functions with the output of code which explicitly demonstrates how such values are derived (generally defined in the same location in test files).*
+#' @srrstats {PD4.2} *All functions constructed in accordance with PD2.1 - that is, which use a fixed distribution, and which name that distribution as an input parameter - should be tested using at least two different distributions.*
+
 #' @noRd
 NULL
 
@@ -102,5 +136,42 @@ NULL
 #' @srrstatsNA {G5.2a} *Every message produced within R code by `stop()`, `warning()`, `message()`, or equivalent should be unique*
 #' @srrstatsNA {G5.2b} *Explicit tests should demonstrate conditions which trigger every one of those messages, and should compare the result with expected values.*
 #' G5.2 to 5.2b is handled by the validate_inputs scripts
+
+#' @srrstatsTODO {EA2.4} *Use and demand an explicit class system for such input (for example, via the [`DM` package](https://github.com/krlmlr/dm)).*
+#' Input is not multitabular
+#' @srrstatsTODO {EA2.5} *Ensure all individual tables follow the above standards for Index Columns*
+#' Input is not multitabular
+#' @srrstatsTODO {EA3.1} *EDA software should enable standardised comparison of inputs, processes, models, or outputs which previous or reference implementations otherwise only enable in some comparably unstandardised form.*
+#' No previous software or models available
+#' @srrstatsNA {EA5.0} *Graphical presentation in EDA software should be as accessible as possible or practicable. In particular, EDA software should consider accessibility in terms of:*
+#' No graphical outputs generated by the package
+#' @srrstatsNA {EA5.0a} *Typeface sizes, which should default to sizes which explicitly enhance accessibility*
+#' No graphical outputs generated by the package
+#' @srrstatsNA {EA5.0b} *Default colour schemes, which should be carefully constructed to ensure accessibility.*
+#' No graphical outputs generated by the package
+#' @srrstatsTODO {EA5.1} *Any explicit specifications of typefaces which override default values provided through other packages (including the `graphics` package) should consider accessibility*
+#' No graphical outputs generated by the package
+#' @srrstatsNA {EA5.5} *All visualisations should include units on all axes where such are specified or otherwise obtainable from input data or other routines.*
+#' No graphical outputs generated by the package
+#' @srrstatsNA {EA5.6} *Any packages which internally bundle libraries used for dynamic visualization and which are also bundled in other, pre-existing R packages, should explain the necessity and advantage of re-bundling that library.*
+#' No graphical outputs generated by the package
+#' @srrstatsTODO {EA6.1} *The properties of graphical output from EDA software should be explicitly tested, for example via the [`vdiffr` package](https://github.com/r-lib/vdiffr) or equivalent.*
+#' No graphical outputs generated by the package
+#'
+#' @srrstatsNA {PD3.2} *Use of optimisation routines to estimate parameters from probability distributions should explicitly specify and explain values of all parameters, including all uses of default parameters.*
+#' No optimisation routines required
+#' @srrstatsNA {PD3.3} *Return objects which include values generated from optimisation algorithms should include information on optimisation algorithm and performance, minimally including the name of the algorithm used, the convergence tolerance, and the number of iterations.*
+#' No optimisation routines required
+#' @srrstatsNA {PD3.4} *Use of routines to integrate probability distributions should explicitly document conditions under which integrals are expected to remain stable, and ideally include pre-processing checks for potentially unstable behaviour.*
+#' No integration of probability distributions
+#' @srrstatsNA {PD3.5} *Integration routines should only rely on discrete summation where such use can be justified (for example, through providing a literature reference), in which case the following applies:*
+#' No integration of probability distributions
+#' @srrstatsNA {PD3.5a} *Use of discrete summation to approximate integrals must demonstrate that the Reimann sum has a finite limit (or, equivalently, must explicitly describe the conditions under which the sum may be expected to be finite).*
+#' No integration of probability distributions
+#' @srrstatsTODO {PD4.3} *Tests of optimisation or integration algorithms should compare default results with results generated with alternative values for every parameter, including all parameters for the chosen algorithm (whether exposed as function inputs or not).*
+#' No integration or optimisation of probability distributions
+#' @srrstatsTODO {PD4.4} *Tests of optimisation or integration algorithms should compare equivalent results generated with at least one alternative algorithm.*
+#' No integration or optimisation of probability distributions
+#'
 #' @noRd
 NULL

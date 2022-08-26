@@ -34,6 +34,8 @@ test_that("band_crm() equates to Band spreadheet outputs in sheet 2", {
   expect_equal(out_case1$opt2, band_spreadsheet_dt$collisions_opt2)
   expect_equal(out_case1$opt3, band_spreadsheet_dt$collisions_opt3,
                tolerance = 1e-7)
+  expect_equal(dim(out_case1),c(12,4))
+  expect_equal(names(out_case1),c("month","opt1","opt2","opt3"))
 
 
   # case 2 - Kittiwake, 98% avoidance, specific wind farm features

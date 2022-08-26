@@ -346,6 +346,6 @@ mig_stoch_crm <- function(
 
   if(verbose) cli::cli_progress_step("Creating outputs")
 
-  return(list(collisions=mcrm_outputs,flux_rates=mcrm_flux))
+  return(list(collisions=as_tibble(mcrm_outputs),flux_rates=as_tibble(mcrm_flux)))
 }
 

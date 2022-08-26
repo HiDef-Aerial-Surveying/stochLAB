@@ -31,7 +31,10 @@ developed by [Masden
 (2015)](https://data.marine.gov.scot/dataset/developing-avian-collision-risk-model-incorporate-variability-and-uncertainty)
 to incorporate variability and uncertainty in the avian collision risk model
 originally developed by [Band
-(2012)](https://www.bto.org/sites/default/files/u28/downloads/Projects/Final_Report_SOSS02_Band1ModelGuidance.pdf).
+(2012)](https://www.bto.org/sites/default/files/u28/downloads/Projects/Final_Report_SOSS02_Band1ModelGuidance.pdf). The package is for use by individuals modelling collision risk of seabirds
+at offshore wind farms. The primary functions take input information on the morphology,
+behaviour and densities of seabirds as well data pertaining to the proposed
+wind farm (i.e., turbine dimensions, speed and number). 
 
 Code developed under `{stochLAB}` substantially re-factored and re-structured
 Masden's (heavily script-based) implementation into a user-friendly,
