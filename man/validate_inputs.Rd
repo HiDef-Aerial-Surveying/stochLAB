@@ -371,6 +371,9 @@ area.}
 \item \code{"mcrm"}: checks \code{\link[=mig_stoch_crm]{mig_stoch_crm()}} inputs
 }}
 }
+\value{
+Nothing returned from this function
+}
 \description{
 Input validator
 }

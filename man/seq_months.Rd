@@ -11,6 +11,9 @@ seq_months(start_month, end_month)
 
 \item{end_month}{character string, the three-letter name of the finishing month.}
 }
+\value{
+character vector. The list of months that falls in between two months
+}
 \description{
 Generate sequence of months
 }
