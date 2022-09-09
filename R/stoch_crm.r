@@ -62,7 +62,8 @@
 #' @param gen_fhd_boots Required only for model Options 2 and 3, a data frame
 #'   with bootstrap samples of flight height distributions (FHD) of the species
 #'   derived from general (country/regional level) data. FHD provides relative
-#'   frequency distribution of bird flights at 1-metre height bands, starting
+#'   frequency distribution of bird flights at 1-+
+#'   -metre height bands, starting
 #'   from sea surface. The first column must be named as `height`,
 #'   expressing the lower bound of the height band (thus it's first element must
 #'   be 0). Each remaining column should provide a bootstrap sample of the
@@ -71,7 +72,7 @@
 #'
 #'   **NOTE:** [generic_fhd_bootstraps] is a list object with generic FHD
 #'   bootstrap estimates for 25 seabird species from [Johnson et al
-#'   (2014)](https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/1365-2664.12191)
+#'   (2014)](https://doi.org/10.1111/1365-2664.12191)
 #'    (see usage in Example Section below).
 #'
 #' @param site_fhd_boots Required only for model Option 4, a data frame similar

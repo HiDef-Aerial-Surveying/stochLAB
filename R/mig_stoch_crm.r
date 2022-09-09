@@ -70,6 +70,7 @@
 #' @inheritParams Day_Length
 #'
 #' @importFrom rlang .data
+#' @importFrom tibble as_tibble
 #' @export
 #
 #' @example examples/mig_stoch_crm_example.r

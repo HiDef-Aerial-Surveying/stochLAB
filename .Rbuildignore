@@ -15,3 +15,5 @@
 ^codemeta\.json
 ^examples
 ^LICENSE
+^CRAN-SUBMISSION$
+^cran-comments\.md$
