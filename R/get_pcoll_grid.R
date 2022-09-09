@@ -23,6 +23,7 @@
 #'
 #' @seealso [generate_rotor_grids]
 #'
+#' @return a matrix. The probability of collisions at different flight height bands
 #' @examples
 #'
 #'   rotor_grids <- generate_rotor_grids(yinc = 0.05, xinc = 0.05, chord_prof_5MW)
@@ -88,7 +89,7 @@ get_pcoll_grid <- function(rotor_grids, direction, rotor_radius,
 
   pcoll[which(pp_radius == 0, arr.ind = TRUE)] <- 1
 
-  pcoll
+  return(pcoll)
 }
 
 

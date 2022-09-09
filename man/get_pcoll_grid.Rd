@@ -50,6 +50,9 @@ metres.}
 
 \item{body_lt}{Numeric value. The length of the bird (\eqn{L}), in metres.}
 }
+\value{
+a matrix. The probability of collisions at different flight height bands
+}
 \description{
 Calculates single transit collision risk at grid points (X, Y) inside the
 left-half of the rotor circle, for a given flight direction (upwind or

@@ -9,6 +9,9 @@ format_months(months)
 \arguments{
 \item{months}{character string or vector. The name of the month}
 }
+\value{
+a character string. The three letter name of the month
+}
 \description{
 Format any month name to three letter code
 }

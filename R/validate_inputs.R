@@ -6,6 +6,9 @@
 #' * `"scrm"`: checks [stoch_crm()] inputs
 #' * `"crm"`: checks [band_crm()] inputs
 #' * `"mcrm"`: checks [mig_stoch_crm()] inputs
+#'
+#' @return Nothing returned from this function
+#'
 #' @examples
 #'   validate_inputs(model_options=c(1),
 #'                avoid_bsc_pars=data.frame(mean=0.99,sd=0.001),

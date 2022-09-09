@@ -31,12 +31,14 @@ sample_qtls <- function(n, probs, qtls){
 
 #' Format any month name to three letter code
 #' @param months character string or vector. The name of the month
+#'
+#' @return a character string. The three letter name of the month
 #' @examples
 #'   format_months("January")
 #' @export
 format_months <- function(months){
   substr(months, 1, 1) <- toupper(substr(months, 1, 1))
-  substr(months, 1, 3)
+  return(substr(months, 1, 3))
 }
 
 
@@ -44,6 +46,8 @@ format_months <- function(months){
 #'
 #' @param start_month character string, the three-letter name of the starting month.
 #' @param end_month character string, the three-letter name of the finishing month.
+#'
+#' @return character vector. The list of months that falls in between two months
 #' @examples
 #'    seq_months("Jan", "Apr")
 #' @export
