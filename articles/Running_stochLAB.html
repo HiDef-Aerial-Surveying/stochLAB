@@ -87,16 +87,7 @@
     
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/HiDef-Aerial-Surveying/stochLAB" class="external-link">stochLAB</a></span><span class="op">)</span></span>
-<span><span class="co">#&gt; Loading required package: tidyverse</span></span>
-<span><span class="co">#&gt; ── <span style="font-weight: bold;">Attaching packages</span> ─────────────────────────────────────── tidyverse 1.3.2 ──</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">ggplot2</span> 3.3.6     <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">purrr  </span> 0.3.4</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">tibble </span> 3.1.8     <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">dplyr  </span> 1.0.9</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">tidyr  </span> 1.2.0     <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">stringr</span> 1.4.1</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">readr  </span> 2.1.2     <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">forcats</span> 0.5.2</span></span>
-<span><span class="co">#&gt; ── <span style="font-weight: bold;">Conflicts</span> ────────────────────────────────────────── tidyverse_conflicts() ──</span></span>
-<span><span class="co">#&gt; <span style="color: #BB0000;">✖</span> <span style="color: #0000BB;">dplyr</span>::<span style="color: #00BB00;">filter()</span> masks <span style="color: #0000BB;">stats</span>::filter()</span></span>
-<span><span class="co">#&gt; <span style="color: #BB0000;">✖</span> <span style="color: #0000BB;">dplyr</span>::<span style="color: #00BB00;">lag()</span>    masks <span style="color: #0000BB;">stats</span>::lag()</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/HiDef-Aerial-Surveying/stochLAB" class="external-link">stochLAB</a></span><span class="op">)</span></span></code></pre></div>
 <p><a href="https://github.com/HiDef-Aerial-Surveying/stochLAB" class="external-link">stochLAB</a> is a tool to run Collision Risk Models (CRMs) for seabirds on offshore wind farms.</p>
 <div class="section level2">
 <h2 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
@@ -323,7 +314,7 @@
 <span>    .before <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># --- Set up progress bar for the upcoming iterative mapping step</span></span>
-<span><span class="va">pb</span> <span class="op">&lt;-</span> <span class="fu">progress</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/progress/man/progress_bar.html" class="external-link">progress_bar</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span>
+<span><span class="va">pb</span> <span class="op">&lt;-</span> <span class="fu">progress</span><span class="fu">::</span><span class="va">progress_bar</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span>
 <span>  format <span class="op">=</span> <span class="st">"Running Scenario: :what [:bar] :percent eta: :eta"</span>,</span>
 <span>  width <span class="op">=</span> <span class="fl">100</span>,</span>
 <span>  total <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">scenarios_specs</span><span class="op">)</span><span class="op">)</span></span>
