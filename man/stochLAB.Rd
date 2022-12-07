@@ -12,7 +12,7 @@ The main functions of stochLAB are:
 \itemize{
 \item \code{\link[=stoch_crm]{stoch_crm()}}: Stochastic Collision Risk Model,
 \item \code{\link[=band_crm]{band_crm()}}: Deterministic Collision Risk Model,
-\item ...fill with migration functions..
+\item \code{\link[=mig_stoch_crm]{mig_stoch_crm()}}: Stochastic Migration Collision risk Model
 }
 }
 \section{Overview}{

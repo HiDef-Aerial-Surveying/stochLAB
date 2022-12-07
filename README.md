@@ -1,13 +1,15 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+
 [![test-coverage](https://github.com/HiDef-Aerial-Surveying/stochLAB/actions/workflows/test-coverage.yaml/badge.svg)](https://github.com/HiDef-Aerial-Surveying/stochLAB/actions/workflows/test-coverage.yaml)
-[![pkgdown](https://github.com/HiDef-Aerial-Surveying/stochLAB/actions/workflows/pkgdown.yaml/badge.svg)](https://github.com/HiDef-Aerial-Surveying/stochLAB/actions/workflows/pkgdown.yaml)
-[![R-CMD-check](https://github.com/HiDef-Aerial-Surveying/stochLAB/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/HiDef-Aerial-Surveying/stochLAB/actions/workflows/R-CMD-check.yaml)
-[![pkgcheck](https://github.com/HiDef-Aerial-Surveying/stochLAB/actions/workflows/pkgcheck.yaml/badge.svg)](https://github.com/HiDef-Aerial-Surveying/stochLAB/actions/workflows/pkgcheck.yaml)
 
 # stochLAB <img src='man/figures/logo.png' align="right" height="139" />
 
 <!-- badges: start -->
+
+[![R-CMD-check](https://github.com/HiDef-Aerial-Surveying/stochLAB/workflows/R-CMD-check/badge.svg)](https://github.com/HiDef-Aerial-Surveying/stochLAB/actions)
+[![Codecov test
+coverage](https://codecov.io/gh/HiDef-Aerial-Surveying/stochLAB/branch/master/graph/badge.svg)](https://app.codecov.io/gh/HiDef-Aerial-Surveying/stochLAB?branch=master)
 <!-- badges: end -->
 
 `{stochLAB}` is a tool to run Collision Risk Models (CRMs) for seabirds
@@ -22,15 +24,17 @@ developed by [Masden
 to incorporate variability and uncertainty in the avian collision risk
 model originally developed by [Band
 (2012)](https://www.bto.org/sites/default/files/u28/downloads/Projects/Final_Report_SOSS02_Band1ModelGuidance.pdf).
-
-The `{stochLAB}` package was compiled and curated by DMP Statistics and 
-HiDef Aerial Surveying. 
+The package is for use by individuals modelling collision risk of
+seabirds at offshore wind farms. The primary functions take input
+information on the morphology, behaviour and densities of seabirds as
+well data pertaining to the proposed wind farm (i.e., turbine
+dimensions, speed and number).
 
 Code developed under `{stochLAB}` substantially re-factored and
 re-structured Masden’s (heavily script-based) implementation into a
 user-friendly, streamlined, well documented and easily distributed tool.
 Furthermore, the package lays down the code infrastructure for easier
-incorporation of new functionality, e.g. extra parameter sampling
+incorporation of new functionality, e.g. extra parameter sampling
 features, model expansions, etc.
 
 In addition, previous code underpinning core calculations for the
@@ -44,10 +48,12 @@ For a more detailed overview type `?stochLAB`, once installed!
 
 ## Installation
 
-<!-- You can install the released version of stochLAB from [CRAN](https://CRAN.R-project.org) with: -->
-<!-- ``` r -->
-<!-- install.packages("stochLAB") -->
-<!-- ``` -->
+You can install the released version of stochLAB from
+[CRAN](https://CRAN.R-project.org) with:
+
+``` r
+install.packages("stochLAB")
+```
 
 You can install the development version with:
 
@@ -358,152 +364,85 @@ outputs
 
 ### Band model example
 
-This is an example usage of `band_crm()`. This is for a single species 
-and single set of turbine parameters. This replicates the Band (2012) 
-worksheet. The `stoch_crm()` function wraps around this function, where 
+This is an example usage of `band_crm()`. This is for a single species
+and single set of turbine parameters. This replicates the Band (2012)
+worksheet. The `stoch_crm()` function wraps around this function, where
 `band_crm()` acts in essence as a single draw of `stoch_crm()`.
 
 Please note the example runs on fictional data.
 
-``` r
-# ------------------------------------------------------
-# Run with arbitrary parameter values, for illustration
-# ------------------------------------------------------
+    # ------------------------------------------------------
+    # Run with arbitrary parameter values, for illustration
+    # ------------------------------------------------------
 
-# Setting a dataframe of parameters to draw from
-params <- data.frame(
-  flight_speed = 13.1,         # Flight speed in m/s
-  body_lt = 0.85,              # Body length in m
-  wing_span = 1.01,            # Wing span in m
-  flight_type = "flapping",    # flapping or gliding flight
-  avoid_rt_basic = 0.989,      # avoidance rate for option 1 and 2
-  avoid_rt_ext = 0.981,        # extended avoidance rate for option 3 and 4
-  noct_activity = 0.5,         # proportion of day birds are inactive
-  prop_crh_surv = 0.13,        # proportion of birds at collision risk height (option 1 only)
-  prop_upwind = 0.5,           # proportion of flights that are upwind
-  rotor_speed = 15,            # rotor speed in m/s
-  rotor_radius = 120,          # radius of turbine in m
-  blade_width = 5,             # width of turbine blades at thickest point in m
-  blade_pitch = 15,            # mean radius pitch in Radians
-  n_blades = 3,                # total number of blades per turbine
-  hub_height = 150,            # height of hub in m above HAT
-  n_turbines = 100,            # number of turbines in the wind farm
-  wf_width = 52,               # width across longest section of wind farm
-  wf_latitude = 56,            # latitude of centroid of wind farm
-  tidal_offset = 2.5,          # mean tidal offset from HAT of the wind farm
-  lrg_arr_corr = TRUE          # apply a large array correction?
-)
+    # Setting a dataframe of parameters to draw from
+    params <- data.frame(
+      flight_speed = 13.1,         # Flight speed in m/s
+      body_lt = 0.85,              # Body length in m
+      wing_span = 1.01,            # Wing span in m
+      flight_type = "flapping",    # flapping or gliding flight
+      avoid_rt_basic = 0.989,      # avoidance rate for option 1 and 2
+      avoid_rt_ext = 0.981,        # extended avoidance rate for option 3 and 4
+      noct_activity = 0.5,         # proportion of day birds are inactive
+      prop_crh_surv = 0.13,        # proportion of birds at collision risk height (option 1 only)
+      prop_upwind = 0.5,           # proportion of flights that are upwind
+      rotor_speed = 15,            # rotor speed in m/s
+      rotor_radius = 120,          # radius of turbine in m
+      blade_width = 5,             # width of turbine blades at thickest point in m
+      blade_pitch = 15,            # mean radius pitch in Radians
+      n_blades = 3,                # total number of blades per turbine
+      hub_height = 150,            # height of hub in m above HAT
+      n_turbines = 100,            # number of turbines in the wind farm
+      wf_width = 52,               # width across longest section of wind farm
+      wf_latitude = 56,            # latitude of centroid of wind farm
+      tidal_offset = 2.5,          # mean tidal offset from HAT of the wind farm
+      lrg_arr_corr = TRUE          # apply a large array correction?
+    )
 
-# Monthly bird densities
-b_dens <- data.frame(
-  month = month.abb,
-  dens = runif(12, 0.8, 1.5)
-)
+    # Monthly bird densities
+    b_dens <- data.frame(
+      month = month.abb,
+      dens = runif(12, 0.8, 1.5)
+    )
 
-# flight height distribution from Johnston et al
-gen_fhd_dat <- data.frame(
-  height = Johnston_Flight_heights_SOSS$Height,
-  prop = Johnston_Flight_heights_SOSS$Gannet.est
-)
+    # flight height distribution from Johnston et al
+    gen_fhd_dat <- data.frame(
+      height = Johnston_Flight_heights_SOSS$Height,
+      prop = Johnston_Flight_heights_SOSS$Gannet.est
+    )
 
-# monthly operational time of the wind farm
-turb_oper <- data.frame(
-  month = month.abb,
-  prop_oper = runif(12,0.5,0.8)
-)
-
-
-band_crm(
-  model_options = c(1,2,3),
-  flight_speed = params$flight_speed,
-  body_lt = params$body_lt,
-  wing_span = params$wing_span,
-  flight_type = params$flight_type,
-  avoid_rt_basic = params$avoid_rt_basic,
-  avoid_rt_ext = params$avoid_rt_ext,
-  noct_activity = params$noct_activity,
-  prop_crh_surv = params$prop_crh_surv,
-  dens_month = b_dens,
-  prop_upwind = params$prop_upwind,
-  gen_fhd = gen_fhd_dat,
-  site_fhd = NULL,  # Option 4 only
-  rotor_speed = params$rotor_speed,
-  rotor_radius = params$rotor_radius,
-  blade_width = params$blade_width,
-  blade_pitch = params$blade_pitch,
-  n_blades = params$n_blades,
-  hub_height = params$hub_height,
-  chord_prof = chord_prof_5MW,
-  n_turbines = params$n_turbines,
-  turb_oper_month = turb_oper,
-  wf_width = params$wf_width,
-  wf_latitude = params$wf_latitude,
-  tidal_offset = params$tidal_offset,
-  lrg_arr_corr = params$lrg_arr_corr
-  )
-```
-
-### Migratory stochastic collision risk model
-
-This is an adaptation of the Band (2012) method for estimating collision
-risk by migratory species in windfarms. This only runs for `crm_opt1()` and 
-uses estimates of population size and PCH due to the complexity of measuring
-these parameters in migratory species. The code will return all draws for
-each defined season.
-
-Please note the example runs on fictional data.
- 
-```r
-# ------------------------------------------------------
-# Run with arbitrary parameter values, for illustration
-# ------------------------------------------------------
-season_specs <- data.frame(
-  season_id = c("PrBMigration", "PoBMigration", "Omigration"),
-  start_month = c("Jan", "May", "Oct"), end_month = c("Apr", "Sep", "Dec")
-)
-
-# wind availability
-windavb <- data.frame(
-  month = month.abb,
-  pctg = runif(12, 85, 98)
-)
-head(windavb)
-
-# maintenance downtime
-dwntm <- data.frame(
-  month = month.abb,
-  mean = runif(12, 6, 10),
-  sd = rep(2, 12))
-head(dwntm)
+    # monthly operational time of the wind farm
+    turb_oper <- data.frame(
+      month = month.abb,
+      prop_oper = runif(12,0.5,0.8)
+    )
 
 
-mig_stoch_crm(
-  wing_span_pars = data.frame(mean = 1.08, sd = 0.04),      # Wing span in m,
-  flt_speed_pars = data.frame(mean = 7.26, sd = 1.5),       # Flight speed in m/s
-  body_lt_pars = data.frame(mean = 0.39, sd = 0.005),       # Body length in m,
-  prop_crh_pars = data.frame(mean = 0.06, sd = 0.009),      # Proportion of birds at CRH
-  avoid_bsc_pars = data.frame(mean = 0.99, sd = 0.001),     # avoidance rate
-  n_turbines = 150,
-  n_blades = 3,
-  rtn_speed_pars = data.frame(mean = 13.1, sd = 4),         # rotation speed in m/s of turbine blades
-  bld_pitch_pars = data.frame(mean = 3, sd = 0.3),          # pitch in degrees of turbine blades
-  rtr_radius_pars = data.frame(mean = 80, sd = 0),          # sd = 0, rotor radius is fixed
-  bld_width_pars = data.frame(mean = 8, sd = 0),            # sd = 0, blade width is fixed
-  wf_width = 100,
-  wf_latitude = 54.1,
-  prop_upwind = 0.5,
-  flight_type = "flapping",
-  popn_estim_pars = data.frame(mean = 21584, sd = 2023),    # population flying through windfarm,
-  season_specs = season_specs,
-  chord_profile = chord_prof_5MW,
-  trb_wind_avbl = windavb,
-  trb_downtime_pars = dwntm,
-  n_iter = 1000,
-  LargeArrayCorrection = TRUE,
-  log_file = NULL,
-  seed = 1234,
-  verbose = TRUE)
-
-
-```
-
+    stochLAB::band_crm(
+      model_options = c(1,2,3),
+      flight_speed = params$flight_speed,
+      body_lt = params$body_lt,
+      wing_span = params$wing_span,
+      flight_type = params$flight_type,
+      avoid_rt_basic = params$avoid_rt_basic,
+      avoid_rt_ext = params$avoid_rt_ext,
+      noct_activity = params$noct_activity,
+      prop_crh_surv = params$prop_crh_surv,
+      dens_month = b_dens,
+      prop_upwind = params$prop_upwind,
+      gen_fhd = gen_fhd_dat,
+      site_fhd = NULL,  # Option 4 only
+      rotor_speed = params$rotor_speed,
+      rotor_radius = params$rotor_radius,
+      blade_width = params$blade_width,
+      blade_pitch = params$blade_pitch,
+      n_blades = params$n_blades,
+      hub_height = params$hub_height,
+      chord_prof = chord_prof_5MW,
+      n_turbines = params$n_turbines,
+      turb_oper_month = turb_oper,
+      wf_width = params$wf_width,
+      wf_latitude = params$wf_latitude,
+      tidal_offset = params$tidal_offset,
+      lrg_arr_corr = params$lrg_arr_corr
+      )

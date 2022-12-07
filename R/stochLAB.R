@@ -7,7 +7,7 @@
 #' The main functions of stochLAB are:
 #'  * [stoch_crm()]: Stochastic Collision Risk Model,
 #'  * [band_crm()]: Deterministic Collision Risk Model,
-#'  * ...fill with migration functions..
+#'  * [mig_stoch_crm()]: Stochastic Migration Collision risk Model
 #'
 #' @docType package
 #' @name stochLAB

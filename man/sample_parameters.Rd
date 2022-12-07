@@ -116,7 +116,8 @@ proportion of bird flights at each height band, with no column naming
 requirements.
 
 \strong{NOTE:} \link{generic_fhd_bootstraps} is a list object with generic FHD
-bootstrap estimates for 25 seabird species from \href{https://doi.org/10.1111/1365-2664.12191}{Johnson et al (2014)}
+bootstrap estimates for 25 seabird species from Johnson et al
+(2014) \doi{10.1111/1365-2664.12191}
 (see usage in Example Section below).}
 
 \item{site_fhd_boots}{Required only for model Option 4, a data frame similar

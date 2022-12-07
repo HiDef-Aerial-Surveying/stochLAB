@@ -3,19 +3,18 @@ Package: stochLAB
 Title: Stochastic Collision Risk Model
 Version: 1.1.1
 Authors@R: c(
-    person("Grant", "Humphries", , "grant.humphries@hidefsurveying.co.uk", role = c("aut", "cre")),
+    person("Grant", "Humphries", , "grwhumphries@blackbawks.net", role = c("aut", "cre")),
     person("Bruno", "Caneco", , "bruno@dmpstats.com", role = "aut"),
     person("Marine Scotland", role = c("fnd", "cph")),
     person("HiDef", role = "cph"),
     person("DMPstats", role = "cph")
   )
-Description: Tool for running Collision Risk Models for seabirds on
+Description: Collision Risk Models for avian fauna (seabird and migratory birds) at
     offshore wind farms. The base deterministic model is derived from 
-    Band (2012) Using a Collision Risk Model to Assess Bird Collision Risks 
-    for Offshore Wind Farms. This was further expanded on by 
-    Masden (2015) <doi:10.7489/1659-1> and code used here is heavily derived
-    from this work with input from Dr A. Cook at the British Trust for
-    Ornithology. 
+    Band (2012) <https://tethys.pnnl.gov/publications/using-collision-risk-model-assess-bird-collision-risks-offshore-wind-farms>. 
+    This was further expanded on by Masden (2015) <doi:10.7489/1659-1> and code 
+    used here is heavily derived from this work with input from Dr A. Cook at the 
+    British Trust for Ornithology. 
 License: GPL (>= 3)
 Depends: 
     R (>= 4.0)
