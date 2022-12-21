@@ -40,7 +40,7 @@ etc.
 
 In addition, previous code underpinning core calculations for the extended model
 has been replaced by an alternative approach, resulting in significant gains in
-computational speed - over 30x faster than Masden's code. This optimization is
+computational speed over Masden's code. This optimization is
 particularly beneficial under a stochastic context, when core calculations are
 called repeatedly during simulations.
 

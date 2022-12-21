@@ -403,6 +403,6 @@ stoch_crm(
   out_sampled_pars = TRUE,
   out_period = "seasons",
   season_specs = seas_dt,
-  log_file = paste0(getwd(), "scrm_example.log")
+  log_file = file.path(getwd(), "scrm_example.log")
 )
 }

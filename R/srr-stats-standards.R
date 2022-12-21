@@ -67,6 +67,8 @@
 #' @srrstats {EA2.2b} *through setting an `attribute` on a table, `x`, of `attr(x, "index") <- <index_col_name>`.*
 #' @srrstats {EA2.3} *Table join operations should not be based on any assumed variable or column names*
 #' Join operations and such within the code are done using tables that are generated within the routines
+#' @srrstats {EA2.4} *Use and demand an explicit class system for such input (for example, via the [`DM` package](https://github.com/krlmlr/dm)).*
+#' @srrstats {EA2.5} *Ensure all individual tables follow the above standards for Index Columns*
 #' @srrstats {EA2.6} *Routines should appropriately process vector data regardless of additional attributes*
 #' @srrstats {EA3.0} *The algorithmic components of EDA Software should enable automated extraction and/or reporting of statistics as some sufficiently "meta" level (such as variable or model selection), for which previous or reference implementations require manual intervention.*
 #' @srrstats {EA4.0} *EDA Software should ensure all return results have types which are consistent with input types.*
@@ -111,6 +113,8 @@ NULL
 #' G2.4d not applicable because no conversion to factor occurs
 #' @srrstatsNA {G2.9} *Software should issue diagnostic messages for type conversion in which information is lost (such as conversion of variables from factor to character; standardisation of variable names; or removal of meta-data such as those associated with [`sf`-format](https://r-spatial.github.io/sf/) data) or added (such as insertion of variable or column names where none were provided).*
 #' G2.9 not applicable as these conversions don't occur
+#' @srrstatsNA {G2.16} *All functions should also provide options to handle undefined values (e.g., `NaN`, `Inf` and `-Inf`), including potentially ignoring or removing such values.*
+#' G2.16 is handled by the validate_inputs scripts
 #' @srrstatsNA {G3.0} *Statistical software should never compare floating point numbers for equality. All numeric equality comparisons should either ensure that they are made between integers, or use appropriate tolerances for approximate equality.*
 #' G3.0 not applicable as only floating point comparisons are for the unit tests, not for functionality
 #' @srrstatsNA {G3.1} *Statistical software which relies on covariance calculations should enable users to choose between different algorithms for calculating covariances, and should not rely solely on covariances from the `stats::cov` function.*
@@ -130,17 +134,10 @@ NULL
 #' G5.9a - the trivial noise would be the same as playing with the seed in this case as sampling is done on the standard deviation
 #' @srrstatsNA {G5.7} **Algorithm performance tests** *to test that implementation performs as expected as properties of data change. For instance, a test may show that parameters approach correct estimates within tolerance as data size increases, or that convergence times decrease for higher convergence thresholds.*
 #' G5.7 not applicable as no convergence occurs here - this is mostly random sampling
-#' @srrstatsNA {G2.16} *All functions should also provide options to handle undefined values (e.g., `NaN`, `Inf` and `-Inf`), including potentially ignoring or removing such values.*
-#' G2.16 is handled by the validate_inputs scripts
 #' @srrstatsNA {G5.2} *Appropriate error and warning behaviour of all functions should be explicitly demonstrated through tests. In particular,*
 #' @srrstatsNA {G5.2a} *Every message produced within R code by `stop()`, `warning()`, `message()`, or equivalent should be unique*
 #' @srrstatsNA {G5.2b} *Explicit tests should demonstrate conditions which trigger every one of those messages, and should compare the result with expected values.*
 #' G5.2 to 5.2b is handled by the validate_inputs scripts
-
-#' @srrstatsNA {EA2.4} *Use and demand an explicit class system for such input (for example, via the [`DM` package](https://github.com/krlmlr/dm)).*
-#' Input is not multitabular
-#' @srrstatsNA {EA2.5} *Ensure all individual tables follow the above standards for Index Columns*
-#' Input is not multitabular
 #' @srrstatsNA {EA3.1} *EDA software should enable standardised comparison of inputs, processes, models, or outputs which previous or reference implementations otherwise only enable in some comparably unstandardised form.*
 #' No previous software or models available
 #' @srrstatsNA {EA5.0} *Graphical presentation in EDA software should be as accessible as possible or practicable. In particular, EDA software should consider accessibility in terms of:*

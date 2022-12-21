@@ -231,7 +231,7 @@ conventional R packages requirements.
 
 Furthermore, previous code underpinning key calculations for the extended
 model was replaced by an alternative approach, resulting in significant gains
-in computational speed - over 30x faster than Masden's approach. This
+in computational speed over Masden's approach. This
 optimization is particularly beneficial under a stochastic context, when Band
 calculations are called repeatedly, potentially thousands of times. See
 \code{\link[=generate_rotor_grids]{generate_rotor_grids()}} for further details.

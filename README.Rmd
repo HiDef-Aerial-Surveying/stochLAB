@@ -1,5 +1,8 @@
 ---
 output: github_document
+editor_options: 
+  markdown: 
+    wrap: 80
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -13,18 +16,19 @@ knitr::opts_chunk$set(
 )
 ```
 
-# stochLAB <img src='man/figures/logo.png' align="right" height="139" />
+# stochLAB <img src="man/figures/logo.png" align="right" height="139"/>
 
 <!-- badges: start -->
+
 [![test-coverage](https://github.com/HiDef-Aerial-Surveying/stochLAB/actions/workflows/test-coverage.yaml/badge.svg)](https://github.com/HiDef-Aerial-Surveying/stochLAB/actions/workflows/test-coverage.yaml)
 [![pkgdown](https://github.com/HiDef-Aerial-Surveying/stochLAB/actions/workflows/pkgdown.yaml/badge.svg)](https://github.com/HiDef-Aerial-Surveying/stochLAB/actions/workflows/pkgdown.yaml)
 [![R-CMD-check](https://github.com/HiDef-Aerial-Surveying/stochLAB/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/HiDef-Aerial-Surveying/stochLAB/actions/workflows/R-CMD-check.yaml)
 [![pkgcheck](https://github.com/HiDef-Aerial-Surveying/stochLAB/actions/workflows/pkgcheck.yaml/badge.svg)](https://github.com/HiDef-Aerial-Surveying/stochLAB/actions/workflows/pkgcheck.yaml)
 
-
 <!-- badges: end -->
 
-`{stochLAB}` is a tool to run Collision Risk Models (CRMs) for seabirds on offshore wind farms.
+`{stochLAB}` is a tool to run Collision Risk Models (CRMs) for seabirds on
+offshore wind farms.
 
 ## Overview
 
@@ -34,42 +38,106 @@ developed by [Masden
 (2015)](https://data.marine.gov.scot/dataset/developing-avian-collision-risk-model-incorporate-variability-and-uncertainty)
 to incorporate variability and uncertainty in the avian collision risk model
 originally developed by [Band
-(2012)](https://www.bto.org/sites/default/files/u28/downloads/Projects/Final_Report_SOSS02_Band1ModelGuidance.pdf). The package is for use by individuals modelling collision risk of seabirds
-at offshore wind farms. The primary functions take input information on the morphology,
-behaviour and densities of seabirds as well data pertaining to the proposed
-wind farm (i.e., turbine dimensions, speed and number). 
+(2012)](https://www.bto.org/sites/default/files/u28/downloads/Projects/Final_Report_SOSS02_Band1ModelGuidance.pdf).
+The package is for use by individuals modelling collision risk of seabirds at
+offshore wind farms. The primary functions take input information on the
+morphology, behaviour and densities of seabirds as well data pertaining to the
+proposed wind farm (i.e., turbine dimensions, speed and number).
+
+These collision risk models are useful for marine ornithologists who are working
+in the offshore wind industry, particularly in UK waters. However, the package
+itself relies on generic biological and windfarm data and can be applied
+anywhere (i.e., in any marine environment) as long as the parameters are
+appropriate for the species and windfarms of interest.
 
 Code developed under `{stochLAB}` substantially re-factored and re-structured
 Masden's (heavily script-based) implementation into a user-friendly,
 streamlined, well documented and easily distributed tool. Furthermore, the
 package lays down the code infrastructure for easier incorporation of new
-functionality, e.g. extra parameter sampling features, model expansions,
-etc.
+functionality, e.g. extra parameter sampling features, model expansions, etc.
 
 In addition, previous code underpinning core calculations for the extended model
 has been replaced by an alternative approach, resulting in significant gains in
-computational speed - over 30x faster than Masden's code. This optimization is
+computational speed over Masden's code. This optimization is
 particularly beneficial under a stochastic context, when core calculations are
 called repeatedly during simulations.
 
 For a more detailed overview type `?stochLAB`, once installed!
 
-
 ## Installation
 
-You can install the released version of stochLAB from [CRAN](https://CRAN.R-project.org) with:
+You can install the released version of stochLAB from
+[CRAN](https://CRAN.R-project.org) with:
 
-```r 
+``` r
 install.packages("stochLAB")
 ```
 
 You can install the development version with:
 
-```r
+``` r
 # install.packages("devtools")
 devtools::install_github("HiDef-Aerial-Surveying/stochLAB")
 ```
 
+This package depends on the following packages, which should be installed
+automatically:
+
+`cli dplyr glue logr magrittr msm pracma purrr rlang stats tibble tidyr`
+
+## Bug reports
+
+To report any bugs, please log an
+[ISSUE](www.github.com/hidef-aerial-surveying/stochLAB/issues)
+
+## Input parameters
+
+Many of the input parameters for the `stoch_crm()` function need to be obtained
+from developers (e.g., blade pitch, rotor radius, wind speed, etc...). However,
+there are many parameters around the morphology and biology of birds that are
+built into the `sCRM` package for UK seabirds, which can be found
+[HERE](www.github.com/dmpstats/sCRM). `sCRM` is an R Shiny application that
+wraps up the `stoch_crm()` and `band_crm()` functions. These biological
+parameters can be accessed by installing the `sCRM` package and running
+`sCRM::spp_dflts`, which will bring up a tibble object with all the relevant
+information.
+
+If performing a collision risk assessment in UK waters, default biological data
+for the following parameters can be obtained from the `sCRM` package:
+
+`flt_speed_pars, body_lt_pars, wing_span_pars, avoid_bsc_pars, avoid_ext_pars, noct_act_pars, flight_type, gen_fhd_boots`
+
+Other parameters around the species of interest need to be derived from
+site-based surveys:
+
+`prop_crh_pars, bird_dens_dt,` and `site_fhd_boots`
+
+All wind farm parameters need to be obtained by the wind farm developers:
+
+`n_blades, air_gap_pars, rtr_radius_pars, bld_width_pars, bld_pitch_pars, rtn_speed_pars, windspd_pars, trb_wind_avbl, trb_downtime_pars, wf_n_trbs, wf_width, wf_latitude, tidal_offset, season_specs, bld_chord_prf, lrg_arr_corr`
+
+The following parameters refer to the outputs:
+
+`out_format, out_sampled_pars, out_period, verbose, log_file`
+
+More information on input parameter specifics can be found in the vignettes for
+`stoch_crm` and `band_crm`.
+
+## Outputs
+
+Once the collision risk model is run, the key outputs are presented as a table
+which contains the mean, standard deviation and median number of collisions
+summarised by month, season, or year. Quantiles of the bootstrapped collisions
+are also presented in the tables. These tables are accessed through calling from
+the model object. Run the [Examples] to view exemplar outputs.
+
+``` r
+stochOUT <- stochLAB::stoch_crm(...)
+
+stochOUT$collisions$opt1 #For outputs from option 1 of the stochastic collision risk model 
+stochOUT$collisions$opt2 #For outputs from option 2 of the stochastic collision risk model 
+stochOUT$collisions$opt3 #For outputs from option 3 of the stochastic collision risk model 
+```
 
 ## Examples
 
@@ -79,7 +147,7 @@ This is a basic example of running the stochastic collision model for one
 seabird species and one turbine/wind-farm scenario, with fictional input
 parameter data.
 
-```r
+``` {r}
 library(stochLAB)
 
 # ------------------------------------------------------
@@ -158,32 +226,29 @@ stoch_crm(
 )
 ```
 
-
 ### Multiscenario example
 
 This is an example usage of `stoch_crm()` for multiple scenarios. The aim is
 two-fold:
 
-1. Suggest how input parameter datasets used in the previous implementation can
-be reshaped to fit `stoch_crm()`'s  interface. Suggested code is also relevant
-in the context of multiple scenarios applications, since the wide tabular
-structure of these datasets is likely the favoured format for users to compile
-input parameters under different scenarios.
+1.  Suggest how input parameter datasets used in the previous implementation can
+    be reshaped to fit `stoch_crm()`'s interface. Suggested code is also
+    relevant in the context of multiple scenarios applications, since the wide
+    tabular structure of these datasets is likely the favoured format for users
+    to compile input parameters under different scenarios.
 
-2. Propose a functional programming framework to run `stoch_crm()` for multiple
-species and wind-farm/turbines features.
+2.  Propose a functional programming framework to run `stoch_crm()` for multiple
+    species and wind-farm/turbines features.
 
 Please note the example runs on fictional data.
 
-```r
+``` {r}
 library(stochLAB)
 
 # --------------------------------------------------------- #
 # ----      Reshaping into list-column data frames       ----
 # --------------------------------------------------------- #
 #
-# Here embracing list-columns tibbles, but lists could be used instead
-
 # --- bird features
 bird_pars <- bird_pars_wide_example %>%
   dplyr::relocate(Flight, .after = dplyr::last_col()) %>%
@@ -303,7 +368,7 @@ outputs <- scenarios_specs %>%
 
     # params for current species
     c_spec <- bird_pars %>%
-      dplyr::filter(Species == {{spp}}) # {{}} to avoid issues with data masking
+      dplyr::filter(Species == {{spp}}) 
 
     # density for current species
     c_dens <- dens_pars %>%
@@ -319,8 +384,9 @@ outputs <- scenarios_specs %>%
 
     # inputs in list-columns need to be unlisted, either via `unlist()` or
     # indexing `[[1]]`
-    # switching off `verbose`, otherwise console will be # cramped with log
-    messages
+    # switching off `verbose`, otherwise console will be 
+    # cramped with log messages
+    
     stoch_crm(
       model_options = c(1, 2, 3),
       n_iter = 1000,
@@ -373,14 +439,15 @@ outputs
 
 ### Band model example
 
-This is an example usage of `band_crm()`. This is for a single species 
-and single set of turbine parameters. This replicates the Band (2012) 
-worksheet. The `stoch_crm()` function wraps around this function, where 
-`band_crm()` acts in essence as a single draw of `stoch_crm()`.
+This is an example usage of `band_crm()`. This is for a single species and
+single set of turbine parameters. This replicates the Band (2012) worksheet. The
+`stoch_crm()` function wraps around this function, where `band_crm()` acts in
+essence as a single draw of `stoch_crm()`.
 
 Please note the example runs on fictional data.
 
-```
+``` {r}
+library(stochLAB)
 # ------------------------------------------------------
 # Run with arbitrary parameter values, for illustration
 # ------------------------------------------------------
@@ -416,10 +483,9 @@ b_dens <- data.frame(
 )
 
 # flight height distribution from Johnston et al
-gen_fhd_dat <- data.frame(
-  height = Johnston_Flight_heights_SOSS$Height,
-  prop = Johnston_Flight_heights_SOSS$Gannet.est
-)
+gen_fhd_dat <- Johnston_Flight_heights_SOSS %>%
+  dplyr::filter(variable=="Gannet.est") %>%
+  dplyr::select(height,prop)
 
 # monthly operational time of the wind farm
 turb_oper <- data.frame(
@@ -457,4 +523,3 @@ stochLAB::band_crm(
   lrg_arr_corr = params$lrg_arr_corr
   )
 ```
-

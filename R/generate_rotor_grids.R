@@ -26,7 +26,7 @@
 #'   `generate_rotor_grids`, are then applied to sampled parameters
 #'   via vectorized operations. The number of calculations per iteration are
 #'   thence substantially reduced, leading to significant gains in computational
-#'   speed - over 30x faster than Masden's implementation for a 1000 iterations
+#'   speed over Masden's implementation for a 1000 iterations
 #'   run.
 #'
 #' @param yinc,xinc numeric values, the grid increments along the y-axis and

@@ -420,6 +420,20 @@ validate_inputs <- function(model_options,
 
 
 # ------------------------------------------------------------------------------
+#' Check the fhd against high point of turbine
+#'
+#' This function checks to make sure the bootstrapped flight height distribution
+#' contains information that falls within the maximum rotor height of the turbines.
+#'
+#' @param fhd data frame. The data frame containing the flight height distribution.
+#' see the band_crm function for details
+#' @param tid_off A numeric. The tidal offset in meters
+#' @param air_gap A numeric. The air gap (mean sea level to lower tip of blade) in meters
+#' @param hub_hght A numeric. The height of the center of the turbines (the hub) in meters
+#' @param rtr_rad A numeric. The rotor radius in meters
+#' @param fn A character. The function being evaluated (mCRM or sCRM)
+#'
+#' @noRd
 check_fhd_vs_maxtip <- function(fhd, tid_off, air_gap = NULL, hub_hght = NULL,
                                 rtr_rad, fn){
   fhd_name <- deparse(substitute(fhd))
@@ -451,6 +465,11 @@ check_fhd_vs_maxtip <- function(fhd, tid_off, air_gap = NULL, hub_hght = NULL,
 
 
 # ------------------------------------------------------------------------------
+#' Validate logical value
+#'
+#' Validates if any value is logical
+#' @param x Any value.
+#' @noRd
 val_logical <- function(x){
   obj_name <- deparse(substitute(x))
 
@@ -461,6 +480,14 @@ val_logical <- function(x){
 
 
 # ------------------------------------------------------------------------------
+#' Validate if a constant falls in a range
+#'
+#' Validation for if a value falls within a range and if it is a whole number
+#' @param x A numeric value. The value to test
+#' @param min A numeric value. The minimum extent of the range
+#' @param max A numeric value. The maximum extent of the range
+#' @param check_whole A boolean. If TRUE, tests if the value is a whole number
+#' @noRd
 val_constant <- function(x, min = -Inf, max = Inf, check_whole = FALSE){
 
   obj_name <- deparse(substitute(x))
@@ -492,6 +519,12 @@ val_constant <- function(x, min = -Inf, max = Inf, check_whole = FALSE){
 
 
 # ------------------------------------------------------------------------------
+#' Validation of model options
+#'
+#' Will validate the selected model options for the sCRM
+#'
+#' @param model_options a vector. Model options as a vector (1,2,3,4)
+#' @noRd
 val_model_opts <- function(model_options){
 
   valid_opts <- c('1', '2', '3', '4')
@@ -532,6 +565,15 @@ val_model_opts <- function(model_options){
 
 
 # ------------------------------------------------------------------------------
+#' Validate data frame
+#'
+#' Validates the structure of a data frame. relies on val_df_columns function
+#' @param df A data frame. The data frame input
+#' @param dt_type A character. One of "dstn_pars", "samples", "qtls", "fhd", or "chord_prof"
+#' @param exp_colnames A vector. The expected column names for the data frame
+#' @param single_row A boolean. Whether or not the data frame is a single row
+#' @noRd
+
 val_pars_df <- function(df,
                         dt_type = "dstn_pars",
                         exp_colnames = c("mean", "sd"),
@@ -633,7 +675,14 @@ val_pars_df <- function(df,
 
 
 # ------------------------------------------------------------------------------
-# Checks presence and validity of expected columns in data frame
+#' Validate data frame columns
+#'
+#' Checks presence and validity of expected columns in data frame
+#' @param df A data frame. The data frame input
+#' @param df_name A character. The name to be checked
+#' @param exp_colnames A vector. The expected column names for the data frame
+#' @noRd
+
 val_df_columns <- function(df,
                            df_name,
                            exp_colnames = c("mean", "sd")){
@@ -704,6 +753,14 @@ val_df_columns <- function(df,
 
 
 # ------------------------------------------------------------------------------
+#' Validate months
+#'
+#' Validates the structure of months fed into the functions
+#' @param m A vector. The vector of the months (ideally in month.abb format)
+#' @param err_msg_header An error message. A message passed forward to pass to user
+#' @param check_duplicated A boolean. A check to make sure months have not been duplicated
+#' @noRd
+
 val_months <- function(m, err_msg_header, check_duplicated = TRUE){
 
   if(!is.character(m)){
@@ -737,6 +794,13 @@ val_months <- function(m, err_msg_header, check_duplicated = TRUE){
 
 
 # ------------------------------------------------------------------------------
+#' Validate option
+#'
+#' Validates a model option
+#' @param opt A character. The option to be validated
+#' @param valid_opts A vector. A vector of option values to be validated
+#' @noRd
+
 val_option <- function(opt, valid_opts){
 
   obj_name <- deparse(substitute(opt))
@@ -757,6 +821,13 @@ val_option <- function(opt, valid_opts){
 
 
 # ------------------------------------------------------------------------------
+#' Validate months
+#'
+#' Validates the structure of months fed into the functions
+#' @param turb_oper_month A data frame. The amount of operational time of the windfarm.
+#' Check the stoch_crm example for the structure.
+#' @noRd
+#'
 val_prop_oper <- function(turb_oper_month){
 
 
@@ -771,73 +842,4 @@ val_prop_oper <- function(turb_oper_month){
   }
 
 }
-
-
-
-# # ------------------------------------------------------------------------------
-# val_bird_dens <- function(dens_month){
-#   if(any(c("month", "dens") %nin% names(dens_month))){
-#     stop("Invalid argument: 'dens_month' missing column(s) named 'month'
-#          and/or 'dens'")
-#   }
-#
-#   if(any(duplicated(dens_month$month))){
-#     stop("Invalid argument: column 'month' in 'dens_month' contains
-#          duplicated entries. Only one entry per month expected")
-#   }
-# }
-#
-# # ------------------------------------------------------------------------------
-# val_chord_prof <- function(chord_prof){
-#
-#   if(any(c("pp_radius", "chord") %nin% names(chord_prof))){
-#     stop("Invalid 'chord_prof' argument: missing column(s) named 'pp_radius'
-#          and/or 'chord' Try e.g. '?get_avg_prob_collision' for further help.")
-#   }
-#
-#   rad_incs <- round(diff(chord_prof$pp_radius), 3)
-#   if(length(unique(rad_incs)) > 1){
-#     stop("Invalid 'chord_prof' argument: all values in 'pp_radius' column must be
-#          equidistant. Please provide pp_radius values with a constant increment.
-#          Try e.g. '?get_avg_prob_collision' for further help.")
-#   }
-#
-#   if(min(chord_prof$pp_radius) != 0 | max(chord_prof$pp_radius) != 1){
-#     stop("Invalid 'chord_prof' argument: values in 'pp_radius' column must be
-#          within the range [0, 1]. Please include a relative chord width at 0 AND
-#          1 (relative) rotor radius. Try '?get_avg_prob_collision' for
-#          further help")
-#   }
-# }
-#
-# # ------------------------------------------------------------------------------
-# val_fhd <- function(fhd){
-#
-#   obj_name <- deparse(substitute(fhd))
-#
-#   if (any(c("height", "prop") %nin% names(fhd))) {
-#     stop(paste0("Invalid argument: '", obj_name, "' missing column(s) named 'height'
-#          and/or 'prop'"))
-#   }
-#
-#   if(fhd$height[1] != 0){
-#     stop(paste0("Invalid argument: flight distribution data in '", obj_name, "' must
-#                 start at height == 0"))
-#   }
-#
-# }
-# # ------------------------------------------------------------------------------
-# val_n_iter <- function(n_iter){
-#   if (length(n_iter) != 1) {
-#     rlang::abort("`n_iter` must have length 1.")
-#   } else {
-#     if (!is.numeric(n_iter)){
-#       rlang::abort("`n_iter` must be numeric.")
-#     } else {
-#       if(!is.wholenumber(n_iter)|n_iter < 0){
-#         rlang::abort("`n_iter` must be a positive integer.")
-#       }
-#     }
-#   }
-# }
 

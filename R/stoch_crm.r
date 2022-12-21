@@ -288,18 +288,10 @@ stoch_crm <- function(model_options = c('1', '2', '3', '4'),
 
 
   # Setup default values for option arguments if unspecified by user
-  if(missing(bird_dens_opt)){
-    bird_dens_opt <- "tnorm"
-  }
-  if(missing(rtn_pitch_opt)){
-    rtn_pitch_opt <- "probDist"
-  }
-  if(missing(out_period)){
-    out_period <- "months"
-  }
-  if(missing(out_period)){
-    out_format <- "draws"
-  }
+  bird_dens_opt <- match.arg(bird_dens_opt)
+  rtn_pitch_opt <- match.arg(rtn_pitch_opt)
+  out_period <- match.arg(out_period)
+  out_format <- match.arg(out_format)
 
 
   # -- For a subset of the data frames, convert column names to lower-case --- ##

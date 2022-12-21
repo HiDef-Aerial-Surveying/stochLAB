@@ -32,7 +32,7 @@ etc.
 
 Previous code underpinning key calculations for the extended model has been
 replaced by an alternative approach, resulting in significant gains in
-computational speed - over 30x faster than Masden's code. This optimization
+computational speed over Masden's code. This optimization
 is particularly beneficial under a stochastic context, when Band calculations
 are computed repeatedly. See \code{\link[=generate_rotor_grids]{generate_rotor_grids()}} for further details.
 }
