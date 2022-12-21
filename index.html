@@ -5,13 +5,16 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="Tool for running Collision Risk Models for seabirds on
+<meta name="description" content="Collision Risk Models for avian fauna (seabird and migratory birds) at
     offshore wind farms. The base deterministic model is derived from 
-    Band (2012) Using a Collision Risk Model to Assess Bird Collision Risks 
-    for Offshore Wind Farms. This was further expanded on by 
-    Masden (2015) &lt;doi:10.7489/1659-1&gt; and code used here is heavily derived
-    from this work with input from Dr A. Cook at the British Trust for
-    Ornithology. ">
+    Band (2012) &lt;https://tethys.pnnl.gov/publications/using-collision-risk-model-assess-bird-collision-risks-offshore-wind-farms&gt;. 
+    This was further expanded on by Masden (2015) &lt;doi:10.7489/1659-1&gt; and code 
+    used here is heavily derived from this work with input from Dr A. Cook at the 
+    British Trust for Ornithology. These collision risk models are useful for 
+    marine ornithologists who are working in the offshore wind industry, particularly 
+    in UK waters. However, many of the species included in the stochastic collision 
+    risk models (stoch_crm) can also be found in the North Atlantic in the 
+    United States and Canada, and could be applied there. ">
 <title>Stochastic Collision Risk Model • stochLAB</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
@@ -20,17 +23,20 @@
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="apple-touch-icon-60x60.png">
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet">
-<script src="deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link href="deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet">
+<script src="deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Stochastic Collision Risk Model">
-<meta property="og:description" content="Tool for running Collision Risk Models for seabirds on
+<!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Stochastic Collision Risk Model">
+<meta property="og:description" content="Collision Risk Models for avian fauna (seabird and migratory birds) at
     offshore wind farms. The base deterministic model is derived from 
-    Band (2012) Using a Collision Risk Model to Assess Bird Collision Risks 
-    for Offshore Wind Farms. This was further expanded on by 
-    Masden (2015) &lt;doi:10.7489/1659-1&gt; and code used here is heavily derived
-    from this work with input from Dr A. Cook at the British Trust for
-    Ornithology. ">
+    Band (2012) &lt;https://tethys.pnnl.gov/publications/using-collision-risk-model-assess-bird-collision-risks-offshore-wind-farms&gt;. 
+    This was further expanded on by Masden (2015) &lt;doi:10.7489/1659-1&gt; and code 
+    used here is heavily derived from this work with input from Dr A. Cook at the 
+    British Trust for Ornithology. These collision risk models are useful for 
+    marine ornithologists who are working in the offshore wind industry, particularly 
+    in UK waters. However, many of the species included in the stochastic collision 
+    risk models (stoch_crm) can also be found in the North Atlantic in the 
+    United States and Canada, and could be applied there. ">
 <meta property="og:image" content="https://hidef-aerial-surveying.github.io/stochLAB/logo.png">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -85,29 +91,66 @@
   </div>
 </nav><div class="container template-home">
 <div class="row">
-  <main id="main" class="col-md-9"><p><a href="https://github.com/HiDef-Aerial-Surveying/stochLAB/actions/workflows/test-coverage.yaml" class="external-link"><img src="https://github.com/HiDef-Aerial-Surveying/stochLAB/actions/workflows/test-coverage.yaml/badge.svg" alt="test-coverage"></a> <a href="https://github.com/HiDef-Aerial-Surveying/stochLAB/actions/workflows/pkgdown.yaml" class="external-link"><img src="https://github.com/HiDef-Aerial-Surveying/stochLAB/actions/workflows/pkgdown.yaml/badge.svg" alt="pkgdown"></a> <a href="https://github.com/HiDef-Aerial-Surveying/stochLAB/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/HiDef-Aerial-Surveying/stochLAB/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a> <a href="https://github.com/HiDef-Aerial-Surveying/stochLAB/actions/workflows/pkgcheck.yaml" class="external-link"><img src="https://github.com/HiDef-Aerial-Surveying/stochLAB/actions/workflows/pkgcheck.yaml/badge.svg" alt="pkgcheck"></a></p>
-<div class="section level1">
+  <main id="main" class="col-md-9"><div class="section level1">
 <div class="page-header">
 <img src="logo.png" class="logo" alt=""><h1 id="stochlab-">stochLAB <a class="anchor" aria-label="anchor" href="#stochlab-"></a>
 </h1>
 </div>
-<!-- badges: start --><!-- badges: end --><p><a href="https://github.com/HiDef-Aerial-Surveying/stochLAB" class="external-link">stochLAB</a> is a tool to run Collision Risk Models (CRMs) for seabirds on offshore wind farms.</p>
+<!-- badges: start -->
+
+<!-- badges: end -->
+<p><a href="https://github.com/HiDef-Aerial-Surveying/stochLAB" class="external-link">stochLAB</a> is a tool to run Collision Risk Models (CRMs) for seabirds on offshore wind farms.</p>
 <div class="section level2">
 <h2 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
 </h2>
-<p>The <a href="https://github.com/HiDef-Aerial-Surveying/stochLAB" class="external-link">stochLAB</a> package is an adaptation of the <a href="https://data.marine.gov.scot/dataset/developing-avian-collision-risk-model-incorporate-variability-and-uncertainty-r-code-0" class="external-link">R code</a> developed by <a href="https://data.marine.gov.scot/dataset/developing-avian-collision-risk-model-incorporate-variability-and-uncertainty" class="external-link">Masden (2015)</a> to incorporate variability and uncertainty in the avian collision risk model originally developed by <a href="https://www.bto.org/sites/default/files/u28/downloads/Projects/Final_Report_SOSS02_Band1ModelGuidance.pdf" class="external-link">Band (2012)</a>.</p>
-<p>The <a href="https://github.com/HiDef-Aerial-Surveying/stochLAB" class="external-link">stochLAB</a> package was compiled and curated by DMP Statistics and HiDef Aerial Surveying.</p>
+<p>The <a href="https://github.com/HiDef-Aerial-Surveying/stochLAB" class="external-link">stochLAB</a> package is an adaptation of the <a href="https://data.marine.gov.scot/dataset/developing-avian-collision-risk-model-incorporate-variability-and-uncertainty-r-code-0" class="external-link">R code</a> developed by <a href="https://data.marine.gov.scot/dataset/developing-avian-collision-risk-model-incorporate-variability-and-uncertainty" class="external-link">Masden (2015)</a> to incorporate variability and uncertainty in the avian collision risk model originally developed by <a href="https://www.bto.org/sites/default/files/u28/downloads/Projects/Final_Report_SOSS02_Band1ModelGuidance.pdf" class="external-link">Band (2012)</a>. The package is for use by individuals modelling collision risk of seabirds at offshore wind farms. The primary functions take input information on the morphology, behaviour and densities of seabirds as well data pertaining to the proposed wind farm (i.e., turbine dimensions, speed and number).</p>
+<p>These collision risk models are useful for marine ornithologists who are working in the offshore wind industry, particularly in UK waters. However, the package itself relies on generic biological and windfarm data and can be applied anywhere (i.e., in any marine environment) as long as the parameters are appropriate for the species and windfarms of interest.</p>
 <p>Code developed under <a href="https://github.com/HiDef-Aerial-Surveying/stochLAB" class="external-link">stochLAB</a> substantially re-factored and re-structured Masden’s (heavily script-based) implementation into a user-friendly, streamlined, well documented and easily distributed tool. Furthermore, the package lays down the code infrastructure for easier incorporation of new functionality, e.g. extra parameter sampling features, model expansions, etc.</p>
-<p>In addition, previous code underpinning core calculations for the extended model has been replaced by an alternative approach, resulting in significant gains in computational speed - over 30x faster than Masden’s code. This optimization is particularly beneficial under a stochastic context, when core calculations are called repeatedly during simulations.</p>
+<p>In addition, previous code underpinning core calculations for the extended model has been replaced by an alternative approach, resulting in significant gains in computational speed over Masden’s code. This optimization is particularly beneficial under a stochastic context, when core calculations are called repeatedly during simulations.</p>
 <p>For a more detailed overview type <code><a href="reference/stochLAB.html">?stochLAB</a></code>, once installed!</p>
 </div>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<!-- You can install the released version of stochLAB from [CRAN](https://CRAN.R-project.org) with: --><!-- ``` r --><!-- install.packages("stochLAB") --><!-- ``` --><p>You can install the development version with:</p>
+<p>You can install the released version of stochLAB from <a href="https://CRAN.R-project.org" class="external-link">CRAN</a> with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"stochLAB"</span><span class="op">)</span></span></code></pre></div>
+<p>You can install the development version with:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># install.packages("devtools")</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"HiDef-Aerial-Surveying/stochLAB"</span><span class="op">)</span></span></code></pre></div>
+<p>This package depends on the following packages, which should be installed automatically:</p>
+<p><code>cli dplyr glue logr magrittr msm pracma purrr rlang stats tibble tidyr</code></p>
+</div>
+<div class="section level2">
+<h2 id="bug-reports">Bug reports<a class="anchor" aria-label="anchor" href="#bug-reports"></a>
+</h2>
+<p>To report any bugs, please log an <a href="www.github.com/hidef-aerial-surveying/stochLAB/issues">ISSUE</a></p>
+</div>
+<div class="section level2">
+<h2 id="input-parameters">Input parameters<a class="anchor" aria-label="anchor" href="#input-parameters"></a>
+</h2>
+<p>Many of the input parameters for the <code><a href="reference/stoch_crm.html">stoch_crm()</a></code> function need to be obtained from developers (e.g., blade pitch, rotor radius, wind speed, etc…). However, there are many parameters around the morphology and biology of birds that are built into the <code>sCRM</code> package for UK seabirds, which can be found <a href="www.github.com/dmpstats/sCRM">HERE</a>. <code>sCRM</code> is an R Shiny application that wraps up the <code><a href="reference/stoch_crm.html">stoch_crm()</a></code> and <code><a href="reference/band_crm.html">band_crm()</a></code> functions. These biological parameters can be accessed by installing the <code>sCRM</code> package and running <code>sCRM::spp_dflts</code>, which will bring up a tibble object with all the relevant information.</p>
+<p>If performing a collision risk assessment in UK waters, default biological data for the following parameters can be obtained from the <code>sCRM</code> package:</p>
+<p><code>flt_speed_pars, body_lt_pars, wing_span_pars, avoid_bsc_pars, avoid_ext_pars, noct_act_pars, flight_type, gen_fhd_boots</code></p>
+<p>Other parameters around the species of interest need to be derived from site-based surveys:</p>
+<p><code>prop_crh_pars, bird_dens_dt,</code> and <code>site_fhd_boots</code></p>
+<p>All wind farm parameters need to be obtained by the wind farm developers:</p>
+<p><code>n_blades, air_gap_pars, rtr_radius_pars, bld_width_pars, bld_pitch_pars, rtn_speed_pars, windspd_pars, trb_wind_avbl, trb_downtime_pars, wf_n_trbs, wf_width, wf_latitude, tidal_offset, season_specs, bld_chord_prf, lrg_arr_corr</code></p>
+<p>The following parameters refer to the outputs:</p>
+<p><code>out_format, out_sampled_pars, out_period, verbose, log_file</code></p>
+<p>More information on input parameter specifics can be found in the vignettes for <code>stoch_crm</code> and <code>band_crm</code>.</p>
+</div>
+<div class="section level2">
+<h2 id="outputs">Outputs<a class="anchor" aria-label="anchor" href="#outputs"></a>
+</h2>
+<p>Once the collision risk model is run, the key outputs are presented as a table which contains the mean, standard deviation and median number of collisions summarised by month, season, or year. Quantiles of the bootstrapped collisions are also presented in the tables. These tables are accessed through calling from the model object. Run the <a href="#examples">Examples</a> to view exemplar outputs.</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">stochOUT</span> <span class="op">&lt;-</span> <span class="fu">stochLAB</span><span class="fu">::</span><span class="fu"><a href="reference/stoch_crm.html">stoch_crm</a></span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">stochOUT</span><span class="op">$</span><span class="va">collisions</span><span class="op">$</span><span class="va">opt1</span> <span class="co">#For outputs from option 1 of the stochastic collision risk model </span></span>
+<span><span class="va">stochOUT</span><span class="op">$</span><span class="va">collisions</span><span class="op">$</span><span class="va">opt2</span> <span class="co">#For outputs from option 2 of the stochastic collision risk model </span></span>
+<span><span class="va">stochOUT</span><span class="op">$</span><span class="va">collisions</span><span class="op">$</span><span class="va">opt3</span> <span class="co">#For outputs from option 3 of the stochastic collision risk model </span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a>
@@ -116,8 +159,9 @@
 <h3 id="simple-example">Simple example<a class="anchor" aria-label="anchor" href="#simple-example"></a>
 </h3>
 <p>This is a basic example of running the stochastic collision model for one seabird species and one turbine/wind-farm scenario, with fictional input parameter data.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/HiDef-Aerial-Surveying/stochLAB" class="external-link">stochLAB</a></span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: package 'stochLAB' was built under R version 4.2.2</span></span>
 <span></span>
 <span><span class="co"># ------------------------------------------------------</span></span>
 <span><span class="co"># Setting some of the required inputs upfront</span></span>
@@ -192,7 +236,196 @@
 <span>  out_period <span class="op">=</span> <span class="st">"seasons"</span>,</span>
 <span>  season_specs <span class="op">=</span> <span class="va">seas_dt</span>,</span>
 <span>  log_file <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"scrm_example.log"</span><span class="op">)</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ── Stochastic CRM ──</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ℹ Checking inputs✔ Checking inputs [99ms]</span></span>
+<span><span class="co">#&gt; ℹ Preparing data✔ Preparing data [168ms]</span></span>
+<span><span class="co">#&gt; ℹ Sampling parameters✔ Sampling parameters [439ms]</span></span>
+<span><span class="co">#&gt; ⠙ Calculating collisions | 3/1000 iterations⠹ Calculating collisions | 102/1000 iterations⠸ Calculating collisions | 249/1000 iterations⠼ Calculating collisions | 397/1000 iterations⠴ Calculating collisions | 552/1000 iterations⠦ Calculating collisions | 709/1000 iterations⠧ Calculating collisions | 869/1000 iterations✔ Calculating collisions | 1000/1000 iterations [1.5s]</span></span>
+<span><span class="co">#&gt; ℹ Sorting outputs✔ Sorting outputs [682ms]</span></span>
+<span><span class="co">#&gt; ✔ Job done!</span></span>
+<span><span class="co">#&gt; $collisions</span></span>
+<span><span class="co">#&gt; $collisions$opt1</span></span>
+<span><span class="co">#&gt; # A tibble: 3 × 10</span></span>
+<span><span class="co">#&gt;   season_id period   mean    sd median pctl_2.5 pctl_25 pctl_75 pctl_9…¹ pctl_99</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 a         Jan_Apr  35.0 15.8    35.9     9.00    24.8    45.4     64.5    89.2</span></span>
+<span><span class="co">#&gt; 2 b         May_Sep  58.3 26.3    59.6    14.9     40.0    75.4    108.    153. </span></span>
+<span><span class="co">#&gt; 3 c         Oct_Dec  20.1  9.10   20.8     5.21    13.6    26.1     37.8    52.7</span></span>
+<span><span class="co">#&gt; # … with abbreviated variable name ¹​pctl_97.5</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $collisions$opt2</span></span>
+<span><span class="co">#&gt; # A tibble: 3 × 10</span></span>
+<span><span class="co">#&gt;   season_id period   mean    sd median pctl_2.5 pctl_25 pctl_75 pctl_9…¹ pctl_99</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 a         Jan_Apr 0.935  1.75  0.490   0.0859   0.287   0.831     6.32   13.9 </span></span>
+<span><span class="co">#&gt; 2 b         May_Sep 1.56   3.02  0.802   0.142    0.480   1.37      9.32   29.5 </span></span>
+<span><span class="co">#&gt; 3 c         Oct_Dec 0.539  1.03  0.278   0.0476   0.169   0.467     3.36    9.83</span></span>
+<span><span class="co">#&gt; # … with abbreviated variable name ¹​pctl_97.5</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $collisions$opt3</span></span>
+<span><span class="co">#&gt; # A tibble: 3 × 10</span></span>
+<span><span class="co">#&gt;   season_id period   mean    sd median pctl_2.5 pctl_25 pctl_75 pctl_9…¹ pctl_99</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 a         Jan_Apr 0.449 1.05   0.184   0.0459  0.114    0.319     3.49    9.75</span></span>
+<span><span class="co">#&gt; 2 b         May_Sep 0.752 1.83   0.301   0.0742  0.190    0.534     5.24   19.0 </span></span>
+<span><span class="co">#&gt; 3 c         Oct_Dec 0.259 0.620  0.103   0.0256  0.0655   0.182     1.99    6.13</span></span>
+<span><span class="co">#&gt; # … with abbreviated variable name ¹​pctl_97.5</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $sampled_pars</span></span>
+<span><span class="co">#&gt; $sampled_pars$air_gap</span></span>
+<span><span class="co">#&gt; # A tibble: 1 × 5</span></span>
+<span><span class="co">#&gt;    mean    sd median pctl_2.5 pctl_97.5</span></span>
+<span><span class="co">#&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1    36     0     36       36        36</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $sampled_pars$bld_width</span></span>
+<span><span class="co">#&gt; # A tibble: 1 × 5</span></span>
+<span><span class="co">#&gt;    mean    sd median pctl_2.5 pctl_97.5</span></span>
+<span><span class="co">#&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1     8     0      8        8         8</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $sampled_pars$body_lt</span></span>
+<span><span class="co">#&gt; # A tibble: 1 × 5</span></span>
+<span><span class="co">#&gt;    mean      sd median pctl_2.5 pctl_97.5</span></span>
+<span><span class="co">#&gt;   &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 0.390 0.00499  0.390    0.380     0.400</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $sampled_pars$flt_speed</span></span>
+<span><span class="co">#&gt; # A tibble: 1 × 5</span></span>
+<span><span class="co">#&gt;    mean    sd median pctl_2.5 pctl_97.5</span></span>
+<span><span class="co">#&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1  7.28  1.47   7.28     4.30      10.0</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $sampled_pars$noct_actv</span></span>
+<span><span class="co">#&gt; # A tibble: 1 × 5</span></span>
+<span><span class="co">#&gt;     mean      sd median pctl_2.5 pctl_97.5</span></span>
+<span><span class="co">#&gt;    &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 0.0333 0.00498 0.0333   0.0241    0.0436</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $sampled_pars$rtr_radius</span></span>
+<span><span class="co">#&gt; # A tibble: 1 × 5</span></span>
+<span><span class="co">#&gt;    mean    sd median pctl_2.5 pctl_97.5</span></span>
+<span><span class="co">#&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1    80     0     80       80        80</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $sampled_pars$wing_span</span></span>
+<span><span class="co">#&gt; # A tibble: 1 × 5</span></span>
+<span><span class="co">#&gt;    mean     sd median pctl_2.5 pctl_97.5</span></span>
+<span><span class="co">#&gt;   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1  1.08 0.0398   1.08     1.00      1.16</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $sampled_pars$hub_height</span></span>
+<span><span class="co">#&gt; # A tibble: 1 × 5</span></span>
+<span><span class="co">#&gt;    mean    sd median pctl_2.5 pctl_97.5</span></span>
+<span><span class="co">#&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1   116     0    116      116       116</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $sampled_pars$dens_mth</span></span>
+<span><span class="co">#&gt; # A tibble: 12 × 6</span></span>
+<span><span class="co">#&gt;    period  mean    sd median pctl_2.5 pctl_97.5</span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt;  1 Jan    0.969 0.201  0.968    0.594      1.37</span></span>
+<span><span class="co">#&gt;  2 Feb    1.25  0.281  1.24     0.731      1.81</span></span>
+<span><span class="co">#&gt;  3 Mar    1.36  0.216  1.36     0.921      1.75</span></span>
+<span><span class="co">#&gt;  4 Apr    1.16  0.255  1.16     0.675      1.67</span></span>
+<span><span class="co">#&gt;  5 May    0.943 0.257  0.933    0.449      1.44</span></span>
+<span><span class="co">#&gt;  6 Jun    1.17  0.214  1.17     0.715      1.60</span></span>
+<span><span class="co">#&gt;  7 Jul    1.10  0.247  1.10     0.632      1.59</span></span>
+<span><span class="co">#&gt;  8 Aug    1.07  0.292  1.07     0.492      1.66</span></span>
+<span><span class="co">#&gt;  9 Sep    1.36  0.236  1.36     0.906      1.81</span></span>
+<span><span class="co">#&gt; 10 Oct    1.49  0.208  1.49     1.09       1.89</span></span>
+<span><span class="co">#&gt; 11 Nov    1.05  0.274  1.04     0.531      1.59</span></span>
+<span><span class="co">#&gt; 12 Dec    0.960 0.218  0.960    0.528      1.38</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $sampled_pars$prop_oper_mth</span></span>
+<span><span class="co">#&gt; # A tibble: 12 × 6</span></span>
+<span><span class="co">#&gt;    period  mean     sd median pctl_2.5 pctl_97.5</span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt;  1 Jan    0.796 0.0207  0.796    0.756     0.833</span></span>
+<span><span class="co">#&gt;  2 Feb    0.870 0.0207  0.870    0.830     0.908</span></span>
+<span><span class="co">#&gt;  3 Mar    0.886 0.0204  0.886    0.843     0.926</span></span>
+<span><span class="co">#&gt;  4 Apr    0.827 0.0196  0.827    0.789     0.865</span></span>
+<span><span class="co">#&gt;  5 May    0.880 0.0194  0.880    0.841     0.917</span></span>
+<span><span class="co">#&gt;  6 Jun    0.820 0.0198  0.820    0.780     0.858</span></span>
+<span><span class="co">#&gt;  7 Jul    0.811 0.0199  0.811    0.770     0.850</span></span>
+<span><span class="co">#&gt;  8 Aug    0.859 0.0194  0.859    0.821     0.897</span></span>
+<span><span class="co">#&gt;  9 Sep    0.767 0.0205  0.767    0.726     0.805</span></span>
+<span><span class="co">#&gt; 10 Oct    0.772 0.0201  0.771    0.731     0.810</span></span>
+<span><span class="co">#&gt; 11 Nov    0.788 0.0201  0.788    0.749     0.827</span></span>
+<span><span class="co">#&gt; 12 Dec    0.828 0.0201  0.829    0.790     0.865</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $sampled_pars$downtime</span></span>
+<span><span class="co">#&gt; # A tibble: 12 × 6</span></span>
+<span><span class="co">#&gt;    period  mean    sd median pctl_2.5 pctl_97.5</span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt;  1 Jan     7.81  2.07   7.84     4.11      11.8</span></span>
+<span><span class="co">#&gt;  2 Feb     8.43  2.07   8.44     4.57      12.4</span></span>
+<span><span class="co">#&gt;  3 Mar     7.83  2.04   7.82     3.81      12.1</span></span>
+<span><span class="co">#&gt;  4 Apr     9.59  1.96   9.63     5.80      13.4</span></span>
+<span><span class="co">#&gt;  5 May     7.00  1.94   6.98     3.29      10.8</span></span>
+<span><span class="co">#&gt;  6 Jun     8.12  1.98   8.10     4.27      12.1</span></span>
+<span><span class="co">#&gt;  7 Jul     9.89  1.99   9.88     5.95      13.9</span></span>
+<span><span class="co">#&gt;  8 Aug     7.68  1.94   7.64     3.85      11.4</span></span>
+<span><span class="co">#&gt;  9 Sep     8.99  2.05   8.97     5.14      13.1</span></span>
+<span><span class="co">#&gt; 10 Oct     9.61  2.01   9.63     5.79      13.7</span></span>
+<span><span class="co">#&gt; 11 Nov     8.89  2.01   8.87     4.92      12.7</span></span>
+<span><span class="co">#&gt; 12 Dec     9.96  2.01   9.86     6.24      13.8</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $sampled_pars$wind_speed</span></span>
+<span><span class="co">#&gt; # A tibble: 1 × 5</span></span>
+<span><span class="co">#&gt;    mean    sd median pctl_2.5 pctl_97.5</span></span>
+<span><span class="co">#&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1  7.73  3.00   7.73     2.15      13.7</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $sampled_pars$rtn_speed</span></span>
+<span><span class="co">#&gt; # A tibble: 1 × 5</span></span>
+<span><span class="co">#&gt;    mean     sd median pctl_2.5 pctl_97.5</span></span>
+<span><span class="co">#&gt;   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 0.428 0.0574  0.417    0.345     0.556</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $sampled_pars$bld_pitch</span></span>
+<span><span class="co">#&gt; # A tibble: 1 × 5</span></span>
+<span><span class="co">#&gt;    mean    sd median pctl_2.5 pctl_97.5</span></span>
+<span><span class="co">#&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 0.329 0.635      0        0      1.57</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $sampled_pars$avoid_bsc</span></span>
+<span><span class="co">#&gt; # A tibble: 1 × 5</span></span>
+<span><span class="co">#&gt;    mean       sd median pctl_2.5 pctl_97.5</span></span>
+<span><span class="co">#&gt;   &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 0.990 0.000986  0.990    0.988     0.992</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $sampled_pars$avoid_ext</span></span>
+<span><span class="co">#&gt; # A tibble: 1 × 5</span></span>
+<span><span class="co">#&gt;    mean      sd median pctl_2.5 pctl_97.5</span></span>
+<span><span class="co">#&gt;   &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 0.960 0.00203  0.960    0.956     0.964</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $sampled_pars$prop_crh</span></span>
+<span><span class="co">#&gt; # A tibble: 1 × 5</span></span>
+<span><span class="co">#&gt;     mean      sd median pctl_2.5 pctl_97.5</span></span>
+<span><span class="co">#&gt;    &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 0.0605 0.00903 0.0602   0.0441    0.0800</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $sampled_pars$gen_fhd</span></span>
+<span><span class="co">#&gt; # A tibble: 500 × 6</span></span>
+<span><span class="co">#&gt;    height   mean      sd median pctl_2.5 pctl_97.5</span></span>
+<span><span class="co">#&gt;     &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt;  1      0 0.163  0.0188  0.166    0.109     0.187 </span></span>
+<span><span class="co">#&gt;  2      1 0.136  0.0129  0.138    0.0967    0.152 </span></span>
+<span><span class="co">#&gt;  3      2 0.114  0.00855 0.115    0.0863    0.124 </span></span>
+<span><span class="co">#&gt;  4      3 0.0950 0.00530 0.0963   0.0769    0.100 </span></span>
+<span><span class="co">#&gt;  5      4 0.0794 0.00296 0.0802   0.0686    0.0816</span></span>
+<span><span class="co">#&gt;  6      5 0.0664 0.00146 0.0669   0.0606    0.0670</span></span>
+<span><span class="co">#&gt;  7      6 0.0556 0.00116 0.0558   0.0530    0.0567</span></span>
+<span><span class="co">#&gt;  8      7 0.0465 0.00166 0.0466   0.0439    0.0490</span></span>
+<span><span class="co">#&gt;  9      8 0.0390 0.00216 0.0389   0.0357    0.0432</span></span>
+<span><span class="co">#&gt; 10      9 0.0327 0.00250 0.0324   0.0290    0.0386</span></span>
+<span><span class="co">#&gt; # … with 490 more rows</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="multiscenario-example">Multiscenario example<a class="anchor" aria-label="anchor" href="#multiscenario-example"></a>
@@ -203,15 +436,13 @@
 <li><p>Propose a functional programming framework to run <code><a href="reference/stoch_crm.html">stoch_crm()</a></code> for multiple species and wind-farm/turbines features.</p></li>
 </ol>
 <p>Please note the example runs on fictional data.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/HiDef-Aerial-Surveying/stochLAB" class="external-link">stochLAB</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># --------------------------------------------------------- #</span></span>
 <span><span class="co"># ----      Reshaping into list-column data frames       ----</span></span>
 <span><span class="co"># --------------------------------------------------------- #</span></span>
 <span><span class="co">#</span></span>
-<span><span class="co"># Here embracing list-columns tibbles, but lists could be used instead</span></span>
-<span></span>
 <span><span class="co"># --- bird features</span></span>
 <span><span class="va">bird_pars</span> <span class="op">&lt;-</span> <span class="va">bird_pars_wide_example</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/relocate.html" class="external-link">relocate</a></span><span class="op">(</span><span class="va">Flight</span>, .after <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">last_col</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
@@ -289,9 +520,41 @@
 <span>  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html" class="external-link">nest</a></span><span class="op">(</span>pars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">mean</span>, <span class="va">sd</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html" class="external-link">pivot_wider</a></span><span class="op">(</span>names_from <span class="op">=</span> <span class="va">feature</span>, values_from <span class="op">=</span> <span class="va">pars</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">.</span>, <span class="va">trb_opr_pars</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Joining, by = "TurbineModel"</span></span>
 <span></span>
 <span><span class="co"># --- windspeed, rotation speed and blade pitch relationship</span></span>
 <span><span class="va">wndspd_rtn_ptch_example</span></span>
+<span><span class="co">#&gt;    wind_speed rtn_speed bld_pitch</span></span>
+<span><span class="co">#&gt; 1           0       0.0        90</span></span>
+<span><span class="co">#&gt; 2           1       0.0        90</span></span>
+<span><span class="co">#&gt; 3           2       0.0        90</span></span>
+<span><span class="co">#&gt; 4           3       6.8         0</span></span>
+<span><span class="co">#&gt; 5           4       6.8         0</span></span>
+<span><span class="co">#&gt; 6           5       6.8         0</span></span>
+<span><span class="co">#&gt; 7           6       6.8         0</span></span>
+<span><span class="co">#&gt; 8           7       6.8         0</span></span>
+<span><span class="co">#&gt; 9           8       8.1         0</span></span>
+<span><span class="co">#&gt; 10          9       9.1         0</span></span>
+<span><span class="co">#&gt; 11         10       9.3         0</span></span>
+<span><span class="co">#&gt; 12         11       9.4         4</span></span>
+<span><span class="co">#&gt; 13         12       9.5         7</span></span>
+<span><span class="co">#&gt; 14         13       9.7         9</span></span>
+<span><span class="co">#&gt; 15         14       9.7        11</span></span>
+<span><span class="co">#&gt; 16         15       9.9        13</span></span>
+<span><span class="co">#&gt; 17         16      10.2        15</span></span>
+<span><span class="co">#&gt; 18         17      10.2        16</span></span>
+<span><span class="co">#&gt; 19         18      10.2        18</span></span>
+<span><span class="co">#&gt; 20         19      10.2        19</span></span>
+<span><span class="co">#&gt; 21         20      10.2        20</span></span>
+<span><span class="co">#&gt; 22         21      10.2        22</span></span>
+<span><span class="co">#&gt; 23         22      10.2        23</span></span>
+<span><span class="co">#&gt; 24         23      10.2        24</span></span>
+<span><span class="co">#&gt; 25         24      10.2        25</span></span>
+<span><span class="co">#&gt; 26         25      10.2        26</span></span>
+<span><span class="co">#&gt; 27         26      10.2        27</span></span>
+<span><span class="co">#&gt; 28         27      10.2        28</span></span>
+<span><span class="co">#&gt; 29         28      10.2        29</span></span>
+<span><span class="co">#&gt; 30         29      10.2        30</span></span>
 <span></span>
 <span><span class="co"># --- windfarm parameters</span></span>
 <span><span class="va">wf_pars</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
@@ -325,13 +588,13 @@
 <span></span>
 <span><span class="co"># --- Map stoch_crm() to each scenario specification via purrr::pmap</span></span>
 <span><span class="va">outputs</span> <span class="op">&lt;-</span> <span class="va">scenarios_specs</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map2.html" class="external-link">pmap</a></span><span class="op">(</span><span class="kw">function</span><span class="op">(</span><span class="va">scenario_id</span>, <span class="va">spp</span>, <span class="va">turb_id</span>, <span class="va">wf_id</span>, <span class="va">...</span><span class="op">)</span><span class="op">{</span></span>
+<span>  <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/pmap.html" class="external-link">pmap</a></span><span class="op">(</span><span class="kw">function</span><span class="op">(</span><span class="va">scenario_id</span>, <span class="va">spp</span>, <span class="va">turb_id</span>, <span class="va">wf_id</span>, <span class="va">...</span><span class="op">)</span><span class="op">{</span></span>
 <span></span>
 <span>    <span class="va">pb</span><span class="op">$</span><span class="fu">tick</span><span class="op">(</span>tokens <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>what <span class="op">=</span> <span class="va">scenario_id</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span>    <span class="co"># params for current species</span></span>
 <span>    <span class="va">c_spec</span> <span class="op">&lt;-</span> <span class="va">bird_pars</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
-<span>      <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Species</span> <span class="op">==</span> <span class="op">{</span><span class="op">{</span><span class="va">spp</span><span class="op">}</span><span class="op">}</span><span class="op">)</span> <span class="co"># {{}} to avoid issues with data masking</span></span>
+<span>      <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Species</span> <span class="op">==</span> <span class="op">{</span><span class="op">{</span><span class="va">spp</span><span class="op">}</span><span class="op">}</span><span class="op">)</span> </span>
 <span></span>
 <span>    <span class="co"># density for current species</span></span>
 <span>    <span class="va">c_dens</span> <span class="op">&lt;-</span> <span class="va">dens_pars</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
@@ -347,8 +610,9 @@
 <span></span>
 <span>    <span class="co"># inputs in list-columns need to be unlisted, either via `unlist()` or</span></span>
 <span>    <span class="co"># indexing `[[1]]`</span></span>
-<span>    <span class="co"># switching off `verbose`, otherwise console will be # cramped with log</span></span>
-<span>    <span class="va">messages</span></span>
+<span>    <span class="co"># switching off `verbose`, otherwise console will be </span></span>
+<span>    <span class="co"># cramped with log messages</span></span>
+<span>    </span>
 <span>    <span class="fu"><a href="reference/stoch_crm.html">stoch_crm</a></span><span class="op">(</span></span>
 <span>      model_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span>,</span>
 <span>      n_iter <span class="op">=</span> <span class="fl">1000</span>,</span>
@@ -396,15 +660,536 @@
 <span><span class="co"># --- identify elements of output list</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">outputs</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">scenarios_specs</span><span class="op">$</span><span class="va">scenario_id</span></span>
 <span></span>
-<span><span class="va">outputs</span></span></code></pre></div>
+<span><span class="va">outputs</span></span>
+<span><span class="co">#&gt; $scenario_1</span></span>
+<span><span class="co">#&gt; $scenario_1$opt1</span></span>
+<span><span class="co">#&gt; # A tibble: 3 × 10</span></span>
+<span><span class="co">#&gt;   season_id period   mean    sd median pctl_2.5 pctl_25 pctl_75 pctl_9…¹ pctl_99</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 breeding  May_Aug  984.  75.9   982.     847.    933.   1031.    1130.   1241.</span></span>
+<span><span class="co">#&gt; 2 feeding   Sep_Dec  552.  41.6   551.     478.    523.    579.     634.    683.</span></span>
+<span><span class="co">#&gt; 3 migrating Jan_Apr  626.  47.7   623.     541.    591.    658.     722.    780.</span></span>
+<span><span class="co">#&gt; # … with abbreviated variable name ¹​pctl_97.5</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $scenario_1$opt2</span></span>
+<span><span class="co">#&gt; # A tibble: 3 × 10</span></span>
+<span><span class="co">#&gt;   season_id period   mean    sd median pctl_2.5 pctl_25 pctl_75 pctl_9…¹ pctl_99</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 breeding  May_Aug  60.7  67.3   41.9     2.41    25.3    65.7     293.    389.</span></span>
+<span><span class="co">#&gt; 2 feeding   Sep_Dec  34.0  37.7   23.5     1.35    14.3    37.0     162.    217.</span></span>
+<span><span class="co">#&gt; 3 migrating Jan_Apr  38.6  42.8   26.8     1.55    16.2    42.4     186.    249.</span></span>
+<span><span class="co">#&gt; # … with abbreviated variable name ¹​pctl_97.5</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $scenario_1$opt3</span></span>
+<span><span class="co">#&gt; # A tibble: 3 × 10</span></span>
+<span><span class="co">#&gt;   season_id period   mean    sd median pctl_2.5 pctl_25 pctl_75 pctl_9…¹ pctl_99</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 breeding  May_Aug  17.9  24.8  10.5     0.394    5.92    17.9    106.    151. </span></span>
+<span><span class="co">#&gt; 2 feeding   Sep_Dec  10.1  13.9   5.86    0.221    3.35    10.0     59.0    84.5</span></span>
+<span><span class="co">#&gt; 3 migrating Jan_Apr  11.4  15.8   6.77    0.251    3.79    11.5     66.9    93.8</span></span>
+<span><span class="co">#&gt; # … with abbreviated variable name ¹​pctl_97.5</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $scenario_2</span></span>
+<span><span class="co">#&gt; $scenario_2$opt1</span></span>
+<span><span class="co">#&gt; # A tibble: 3 × 10</span></span>
+<span><span class="co">#&gt;   season_id period   mean    sd median pctl_2.5 pctl_25 pctl_75 pctl_9…¹ pctl_99</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 breeding  May_Aug 1836. 137.   1831.    1586.   1743.   1921.    2098.   2301.</span></span>
+<span><span class="co">#&gt; 2 feeding   Sep_Dec 1045.  76.4  1044.     909.    991.   1096.    1195.   1288.</span></span>
+<span><span class="co">#&gt; 3 migrating Jan_Apr 1181.  87.6  1177.    1025.   1118.   1241.    1356.   1463.</span></span>
+<span><span class="co">#&gt; # … with abbreviated variable name ¹​pctl_97.5</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $scenario_2$opt2</span></span>
+<span><span class="co">#&gt; # A tibble: 3 × 10</span></span>
+<span><span class="co">#&gt;   season_id period   mean    sd median pctl_2.5 pctl_25 pctl_75 pctl_9…¹ pctl_99</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 breeding  May_Aug 122.  132.    85.2     5.20    52.1   133.      574.    759.</span></span>
+<span><span class="co">#&gt; 2 feeding   Sep_Dec  69.2  75.0   48.4     2.95    29.9    75.9     323.    430.</span></span>
+<span><span class="co">#&gt; 3 migrating Jan_Apr  78.3  84.8   55.1     3.37    33.7    86.5     369.    491.</span></span>
+<span><span class="co">#&gt; # … with abbreviated variable name ¹​pctl_97.5</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $scenario_2$opt3</span></span>
+<span><span class="co">#&gt; # A tibble: 3 × 10</span></span>
+<span><span class="co">#&gt;   season_id period   mean    sd median pctl_2.5 pctl_25 pctl_75 pctl_9…¹ pctl_99</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 breeding  May_Aug  35.9  48.7   21.4    0.848   12.2     36.1     208.    294.</span></span>
+<span><span class="co">#&gt; 2 feeding   Sep_Dec  20.4  27.7   12.1    0.482    7.00    20.6     118.    167.</span></span>
+<span><span class="co">#&gt; 3 migrating Jan_Apr  23.1  31.3   13.9    0.547    7.91    23.5     133.    185.</span></span>
+<span><span class="co">#&gt; # … with abbreviated variable name ¹​pctl_97.5</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $scenario_3</span></span>
+<span><span class="co">#&gt; $scenario_3$opt1</span></span>
+<span><span class="co">#&gt; # A tibble: 3 × 10</span></span>
+<span><span class="co">#&gt;   season_id period   mean    sd median pctl_2.5 pctl_25 pctl_75 pctl_9…¹ pctl_99</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 breeding  May_Aug 2131. 143.   2126.    1875.   2034.   2223.    2415.   2690.</span></span>
+<span><span class="co">#&gt; 2 feeding   Sep_Dec 1149.  76.8  1143.    1011.   1095.   1197.    1302.   1446.</span></span>
+<span><span class="co">#&gt; 3 migrating Jan_Apr 1300.  89.6  1292.    1131.   1239.   1357.    1491.   1638.</span></span>
+<span><span class="co">#&gt; # … with abbreviated variable name ¹​pctl_97.5</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $scenario_3$opt2</span></span>
+<span><span class="co">#&gt; # A tibble: 3 × 10</span></span>
+<span><span class="co">#&gt;   season_id period   mean    sd median pctl_2.5 pctl_25 pctl_75 pctl_9…¹ pctl_99</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 breeding  May_Aug  53.7  77.6   30.1    0.894   17.0     53.9     347.    477.</span></span>
+<span><span class="co">#&gt; 2 feeding   Sep_Dec  28.9  41.8   16.1    0.496    9.16    29.0     185.    257.</span></span>
+<span><span class="co">#&gt; 3 migrating Jan_Apr  32.7  47.1   18.3    0.546   10.3     32.5     205.    291.</span></span>
+<span><span class="co">#&gt; # … with abbreviated variable name ¹​pctl_97.5</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $scenario_3$opt3</span></span>
+<span><span class="co">#&gt; # A tibble: 3 × 10</span></span>
+<span><span class="co">#&gt;   season_id period   mean    sd median pctl_2.5 pctl_25 pctl_75 pctl_9…¹ pctl_99</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 breeding  May_Aug 14.4   25.7   6.47   0.124     3.37   12.7     109.    162. </span></span>
+<span><span class="co">#&gt; 2 feeding   Sep_Dec  7.74  13.8   3.48   0.0685    1.81    6.84     59.8    86.3</span></span>
+<span><span class="co">#&gt; 3 migrating Jan_Apr  8.74  15.6   3.93   0.0756    2.05    7.65     66.9    96.0</span></span>
+<span><span class="co">#&gt; # … with abbreviated variable name ¹​pctl_97.5</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $scenario_4</span></span>
+<span><span class="co">#&gt; $scenario_4$opt1</span></span>
+<span><span class="co">#&gt; # A tibble: 3 × 10</span></span>
+<span><span class="co">#&gt;   season_id period   mean    sd median pctl_2.5 pctl_25 pctl_75 pctl_9…¹ pctl_99</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 breeding  May_Aug 3720.  240.  3713.    3290.   3560.   3872.    4188.   4654.</span></span>
+<span><span class="co">#&gt; 2 feeding   Sep_Dec 2037.  131.  2025.    1801.   1944.   2122.    2297.   2540.</span></span>
+<span><span class="co">#&gt; 3 migrating Jan_Apr 2297.  152.  2284.    2012.   2193.   2393.    2626.   2854.</span></span>
+<span><span class="co">#&gt; # … with abbreviated variable name ¹​pctl_97.5</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $scenario_4$opt2</span></span>
+<span><span class="co">#&gt; # A tibble: 3 × 10</span></span>
+<span><span class="co">#&gt;   season_id period   mean    sd median pctl_2.5 pctl_25 pctl_75 pctl_9…¹ pctl_99</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 breeding  May_Aug 100.  142.    57.0     1.79    32.6   101.      633.    867.</span></span>
+<span><span class="co">#&gt; 2 feeding   Sep_Dec  54.8  77.7   31.0     1.01    17.8    55.5     342.    474.</span></span>
+<span><span class="co">#&gt; 3 migrating Jan_Apr  61.7  87.3   35.1     1.11    20.1    62.2     382.    531.</span></span>
+<span><span class="co">#&gt; # … with abbreviated variable name ¹​pctl_97.5</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $scenario_4$opt3</span></span>
+<span><span class="co">#&gt; # A tibble: 3 × 10</span></span>
+<span><span class="co">#&gt;   season_id period   mean    sd median pctl_2.5 pctl_25 pctl_75 pctl_9…¹ pctl_99</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 breeding  May_Aug  26.8  47.1  12.3     0.249    6.47    23.9     199.    295.</span></span>
+<span><span class="co">#&gt; 2 feeding   Sep_Dec  14.7  25.7   6.69    0.140    3.53    13.1     111.    160.</span></span>
+<span><span class="co">#&gt; 3 migrating Jan_Apr  16.5  28.9   7.57    0.153    3.98    14.7     124.    177.</span></span>
+<span><span class="co">#&gt; # … with abbreviated variable name ¹​pctl_97.5</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $scenario_5</span></span>
+<span><span class="co">#&gt; $scenario_5$opt1</span></span>
+<span><span class="co">#&gt; # A tibble: 3 × 10</span></span>
+<span><span class="co">#&gt;   season_id period   mean    sd median pctl_2.5 pctl_25 pctl_75 pctl_9…¹ pctl_99</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 breeding  May_Aug 1176.  341.  1053.     825.    985.   1219.    2220.   2634.</span></span>
+<span><span class="co">#&gt; 2 feeding   Sep_Dec  615.  176.   551.     430.    516.    640.    1136.   1338.</span></span>
+<span><span class="co">#&gt; 3 migrating Jan_Apr  703.  202.   630.     489.    591.    731.    1323.   1551.</span></span>
+<span><span class="co">#&gt; # … with abbreviated variable name ¹​pctl_97.5</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $scenario_5$opt2</span></span>
+<span><span class="co">#&gt; # A tibble: 3 × 10</span></span>
+<span><span class="co">#&gt;   season_id period   mean    sd median pctl_2.5 pctl_25 pctl_75 pctl_9…¹ pctl_99</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 breeding  May_Aug 0.837  2.75 0.131  0.000231  0.0341   0.390     8.68    31.9</span></span>
+<span><span class="co">#&gt; 2 feeding   Sep_Dec 0.438  1.45 0.0687 0.000118  0.0180   0.202     4.66    17.0</span></span>
+<span><span class="co">#&gt; 3 migrating Jan_Apr 0.500  1.63 0.0782 0.000136  0.0209   0.230     5.20    18.4</span></span>
+<span><span class="co">#&gt; # … with abbreviated variable name ¹​pctl_97.5</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $scenario_5$opt3</span></span>
+<span><span class="co">#&gt; # A tibble: 3 × 10</span></span>
+<span><span class="co">#&gt;   season_id period   mean    sd median  pctl_2.5 pctl_25 pctl_75 pctl_…¹ pctl_99</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 breeding  May_Aug 0.221 0.795 0.0245 0.0000261 0.00602  0.0786    2.41    8.88</span></span>
+<span><span class="co">#&gt; 2 feeding   Sep_Dec 0.116 0.418 0.0129 0.0000129 0.00319  0.0408    1.29    4.73</span></span>
+<span><span class="co">#&gt; 3 migrating Jan_Apr 0.132 0.472 0.0147 0.0000151 0.00365  0.0462    1.44    5.12</span></span>
+<span><span class="co">#&gt; # … with abbreviated variable name ¹​pctl_97.5</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $scenario_6</span></span>
+<span><span class="co">#&gt; $scenario_6$opt1</span></span>
+<span><span class="co">#&gt; # A tibble: 3 × 10</span></span>
+<span><span class="co">#&gt;   season_id period   mean    sd median pctl_2.5 pctl_25 pctl_75 pctl_9…¹ pctl_99</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 breeding  May_Aug 2164.  568.  1961.    1557.   1840.   2263.    3874.   4500.</span></span>
+<span><span class="co">#&gt; 2 feeding   Sep_Dec 1148.  298.  1043.     822.    977.   1210.    2021.   2323.</span></span>
+<span><span class="co">#&gt; 3 migrating Jan_Apr 1310.  341.  1188.     934.   1117.   1370.    2325.   2688.</span></span>
+<span><span class="co">#&gt; # … with abbreviated variable name ¹​pctl_97.5</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $scenario_6$opt2</span></span>
+<span><span class="co">#&gt; # A tibble: 3 × 10</span></span>
+<span><span class="co">#&gt;   season_id period   mean    sd median pctl_2.5 pctl_25 pctl_75 pctl_9…¹ pctl_99</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 breeding  May_Aug 1.64   5.28  0.266 0.000499  0.0711   0.779    17.1     59.5</span></span>
+<span><span class="co">#&gt; 2 feeding   Sep_Dec 0.872  2.82  0.142 0.000254  0.0379   0.415     9.33    32.2</span></span>
+<span><span class="co">#&gt; 3 migrating Jan_Apr 0.991  3.18  0.162 0.000295  0.0437   0.472    10.4     34.7</span></span>
+<span><span class="co">#&gt; # … with abbreviated variable name ¹​pctl_97.5</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $scenario_6$opt3</span></span>
+<span><span class="co">#&gt; # A tibble: 3 × 10</span></span>
+<span><span class="co">#&gt;   season_id period   mean    sd median  pctl_2.5 pctl_25 pctl_75 pctl_…¹ pctl_99</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 breeding  May_Aug 0.433 1.53  0.0503 0.0000579 0.0126   0.157     4.77   16.6 </span></span>
+<span><span class="co">#&gt; 2 feeding   Sep_Dec 0.230 0.817 0.0271 0.0000291 0.00672  0.0832    2.59    8.97</span></span>
+<span><span class="co">#&gt; 3 migrating Jan_Apr 0.261 0.921 0.0304 0.0000337 0.00768  0.0947    2.88    9.68</span></span>
+<span><span class="co">#&gt; # … with abbreviated variable name ¹​pctl_97.5</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $scenario_7</span></span>
+<span><span class="co">#&gt; $scenario_7$opt1</span></span>
+<span><span class="co">#&gt; # A tibble: 3 × 10</span></span>
+<span><span class="co">#&gt;   season_id period   mean    sd median pctl_2.5 pctl_25 pctl_75 pctl_9…¹ pctl_99</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 breeding  Jan_Apr  429.  93.1   423.     270.    360.    490.     626.    767.</span></span>
+<span><span class="co">#&gt; 2 feeding   May_Sep  697. 151.    685.     442.    588.    791.    1006.   1252.</span></span>
+<span><span class="co">#&gt; 3 migrating Oct_Dec  266.  59.2   262.     164.    223.    303.     390.    498.</span></span>
+<span><span class="co">#&gt; # … with abbreviated variable name ¹​pctl_97.5</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $scenario_7$opt2</span></span>
+<span><span class="co">#&gt; # A tibble: 3 × 10</span></span>
+<span><span class="co">#&gt;   season_id period   mean    sd median pctl_2.5 pctl_25 pctl_75 pctl_9…¹ pctl_99</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 breeding  Jan_Apr  257. 150.    223.     62.9   153.     320.     603.   1071.</span></span>
+<span><span class="co">#&gt; 2 feeding   May_Sep  417. 244.    366.    100.    251.     517.     985.   1797.</span></span>
+<span><span class="co">#&gt; 3 migrating Oct_Dec  159.  93.0   137.     37.8    94.0    199.     377.    649.</span></span>
+<span><span class="co">#&gt; # … with abbreviated variable name ¹​pctl_97.5</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $scenario_7$opt3</span></span>
+<span><span class="co">#&gt; # A tibble: 3 × 10</span></span>
+<span><span class="co">#&gt;   season_id period   mean    sd median pctl_2.5 pctl_25 pctl_75 pctl_9…¹ pctl_99</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 breeding  Jan_Apr  28.2  25.9   20.9     4.02   12.5     34.1     86.4    239.</span></span>
+<span><span class="co">#&gt; 2 feeding   May_Sep  45.9  42.4   34.3     6.51   20.3     55.1    145.     409.</span></span>
+<span><span class="co">#&gt; 3 migrating Oct_Dec  17.5  16.0   12.8     2.48    7.78    21.8     54.6    144.</span></span>
+<span><span class="co">#&gt; # … with abbreviated variable name ¹​pctl_97.5</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $scenario_8</span></span>
+<span><span class="co">#&gt; $scenario_8$opt1</span></span>
+<span><span class="co">#&gt; # A tibble: 3 × 10</span></span>
+<span><span class="co">#&gt;   season_id period   mean    sd median pctl_2.5 pctl_25 pctl_75 pctl_9…¹ pctl_99</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 breeding  Jan_Apr  855.  186.   844.     539.    719.    977.    1248.   1531.</span></span>
+<span><span class="co">#&gt; 2 feeding   May_Sep 1376.  299.  1352.     872.   1160.   1560.    1985.   2472.</span></span>
+<span><span class="co">#&gt; 3 migrating Oct_Dec  534.  119.   526.     329.    448.    608.     782.    999.</span></span>
+<span><span class="co">#&gt; # … with abbreviated variable name ¹​pctl_97.5</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $scenario_8$opt2</span></span>
+<span><span class="co">#&gt; # A tibble: 3 × 10</span></span>
+<span><span class="co">#&gt;   season_id period   mean    sd median pctl_2.5 pctl_25 pctl_75 pctl_9…¹ pctl_99</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 breeding  Jan_Apr  536.  307.   468.    135.     324.    668.    1246.   2183.</span></span>
+<span><span class="co">#&gt; 2 feeding   May_Sep  862.  494.   760.    213.     524.   1067.    2013.   3624.</span></span>
+<span><span class="co">#&gt; 3 migrating Oct_Dec  334.  192.   290.     81.5    200.    418.     783.   1330.</span></span>
+<span><span class="co">#&gt; # … with abbreviated variable name ¹​pctl_97.5</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $scenario_8$opt3</span></span>
+<span><span class="co">#&gt; # A tibble: 3 × 10</span></span>
+<span><span class="co">#&gt;   season_id period   mean    sd median pctl_2.5 pctl_25 pctl_75 pctl_9…¹ pctl_99</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 breeding  Jan_Apr  58.6  52.8   43.8     8.62    26.4    71.2     178.    485.</span></span>
+<span><span class="co">#&gt; 2 feeding   May_Sep  94.4  85.7   71.2    14.0     42.5   114.      295.    820.</span></span>
+<span><span class="co">#&gt; 3 migrating Oct_Dec  36.6  32.8   27.1     5.36    16.5    45.6     113.    293.</span></span>
+<span><span class="co">#&gt; # … with abbreviated variable name ¹​pctl_97.5</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $scenario_9</span></span>
+<span><span class="co">#&gt; $scenario_9$opt1</span></span>
+<span><span class="co">#&gt; # A tibble: 3 × 10</span></span>
+<span><span class="co">#&gt;   season_id period   mean    sd median pctl_2.5 pctl_25 pctl_75 pctl_9…¹ pctl_99</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 breeding  Jan_Apr  571. 123.    563.     360.    484.    643.     818.   1015.</span></span>
+<span><span class="co">#&gt; 2 feeding   May_Sep  965. 210.    953.     615.    815.   1089.    1428.   1738.</span></span>
+<span><span class="co">#&gt; 3 migrating Oct_Dec  354.  78.1   349.     223.    299.    401.     511.    646.</span></span>
+<span><span class="co">#&gt; # … with abbreviated variable name ¹​pctl_97.5</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $scenario_9$opt2</span></span>
+<span><span class="co">#&gt; # A tibble: 3 × 10</span></span>
+<span><span class="co">#&gt;   season_id period   mean    sd median pctl_2.5 pctl_25 pctl_75 pctl_9…¹ pctl_99</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 breeding  Jan_Apr  194. 140.   157.      32.9   100.     245.     539.   1050.</span></span>
+<span><span class="co">#&gt; 2 feeding   May_Sep  329. 238.   265.      55.1   169.     414.     905.   1788.</span></span>
+<span><span class="co">#&gt; 3 migrating Oct_Dec  121.  87.9   97.6     20.1    62.0    153.     332.    682.</span></span>
+<span><span class="co">#&gt; # … with abbreviated variable name ¹​pctl_97.5</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $scenario_9$opt3</span></span>
+<span><span class="co">#&gt; # A tibble: 3 × 10</span></span>
+<span><span class="co">#&gt;   season_id period   mean    sd median pctl_2.5 pctl_25 pctl_75 pctl_9…¹ pctl_99</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 breeding  Jan_Apr  23.0  25.6  15.7      2.36    8.83    27.4     79.6    265.</span></span>
+<span><span class="co">#&gt; 2 feeding   May_Sep  38.9  43.5  26.3      3.96   15.0     47.4    137.     472.</span></span>
+<span><span class="co">#&gt; 3 migrating Oct_Dec  14.3  16.2   9.75     1.46    5.51    17.2     48.9    183.</span></span>
+<span><span class="co">#&gt; # … with abbreviated variable name ¹​pctl_97.5</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $scenario_10</span></span>
+<span><span class="co">#&gt; $scenario_10$opt1</span></span>
+<span><span class="co">#&gt; # A tibble: 3 × 10</span></span>
+<span><span class="co">#&gt;   season_id period   mean    sd median pctl_2.5 pctl_25 pctl_75 pctl_9…¹ pctl_99</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 breeding  Jan_Apr 1136.  245.  1120.     717.    963.   1279.    1628.   2019.</span></span>
+<span><span class="co">#&gt; 2 feeding   May_Sep 1901.  413.  1875.    1212.   1605.   2145.    2811.   3422.</span></span>
+<span><span class="co">#&gt; 3 migrating Oct_Dec  709.  156.   698.     446.    598.    802.    1024.   1294.</span></span>
+<span><span class="co">#&gt; # … with abbreviated variable name ¹​pctl_97.5</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $scenario_10$opt2</span></span>
+<span><span class="co">#&gt; # A tibble: 3 × 10</span></span>
+<span><span class="co">#&gt;   season_id period   mean    sd median pctl_2.5 pctl_25 pctl_75 pctl_9…¹ pctl_99</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 breeding  Jan_Apr  404.  286.   328.     70.2    211.    509.    1101.   2131.</span></span>
+<span><span class="co">#&gt; 2 feeding   May_Sep  676.  481.   547.    116.     351.    852.    1833.   3592.</span></span>
+<span><span class="co">#&gt; 3 migrating Oct_Dec  252.  181.   205.     43.2    131.    320.     686.   1393.</span></span>
+<span><span class="co">#&gt; # … with abbreviated variable name ¹​pctl_97.5</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $scenario_10$opt3</span></span>
+<span><span class="co">#&gt; # A tibble: 3 × 10</span></span>
+<span><span class="co">#&gt;   season_id period   mean    sd median pctl_2.5 pctl_25 pctl_75 pctl_9…¹ pctl_99</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 breeding  Jan_Apr  47.6  52.0   32.8     5.05    18.6    56.9     164.    535.</span></span>
+<span><span class="co">#&gt; 2 feeding   May_Sep  79.8  87.6   54.3     8.36    31.2    95.8     279.    944.</span></span>
+<span><span class="co">#&gt; 3 migrating Oct_Dec  29.8  33.2   20.5     3.15    11.7    35.6     101.    373.</span></span>
+<span><span class="co">#&gt; # … with abbreviated variable name ¹​pctl_97.5</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $scenario_11</span></span>
+<span><span class="co">#&gt; $scenario_11$opt1</span></span>
+<span><span class="co">#&gt; # A tibble: 3 × 10</span></span>
+<span><span class="co">#&gt;   season_id period   mean    sd median pctl_2.5 pctl_25 pctl_75 pctl_9…¹ pctl_99</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 breeding  Jan_Apr  570. 121.    558.     366.    484.    647.     826.    979.</span></span>
+<span><span class="co">#&gt; 2 feeding   May_Sep  981. 211.    957.     624.    830.   1115.    1431.   1682.</span></span>
+<span><span class="co">#&gt; 3 migrating Oct_Dec  347.  76.0   344.     221.    293.    395.     515.    606.</span></span>
+<span><span class="co">#&gt; # … with abbreviated variable name ¹​pctl_97.5</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $scenario_11$opt2</span></span>
+<span><span class="co">#&gt; # A tibble: 3 × 10</span></span>
+<span><span class="co">#&gt;   season_id period   mean    sd median pctl_2.5 pctl_25 pctl_75 pctl_9…¹ pctl_99</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 breeding  Jan_Apr  24.7  40.3  11.5     0.787    4.98    29.1    111.     440.</span></span>
+<span><span class="co">#&gt; 2 feeding   May_Sep  42.5  69.2  19.8     1.35     8.56    48.3    189.     768.</span></span>
+<span><span class="co">#&gt; 3 migrating Oct_Dec  15.0  24.2   7.02    0.486    3.02    17.4     67.2    263.</span></span>
+<span><span class="co">#&gt; # … with abbreviated variable name ¹​pctl_97.5</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $scenario_11$opt3</span></span>
+<span><span class="co">#&gt; # A tibble: 3 × 10</span></span>
+<span><span class="co">#&gt;   season_id period   mean    sd median pctl_2.5 pctl_25 pctl_75 pctl_9…¹ pctl_99</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 breeding  Jan_Apr  3.52 11.1   0.933   0.0455   0.337    2.66     21.6   133. </span></span>
+<span><span class="co">#&gt; 2 feeding   May_Sep  6.04 19.0   1.57    0.0814   0.584    4.48     36.6   233. </span></span>
+<span><span class="co">#&gt; 3 migrating Oct_Dec  2.13  6.60  0.568   0.0283   0.207    1.57     13.3    75.9</span></span>
+<span><span class="co">#&gt; # … with abbreviated variable name ¹​pctl_97.5</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $scenario_12</span></span>
+<span><span class="co">#&gt; $scenario_12$opt1</span></span>
+<span><span class="co">#&gt; # A tibble: 3 × 10</span></span>
+<span><span class="co">#&gt;   season_id period   mean    sd median pctl_2.5 pctl_25 pctl_75 pctl_9…¹ pctl_99</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 breeding  Jan_Apr 1135.  241.  1111.     728.    964.   1287.    1645.   1949.</span></span>
+<span><span class="co">#&gt; 2 feeding   May_Sep 1932.  415.  1885.    1229.   1635.   2197.    2819.   3315.</span></span>
+<span><span class="co">#&gt; 3 migrating Oct_Dec  696.  152.   689.     442.    587.    791.    1032.   1212.</span></span>
+<span><span class="co">#&gt; # … with abbreviated variable name ¹​pctl_97.5</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $scenario_12$opt2</span></span>
+<span><span class="co">#&gt; # A tibble: 3 × 10</span></span>
+<span><span class="co">#&gt;   season_id period   mean    sd median pctl_2.5 pctl_25 pctl_75 pctl_9…¹ pctl_99</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 breeding  Jan_Apr  50.9  81.9   24.0     1.68   10.5     60.3     229.    887.</span></span>
+<span><span class="co">#&gt; 2 feeding   May_Sep  86.6 139.    41.0     2.85   17.8     99.1     384.   1534.</span></span>
+<span><span class="co">#&gt; 3 migrating Oct_Dec  31.2  49.5   14.8     1.04    6.37    36.3     139.    535.</span></span>
+<span><span class="co">#&gt; # … with abbreviated variable name ¹​pctl_97.5</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $scenario_12$opt3</span></span>
+<span><span class="co">#&gt; # A tibble: 3 × 10</span></span>
+<span><span class="co">#&gt;   season_id period   mean    sd median pctl_2.5 pctl_25 pctl_75 pctl_9…¹ pctl_99</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 breeding  Jan_Apr  7.17  22.2   1.95   0.0973   0.707    5.54     43.2    268.</span></span>
+<span><span class="co">#&gt; 2 feeding   May_Sep 12.2   37.7   3.25   0.172    1.22     9.21     73.2    464.</span></span>
+<span><span class="co">#&gt; 3 migrating Oct_Dec  4.38  13.4   1.19   0.0606   0.439    3.28     27.1    154.</span></span>
+<span><span class="co">#&gt; # … with abbreviated variable name ¹​pctl_97.5</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $scenario_13</span></span>
+<span><span class="co">#&gt; $scenario_13$opt1</span></span>
+<span><span class="co">#&gt; # A tibble: 3 × 10</span></span>
+<span><span class="co">#&gt;   season_id period   mean    sd median pctl_2.5 pctl_25 pctl_75 pctl_9…¹ pctl_99</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 breeding  Dec_Feb  21.5  4.95   21.0     13.1    18.0    24.4     32.0    39.7</span></span>
+<span><span class="co">#&gt; 2 feeding   Mar_Aug  60.9 13.9    59.8     37.2    50.8    69.7     91.1   112. </span></span>
+<span><span class="co">#&gt; 3 migrating Sep_Nov  24.4  5.70   24.0     14.9    20.3    27.8     37.0    45.4</span></span>
+<span><span class="co">#&gt; # … with abbreviated variable name ¹​pctl_97.5</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $scenario_13$opt2</span></span>
+<span><span class="co">#&gt; # A tibble: 3 × 10</span></span>
+<span><span class="co">#&gt;   season_id period   mean    sd median pctl_2.5 pctl_25 pctl_75 pctl_9…¹ pctl_99</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 breeding  Dec_Feb  21.6  4.72   21.3     13.2    18.4    24.6     31.5    36.8</span></span>
+<span><span class="co">#&gt; 2 feeding   Mar_Aug  61.3 13.3    60.9     37.6    52.2    69.8     89.0   106. </span></span>
+<span><span class="co">#&gt; 3 migrating Sep_Nov  24.6  5.48   24.3     14.8    20.9    27.9     36.1    42.8</span></span>
+<span><span class="co">#&gt; # … with abbreviated variable name ¹​pctl_97.5</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $scenario_13$opt3</span></span>
+<span><span class="co">#&gt; # A tibble: 3 × 10</span></span>
+<span><span class="co">#&gt;   season_id period   mean    sd median pctl_2.5 pctl_25 pctl_75 pctl_9…¹ pctl_99</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 breeding  Dec_Feb  18.6  3.99   18.7     11.4    15.9    21.1     27.2    35.6</span></span>
+<span><span class="co">#&gt; 2 feeding   Mar_Aug  52.9 11.3    52.9     32.7    45.1    59.8     77.3   100. </span></span>
+<span><span class="co">#&gt; 3 migrating Sep_Nov  21.2  4.68   21.1     13.1    18.0    24.0     31.4    41.3</span></span>
+<span><span class="co">#&gt; # … with abbreviated variable name ¹​pctl_97.5</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $scenario_14</span></span>
+<span><span class="co">#&gt; $scenario_14$opt1</span></span>
+<span><span class="co">#&gt; # A tibble: 3 × 10</span></span>
+<span><span class="co">#&gt;   season_id period   mean    sd median pctl_2.5 pctl_25 pctl_75 pctl_9…¹ pctl_99</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 breeding  Dec_Feb  43.5  10.0   42.6     26.6    36.5    49.5     64.8    80.5</span></span>
+<span><span class="co">#&gt; 2 feeding   Mar_Aug 121.   27.6  119.      73.7   101.    138.     181.    223. </span></span>
+<span><span class="co">#&gt; 3 migrating Sep_Nov  49.0  11.4   48.1     30.0    40.8    55.7     74.3    91.2</span></span>
+<span><span class="co">#&gt; # … with abbreviated variable name ¹​pctl_97.5</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $scenario_14$opt2</span></span>
+<span><span class="co">#&gt; # A tibble: 3 × 10</span></span>
+<span><span class="co">#&gt;   season_id period   mean    sd median pctl_2.5 pctl_25 pctl_75 pctl_9…¹ pctl_99</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 breeding  Dec_Feb  46.0  9.96   45.4     28.2    39.2    52.4     66.7    78.3</span></span>
+<span><span class="co">#&gt; 2 feeding   Mar_Aug 128.  27.6   127.      78.7   109.    145.     185.    219. </span></span>
+<span><span class="co">#&gt; 3 migrating Sep_Nov  51.8 11.5    51.3     31.3    44.2    58.8     75.8    89.4</span></span>
+<span><span class="co">#&gt; # … with abbreviated variable name ¹​pctl_97.5</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $scenario_14$opt3</span></span>
+<span><span class="co">#&gt; # A tibble: 3 × 10</span></span>
+<span><span class="co">#&gt;   season_id period   mean    sd median pctl_2.5 pctl_25 pctl_75 pctl_9…¹ pctl_99</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 breeding  Dec_Feb  39.6  8.40   39.7     24.3    33.9    45.0     57.7    75.1</span></span>
+<span><span class="co">#&gt; 2 feeding   Mar_Aug 110.  23.3   110.      68.7    94.2   125.     160.    206. </span></span>
+<span><span class="co">#&gt; 3 migrating Sep_Nov  44.7  9.76   44.6     27.7    38.1    50.5     65.7    85.9</span></span>
+<span><span class="co">#&gt; # … with abbreviated variable name ¹​pctl_97.5</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $scenario_15</span></span>
+<span><span class="co">#&gt; $scenario_15$opt1</span></span>
+<span><span class="co">#&gt; # A tibble: 3 × 10</span></span>
+<span><span class="co">#&gt;   season_id period   mean    sd median pctl_2.5 pctl_25 pctl_75 pctl_9…¹ pctl_99</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 breeding  Dec_Feb  30.8  6.55   30.3     20.0    26.2    34.7     45.5    53.8</span></span>
+<span><span class="co">#&gt; 2 feeding   Mar_Aug  88.3 18.8    86.9     57.3    75.0    99.5    130.    157. </span></span>
+<span><span class="co">#&gt; 3 migrating Sep_Nov  34.5  7.50   33.9     22.1    29.1    38.9     51.6    60.5</span></span>
+<span><span class="co">#&gt; # … with abbreviated variable name ¹​pctl_97.5</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $scenario_15$opt2</span></span>
+<span><span class="co">#&gt; # A tibble: 3 × 10</span></span>
+<span><span class="co">#&gt;   season_id period   mean    sd median pctl_2.5 pctl_25 pctl_75 pctl_9…¹ pctl_99</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 breeding  Dec_Feb  16.7  3.64   16.5     10.1    14.0    19.1     23.8    29.4</span></span>
+<span><span class="co">#&gt; 2 feeding   Mar_Aug  47.8 10.4    47.6     29.1    40.2    54.7     68.6    83.1</span></span>
+<span><span class="co">#&gt; 3 migrating Sep_Nov  18.6  4.16   18.6     11.2    15.7    21.3     27.0    33.1</span></span>
+<span><span class="co">#&gt; # … with abbreviated variable name ¹​pctl_97.5</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $scenario_15$opt3</span></span>
+<span><span class="co">#&gt; # A tibble: 3 × 10</span></span>
+<span><span class="co">#&gt;   season_id period   mean    sd median pctl_2.5 pctl_25 pctl_75 pctl_9…¹ pctl_99</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 breeding  Dec_Feb  15.4  3.59   15.4     9.16    12.9    17.5     22.1    31.7</span></span>
+<span><span class="co">#&gt; 2 feeding   Mar_Aug  44.1 10.3    44.1    26.2     37.0    50.2     62.9    91.6</span></span>
+<span><span class="co">#&gt; 3 migrating Sep_Nov  17.2  4.09   17.3    10.2     14.5    19.5     25.1    37.2</span></span>
+<span><span class="co">#&gt; # … with abbreviated variable name ¹​pctl_97.5</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $scenario_16</span></span>
+<span><span class="co">#&gt; $scenario_16$opt1</span></span>
+<span><span class="co">#&gt; # A tibble: 3 × 10</span></span>
+<span><span class="co">#&gt;   season_id period   mean    sd median pctl_2.5 pctl_25 pctl_75 pctl_9…¹ pctl_99</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 breeding  Dec_Feb  62.3  13.3   61.3     40.4    53.0    70.3     92.2    109.</span></span>
+<span><span class="co">#&gt; 2 feeding   Mar_Aug 175.   37.3  172.     114.    149.    197.     258.     311.</span></span>
+<span><span class="co">#&gt; 3 migrating Sep_Nov  69.1  15.0   68.0     44.2    58.3    78.1    104.     121.</span></span>
+<span><span class="co">#&gt; # … with abbreviated variable name ¹​pctl_97.5</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $scenario_16$opt2</span></span>
+<span><span class="co">#&gt; # A tibble: 3 × 10</span></span>
+<span><span class="co">#&gt;   season_id period   mean    sd median pctl_2.5 pctl_25 pctl_75 pctl_9…¹ pctl_99</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 breeding  Dec_Feb  35.4  7.67   35.0     21.5    29.9    40.6     50.5    62.3</span></span>
+<span><span class="co">#&gt; 2 feeding   Mar_Aug  99.4 21.5    98.9     60.8    83.8   114.     143.    173. </span></span>
+<span><span class="co">#&gt; 3 migrating Sep_Nov  39.2  8.67   39.1     23.6    33.1    44.8     56.8    69.4</span></span>
+<span><span class="co">#&gt; # … with abbreviated variable name ¹​pctl_97.5</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $scenario_16$opt3</span></span>
+<span><span class="co">#&gt; # A tibble: 3 × 10</span></span>
+<span><span class="co">#&gt;   season_id period   mean    sd median pctl_2.5 pctl_25 pctl_75 pctl_9…¹ pctl_99</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 breeding  Dec_Feb  32.7  7.54   32.7     19.6    27.6    37.1     46.9    66.3</span></span>
+<span><span class="co">#&gt; 2 feeding   Mar_Aug  91.9 21.1    91.8     54.9    77.1   104.     131.    188. </span></span>
+<span><span class="co">#&gt; 3 migrating Sep_Nov  36.3  8.51   36.3     21.5    30.6    40.9     52.7    77.3</span></span>
+<span><span class="co">#&gt; # … with abbreviated variable name ¹​pctl_97.5</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $scenario_17</span></span>
+<span><span class="co">#&gt; $scenario_17$opt1</span></span>
+<span><span class="co">#&gt; # A tibble: 3 × 10</span></span>
+<span><span class="co">#&gt;   season_id period   mean    sd median pctl_2.5 pctl_25 pctl_75 pctl_9…¹ pctl_99</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 breeding  Dec_Feb  27.1  6.46   26.8     16.4    22.5    31.3     40.4    51.6</span></span>
+<span><span class="co">#&gt; 2 feeding   Mar_Aug  81.3 19.3    80.0     49.3    67.2    93.3    122.    157. </span></span>
+<span><span class="co">#&gt; 3 migrating Sep_Nov  31.0  7.53   30.4     18.5    25.4    35.7     47.4    58.1</span></span>
+<span><span class="co">#&gt; # … with abbreviated variable name ¹​pctl_97.5</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $scenario_17$opt2</span></span>
+<span><span class="co">#&gt; # A tibble: 3 × 10</span></span>
+<span><span class="co">#&gt;   season_id period   mean    sd median pctl_2.5 pctl_25 pctl_75 pctl_9…¹ pctl_99</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 breeding  Dec_Feb  1.10 0.470   1.04    0.417   0.761    1.34     2.18    3.68</span></span>
+<span><span class="co">#&gt; 2 feeding   Mar_Aug  3.28 1.40    3.12    1.24    2.27     4.02     6.51   11.0 </span></span>
+<span><span class="co">#&gt; 3 migrating Sep_Nov  1.25 0.541   1.19    0.471   0.869    1.54     2.51    4.42</span></span>
+<span><span class="co">#&gt; # … with abbreviated variable name ¹​pctl_97.5</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $scenario_17$opt3</span></span>
+<span><span class="co">#&gt; # A tibble: 3 × 10</span></span>
+<span><span class="co">#&gt;   season_id period   mean    sd median pctl_2.5 pctl_25 pctl_75 pctl_9…¹ pctl_99</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 breeding  Dec_Feb 0.774 0.408  0.725    0.283   0.520   0.957     1.56    4.85</span></span>
+<span><span class="co">#&gt; 2 feeding   Mar_Aug 2.32  1.21   2.18     0.855   1.56    2.88      4.64   14.1 </span></span>
+<span><span class="co">#&gt; 3 migrating Sep_Nov 0.884 0.467  0.840    0.333   0.593   1.10      1.78    5.34</span></span>
+<span><span class="co">#&gt; # … with abbreviated variable name ¹​pctl_97.5</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $scenario_18</span></span>
+<span><span class="co">#&gt; $scenario_18$opt1</span></span>
+<span><span class="co">#&gt; # A tibble: 3 × 10</span></span>
+<span><span class="co">#&gt;   season_id period   mean    sd median pctl_2.5 pctl_25 pctl_75 pctl_9…¹ pctl_99</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 breeding  Dec_Feb  54.9  13.1   54.2     33.2    45.5    63.3     81.7    104.</span></span>
+<span><span class="co">#&gt; 2 feeding   Mar_Aug 161.   38.2  159.      97.8   133.    185.     242.     310.</span></span>
+<span><span class="co">#&gt; 3 migrating Sep_Nov  62.2  15.1   61.0     37.2    51.0    71.7     95.0    117.</span></span>
+<span><span class="co">#&gt; # … with abbreviated variable name ¹​pctl_97.5</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $scenario_18$opt2</span></span>
+<span><span class="co">#&gt; # A tibble: 3 × 10</span></span>
+<span><span class="co">#&gt;   season_id period   mean    sd median pctl_2.5 pctl_25 pctl_75 pctl_9…¹ pctl_99</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 breeding  Dec_Feb  2.33 0.992   2.22    0.889    1.62    2.84     4.63    7.73</span></span>
+<span><span class="co">#&gt; 2 feeding   Mar_Aug  6.84 2.90    6.50    2.61     4.73    8.38    13.6    22.7 </span></span>
+<span><span class="co">#&gt; 3 migrating Sep_Nov  2.64 1.13    2.52    0.998    1.83    3.24     5.29    9.20</span></span>
+<span><span class="co">#&gt; # … with abbreviated variable name ¹​pctl_97.5</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $scenario_18$opt3</span></span>
+<span><span class="co">#&gt; # A tibble: 3 × 10</span></span>
+<span><span class="co">#&gt;   season_id period   mean    sd median pctl_2.5 pctl_25 pctl_75 pctl_9…¹ pctl_99</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 breeding  Dec_Feb  1.65 0.855   1.54    0.606    1.11    2.03     3.31    10.1</span></span>
+<span><span class="co">#&gt; 2 feeding   Mar_Aug  4.83 2.49    4.55    1.79     3.26    6.00     9.54    28.7</span></span>
+<span><span class="co">#&gt; 3 migrating Sep_Nov  1.86 0.969   1.77    0.707    1.25    2.31     3.68    11.0</span></span>
+<span><span class="co">#&gt; # … with abbreviated variable name ¹​pctl_97.5</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="band-model-example">Band model example<a class="anchor" aria-label="anchor" href="#band-model-example"></a>
 </h3>
 <p>This is an example usage of <code><a href="reference/band_crm.html">band_crm()</a></code>. This is for a single species and single set of turbine parameters. This replicates the Band (2012) worksheet. The <code><a href="reference/stoch_crm.html">stoch_crm()</a></code> function wraps around this function, where <code><a href="reference/band_crm.html">band_crm()</a></code> acts in essence as a single draw of <code><a href="reference/stoch_crm.html">stoch_crm()</a></code>.</p>
 <p>Please note the example runs on fictional data.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># ------------------------------------------------------</span></span>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/HiDef-Aerial-Surveying/stochLAB" class="external-link">stochLAB</a></span><span class="op">)</span></span>
+<span><span class="co"># ------------------------------------------------------</span></span>
 <span><span class="co"># Run with arbitrary parameter values, for illustration</span></span>
 <span><span class="co"># ------------------------------------------------------</span></span>
 <span></span>
@@ -439,10 +1224,9 @@
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># flight height distribution from Johnston et al</span></span>
-<span><span class="va">gen_fhd_dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
-<span>  height <span class="op">=</span> <span class="va">Johnston_Flight_heights_SOSS</span><span class="op">$</span><span class="va">Height</span>,</span>
-<span>  prop <span class="op">=</span> <span class="va">Johnston_Flight_heights_SOSS</span><span class="op">$</span><span class="va">Gannet.est</span></span>
-<span><span class="op">)</span></span>
+<span><span class="va">gen_fhd_dat</span> <span class="op">&lt;-</span> <span class="va">Johnston_Flight_heights_SOSS</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">variable</span><span class="op">==</span><span class="st">"Gannet.est"</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">height</span>,<span class="va">prop</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># monthly operational time of the wind farm</span></span>
 <span><span class="va">turb_oper</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
@@ -451,7 +1235,7 @@
 <span><span class="op">)</span></span>
 <span></span>
 <span></span>
-<span><span class="fu"><a href="reference/band_crm.html">band_crm</a></span><span class="op">(</span></span>
+<span><span class="fu">stochLAB</span><span class="fu">::</span><span class="fu"><a href="reference/band_crm.html">band_crm</a></span><span class="op">(</span></span>
 <span>  model_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">3</span><span class="op">)</span>,</span>
 <span>  flight_speed <span class="op">=</span> <span class="va">params</span><span class="op">$</span><span class="va">flight_speed</span>,</span>
 <span>  body_lt <span class="op">=</span> <span class="va">params</span><span class="op">$</span><span class="va">body_lt</span>,</span>
@@ -478,70 +1262,29 @@
 <span>  wf_latitude <span class="op">=</span> <span class="va">params</span><span class="op">$</span><span class="va">wf_latitude</span>,</span>
 <span>  tidal_offset <span class="op">=</span> <span class="va">params</span><span class="op">$</span><span class="va">tidal_offset</span>,</span>
 <span>  lrg_arr_corr <span class="op">=</span> <span class="va">params</span><span class="op">$</span><span class="va">lrg_arr_corr</span></span>
-<span>  <span class="op">)</span></span></code></pre></div>
-</div>
-<div class="section level3">
-<h3 id="migratory-stochastic-collision-risk-model">Migratory stochastic collision risk model<a class="anchor" aria-label="anchor" href="#migratory-stochastic-collision-risk-model"></a>
-</h3>
-<p>This is an adaptation of the Band (2012) method for estimating collision risk by migratory species in windfarms. This only runs for <code><a href="reference/crm_opt1.html">crm_opt1()</a></code> and uses estimates of population size and PCH due to the complexity of measuring these parameters in migratory species. The code will return all draws for each defined season.</p>
-<p>Please note the example runs on fictional data.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># ------------------------------------------------------</span></span>
-<span><span class="co"># Run with arbitrary parameter values, for illustration</span></span>
-<span><span class="co"># ------------------------------------------------------</span></span>
-<span><span class="va">season_specs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
-<span>  season_id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"PrBMigration"</span>, <span class="st">"PoBMigration"</span>, <span class="st">"Omigration"</span><span class="op">)</span>,</span>
-<span>  start_month <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Jan"</span>, <span class="st">"May"</span>, <span class="st">"Oct"</span><span class="op">)</span>, end_month <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Apr"</span>, <span class="st">"Sep"</span>, <span class="st">"Dec"</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># wind availability</span></span>
-<span><span class="va">windavb</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
-<span>  month <span class="op">=</span> <span class="va">month.abb</span>,</span>
-<span>  pctg <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">12</span>, <span class="fl">85</span>, <span class="fl">98</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">windavb</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># maintenance downtime</span></span>
-<span><span class="va">dwntm</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
-<span>  month <span class="op">=</span> <span class="va">month.abb</span>,</span>
-<span>  mean <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">12</span>, <span class="fl">6</span>, <span class="fl">10</span><span class="op">)</span>,</span>
-<span>  sd <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">12</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">dwntm</span><span class="op">)</span></span>
-<span></span>
-<span></span>
-<span><span class="fu"><a href="reference/mig_stoch_crm.html">mig_stoch_crm</a></span><span class="op">(</span></span>
-<span>  wing_span_pars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">1.08</span>, sd <span class="op">=</span> <span class="fl">0.04</span><span class="op">)</span>,      <span class="co"># Wing span in m,</span></span>
-<span>  flt_speed_pars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">7.26</span>, sd <span class="op">=</span> <span class="fl">1.5</span><span class="op">)</span>,       <span class="co"># Flight speed in m/s</span></span>
-<span>  body_lt_pars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">0.39</span>, sd <span class="op">=</span> <span class="fl">0.005</span><span class="op">)</span>,       <span class="co"># Body length in m,</span></span>
-<span>  prop_crh_pars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">0.06</span>, sd <span class="op">=</span> <span class="fl">0.009</span><span class="op">)</span>,      <span class="co"># Proportion of birds at CRH</span></span>
-<span>  avoid_bsc_pars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">0.99</span>, sd <span class="op">=</span> <span class="fl">0.001</span><span class="op">)</span>,     <span class="co"># avoidance rate</span></span>
-<span>  n_turbines <span class="op">=</span> <span class="fl">150</span>,</span>
-<span>  n_blades <span class="op">=</span> <span class="fl">3</span>,</span>
-<span>  rtn_speed_pars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">13.1</span>, sd <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>,         <span class="co"># rotation speed in m/s of turbine blades</span></span>
-<span>  bld_pitch_pars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">3</span>, sd <span class="op">=</span> <span class="fl">0.3</span><span class="op">)</span>,          <span class="co"># pitch in degrees of turbine blades</span></span>
-<span>  rtr_radius_pars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">80</span>, sd <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>,          <span class="co"># sd = 0, rotor radius is fixed</span></span>
-<span>  bld_width_pars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">8</span>, sd <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>,            <span class="co"># sd = 0, blade width is fixed</span></span>
-<span>  wf_width <span class="op">=</span> <span class="fl">100</span>,</span>
-<span>  wf_latitude <span class="op">=</span> <span class="fl">54.1</span>,</span>
-<span>  prop_upwind <span class="op">=</span> <span class="fl">0.5</span>,</span>
-<span>  flight_type <span class="op">=</span> <span class="st">"flapping"</span>,</span>
-<span>  popn_estim_pars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">21584</span>, sd <span class="op">=</span> <span class="fl">2023</span><span class="op">)</span>,    <span class="co"># population flying through windfarm,</span></span>
-<span>  season_specs <span class="op">=</span> <span class="va">season_specs</span>,</span>
-<span>  chord_profile <span class="op">=</span> <span class="va">chord_prof_5MW</span>,</span>
-<span>  trb_wind_avbl <span class="op">=</span> <span class="va">windavb</span>,</span>
-<span>  trb_downtime_pars <span class="op">=</span> <span class="va">dwntm</span>,</span>
-<span>  n_iter <span class="op">=</span> <span class="fl">1000</span>,</span>
-<span>  LargeArrayCorrection <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  log_file <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  seed <span class="op">=</span> <span class="fl">1234</span>,</span>
-<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 12 × 4</span></span>
+<span><span class="co">#&gt;    month  opt1  opt2  opt3</span></span>
+<span><span class="co">#&gt;    &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt;  1 Jan    98.6  25.4 10.4 </span></span>
+<span><span class="co">#&gt;  2 Feb    53.2  13.7  5.61</span></span>
+<span><span class="co">#&gt;  3 Mar    83.7  21.6  8.83</span></span>
+<span><span class="co">#&gt;  4 Apr    61.4  15.8  6.48</span></span>
+<span><span class="co">#&gt;  5 May   117.   30.2 12.4 </span></span>
+<span><span class="co">#&gt;  6 Jun    91.7  23.6  9.67</span></span>
+<span><span class="co">#&gt;  7 Jul   114.   29.3 12.0 </span></span>
+<span><span class="co">#&gt;  8 Aug    91.1  23.5  9.61</span></span>
+<span><span class="co">#&gt;  9 Sep   106.   27.3 11.2 </span></span>
+<span><span class="co">#&gt; 10 Oct    64.1  16.5  6.77</span></span>
+<span><span class="co">#&gt; 11 Nov    60.7  15.7  6.40</span></span>
+<span><span class="co">#&gt; 12 Dec    73.4  18.9  7.75</span></span></code></pre></div>
 </div>
 </div>
 </div>
-
   </main><aside class="col-md-3"><div class="links">
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
+<li><a href="https://cloud.r-project.org/package=stochLAB" class="external-link">View on CRAN</a></li>
 <li><a href="https://github.com/HiDef-Aerial-Surveying/stochLAB/" class="external-link">Browse source code</a></li>
 <li><a href="https://github.com/HiDef-Aerial-Surveying/stochLAB/issues" class="external-link">Report a bug</a></li>
 </ul>
@@ -572,14 +1315,24 @@
 <div class="developers">
 <h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
-<li>Grant Humphries <br><small class="roles"> Author, maintainer </small>  </li>
+<li>Grant Humphries <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0001-5783-9892" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 <li>Bruno Caneco <br><small class="roles"> Author </small>  </li>
+<li>Aonghais Cook <br><small class="roles"> Author </small>  </li>
+<li>Elizabeth Masden <br><small class="roles"> Author </small>  </li>
 <li>Marine Scotland <br><small class="roles"> Funder, copyright holder </small>  </li>
 <li><a href="authors.html">More about authors...</a></li>
 </ul>
 </div>
 
-
+<div class="dev-status">
+<h2 data-toc-skip>Dev status</h2>
+<ul class="list-unstyled">
+<li><a href="https://github.com/HiDef-Aerial-Surveying/stochLAB/actions/workflows/test-coverage.yaml" class="external-link"><img src="https://github.com/HiDef-Aerial-Surveying/stochLAB/actions/workflows/test-coverage.yaml/badge.svg" alt="test-coverage"></a></li>
+<li><a href="https://github.com/HiDef-Aerial-Surveying/stochLAB/actions/workflows/pkgdown.yaml" class="external-link"><img src="https://github.com/HiDef-Aerial-Surveying/stochLAB/actions/workflows/pkgdown.yaml/badge.svg" alt="pkgdown"></a></li>
+<li><a href="https://github.com/HiDef-Aerial-Surveying/stochLAB/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/HiDef-Aerial-Surveying/stochLAB/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
+<li><a href="https://github.com/HiDef-Aerial-Surveying/stochLAB/actions/workflows/pkgcheck.yaml" class="external-link"><img src="https://github.com/HiDef-Aerial-Surveying/stochLAB/actions/workflows/pkgcheck.yaml/badge.svg" alt="pkgcheck"></a></li>
+</ul>
+</div>
 
   </aside>
 </div>
@@ -587,12 +1340,12 @@
 
     <footer><div class="pkgdown-footer-left">
   <p></p>
-<p>Developed by Grant Humphries, Bruno Caneco, Marine Scotland.</p>
+<p>Developed by Grant Humphries, Bruno Caneco, Aonghais Cook, Elizabeth Masden, Marine Scotland.</p>
 </div>
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
     </footer>
