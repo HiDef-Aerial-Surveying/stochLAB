@@ -76,7 +76,7 @@ installed automatically:
 ## Bug reports
 
 To report any bugs, please log an
-[ISSUE](www.github.com/hidef-aerial-surveying/stochLAB/issues)
+[ISSUE](https://github.com/HiDef-Aerial-Surveying/stochLAB/issues)
 
 ## Input parameters
 
@@ -84,8 +84,8 @@ Many of the input parameters for the `stoch_crm()` function need to be
 obtained from developers (e.g., blade pitch, rotor radius, wind speed,
 etc…). However, there are many parameters around the morphology and
 biology of birds that are built into the `sCRM` package for UK seabirds,
-which can be found [HERE](www.github.com/dmpstats/sCRM). `sCRM` is an R
-Shiny application that wraps up the `stoch_crm()` and `band_crm()`
+which can be found [HERE](https://github.com/dmpstats/sCRM). `sCRM` is
+an R Shiny application that wraps up the `stoch_crm()` and `band_crm()`
 functions. These biological parameters can be accessed by installing the
 `sCRM` package and running `sCRM::spp_dflts`, which will bring up a
 tibble object with all the relevant information.
@@ -140,7 +140,6 @@ input parameter data.
 
 ``` r
 library(stochLAB)
-#> Warning: package 'stochLAB' was built under R version 4.2.2
 
 # ------------------------------------------------------
 # Setting some of the required inputs upfront
@@ -219,38 +218,38 @@ stoch_crm(
 #> 
 #> ── Stochastic CRM ──
 #> 
-#> ℹ Checking inputs✔ Checking inputs [99ms]
-#> ℹ Preparing data✔ Preparing data [168ms]
-#> ℹ Sampling parameters✔ Sampling parameters [439ms]
-#> ⠙ Calculating collisions | 3/1000 iterations⠹ Calculating collisions | 102/1000 iterations⠸ Calculating collisions | 249/1000 iterations⠼ Calculating collisions | 397/1000 iterations⠴ Calculating collisions | 552/1000 iterations⠦ Calculating collisions | 709/1000 iterations⠧ Calculating collisions | 869/1000 iterations✔ Calculating collisions | 1000/1000 iterations [1.5s]
-#> ℹ Sorting outputs✔ Sorting outputs [682ms]
+#> ℹ Checking inputs✔ Checking inputs [87ms]
+#> ℹ Preparing data✔ Preparing data [152ms]
+#> ℹ Sampling parameters✔ Sampling parameters [423ms]
+#> ⠙ Calculating collisions | 3/1000 iterations⠹ Calculating collisions | 117/1000 iterations⠸ Calculating collisions | 272/1000 iterations⠼ Calculating collisions | 420/1000 iterations⠴ Calculating collisions | 570/1000 iterations⠦ Calculating collisions | 717/1000 iterations⠧ Calculating collisions | 870/1000 iterations⠇ Calculating collisions | 1000/1000 iterations✔ Calculating collisions | 1000/1000 iterations [1.6s]
+#> ℹ Sorting outputs✔ Sorting outputs [761ms]
 #> ✔ Job done!
 #> $collisions
 #> $collisions$opt1
 #> # A tibble: 3 × 10
 #>   season_id period   mean    sd median pctl_2.5 pctl_25 pctl_75 pctl_9…¹ pctl_99
 #>   <chr>     <chr>   <dbl> <dbl>  <dbl>    <dbl>   <dbl>   <dbl>    <dbl>   <dbl>
-#> 1 a         Jan_Apr  35.0 15.8    35.9     9.00    24.8    45.4     64.5    89.2
-#> 2 b         May_Sep  58.3 26.3    59.6    14.9     40.0    75.4    108.    153. 
-#> 3 c         Oct_Dec  20.1  9.10   20.8     5.21    13.6    26.1     37.8    52.7
+#> 1 a         Jan_Apr  28.0 12.7    28.8     7.15    18.2    36.4     52.0    67.3
+#> 2 b         May_Sep  56.4 25.3    58.1    15.4     37.2    73.5    105.    142. 
+#> 3 c         Oct_Dec  19.3  8.92   19.5     5.13    12.2    25.5     36.6    45.4
 #> # … with abbreviated variable name ¹​pctl_97.5
 #> 
 #> $collisions$opt2
 #> # A tibble: 3 × 10
 #>   season_id period   mean    sd median pctl_2.5 pctl_25 pctl_75 pctl_9…¹ pctl_99
 #>   <chr>     <chr>   <dbl> <dbl>  <dbl>    <dbl>   <dbl>   <dbl>    <dbl>   <dbl>
-#> 1 a         Jan_Apr 0.935  1.75  0.490   0.0859   0.287   0.831     6.32   13.9 
-#> 2 b         May_Sep 1.56   3.02  0.802   0.142    0.480   1.37      9.32   29.5 
-#> 3 c         Oct_Dec 0.539  1.03  0.278   0.0476   0.169   0.467     3.36    9.83
+#> 1 a         Jan_Apr 0.728 1.28   0.393   0.0676   0.230   0.655     5.05   11.6 
+#> 2 b         May_Sep 1.47  2.64   0.804   0.135    0.469   1.30     10.8    21.8 
+#> 3 c         Oct_Dec 0.499 0.888  0.274   0.0448   0.158   0.445     3.43    8.06
 #> # … with abbreviated variable name ¹​pctl_97.5
 #> 
 #> $collisions$opt3
 #> # A tibble: 3 × 10
 #>   season_id period   mean    sd median pctl_2.5 pctl_25 pctl_75 pctl_9…¹ pctl_99
 #>   <chr>     <chr>   <dbl> <dbl>  <dbl>    <dbl>   <dbl>   <dbl>    <dbl>   <dbl>
-#> 1 a         Jan_Apr 0.449 1.05   0.184   0.0459  0.114    0.319     3.49    9.75
-#> 2 b         May_Sep 0.752 1.83   0.301   0.0742  0.190    0.534     5.24   19.0 
-#> 3 c         Oct_Dec 0.259 0.620  0.103   0.0256  0.0655   0.182     1.99    6.13
+#> 1 a         Jan_Apr 0.350 0.790 0.143    0.0337  0.0913   0.256     3.05    6.66
+#> 2 b         May_Sep 0.710 1.61  0.294    0.0687  0.185    0.487     5.55   15.2 
+#> 3 c         Oct_Dec 0.240 0.546 0.0995   0.0223  0.0636   0.177     1.93    4.73
 #> # … with abbreviated variable name ¹​pctl_97.5
 #> 
 #> 
@@ -307,52 +306,52 @@ stoch_crm(
 #> # A tibble: 12 × 6
 #>    period  mean    sd median pctl_2.5 pctl_97.5
 #>    <chr>  <dbl> <dbl>  <dbl>    <dbl>     <dbl>
-#>  1 Jan    0.969 0.201  0.968    0.594      1.37
-#>  2 Feb    1.25  0.281  1.24     0.731      1.81
-#>  3 Mar    1.36  0.216  1.36     0.921      1.75
-#>  4 Apr    1.16  0.255  1.16     0.675      1.67
-#>  5 May    0.943 0.257  0.933    0.449      1.44
-#>  6 Jun    1.17  0.214  1.17     0.715      1.60
-#>  7 Jul    1.10  0.247  1.10     0.632      1.59
-#>  8 Aug    1.07  0.292  1.07     0.492      1.66
-#>  9 Sep    1.36  0.236  1.36     0.906      1.81
-#> 10 Oct    1.49  0.208  1.49     1.09       1.89
-#> 11 Nov    1.05  0.274  1.04     0.531      1.59
-#> 12 Dec    0.960 0.218  0.960    0.528      1.38
+#>  1 Jan    0.849 0.286  0.847    0.315      1.42
+#>  2 Feb    0.833 0.224  0.826    0.415      1.28
+#>  3 Mar    1.12  0.225  1.12     0.665      1.53
+#>  4 Apr    1.11  0.242  1.11     0.647      1.59
+#>  5 May    1.22  0.270  1.21     0.700      1.75
+#>  6 Jun    0.835 0.252  0.838    0.299      1.35
+#>  7 Jul    1.07  0.247  1.07     0.600      1.55
+#>  8 Aug    1.04  0.279  1.05     0.490      1.61
+#>  9 Sep    1.13  0.277  1.13     0.601      1.66
+#> 10 Oct    1.04  0.222  1.04     0.616      1.48
+#> 11 Nov    0.965 0.267  0.959    0.460      1.50
+#> 12 Dec    1.21  0.199  1.21     0.813      1.59
 #> 
 #> $sampled_pars$prop_oper_mth
 #> # A tibble: 12 × 6
 #>    period  mean     sd median pctl_2.5 pctl_97.5
 #>    <chr>  <dbl>  <dbl>  <dbl>    <dbl>     <dbl>
-#>  1 Jan    0.796 0.0207  0.796    0.756     0.833
-#>  2 Feb    0.870 0.0207  0.870    0.830     0.908
-#>  3 Mar    0.886 0.0204  0.886    0.843     0.926
-#>  4 Apr    0.827 0.0196  0.827    0.789     0.865
-#>  5 May    0.880 0.0194  0.880    0.841     0.917
-#>  6 Jun    0.820 0.0198  0.820    0.780     0.858
-#>  7 Jul    0.811 0.0199  0.811    0.770     0.850
-#>  8 Aug    0.859 0.0194  0.859    0.821     0.897
-#>  9 Sep    0.767 0.0205  0.767    0.726     0.805
-#> 10 Oct    0.772 0.0201  0.771    0.731     0.810
-#> 11 Nov    0.788 0.0201  0.788    0.749     0.827
-#> 12 Dec    0.828 0.0201  0.829    0.790     0.865
+#>  1 Jan    0.793 0.0207  0.792    0.752     0.829
+#>  2 Feb    0.769 0.0207  0.769    0.729     0.808
+#>  3 Mar    0.850 0.0204  0.850    0.807     0.890
+#>  4 Apr    0.807 0.0196  0.807    0.769     0.845
+#>  5 May    0.847 0.0195  0.847    0.809     0.884
+#>  6 Jun    0.866 0.0198  0.866    0.827     0.905
+#>  7 Jul    0.869 0.0199  0.869    0.829     0.910
+#>  8 Aug    0.806 0.0194  0.806    0.768     0.844
+#>  9 Sep    0.879 0.0205  0.879    0.838     0.917
+#> 10 Oct    0.820 0.0200  0.820    0.779     0.858
+#> 11 Nov    0.858 0.0201  0.858    0.819     0.898
+#> 12 Dec    0.910 0.0201  0.911    0.872     0.947
 #> 
 #> $sampled_pars$downtime
 #> # A tibble: 12 × 6
 #>    period  mean    sd median pctl_2.5 pctl_97.5
 #>    <chr>  <dbl> <dbl>  <dbl>    <dbl>     <dbl>
-#>  1 Jan     7.81  2.07   7.84     4.11      11.8
-#>  2 Feb     8.43  2.07   8.44     4.57      12.4
-#>  3 Mar     7.83  2.04   7.82     3.81      12.1
-#>  4 Apr     9.59  1.96   9.63     5.80      13.4
-#>  5 May     7.00  1.94   6.98     3.29      10.8
-#>  6 Jun     8.12  1.98   8.10     4.27      12.1
-#>  7 Jul     9.89  1.99   9.88     5.95      13.9
-#>  8 Aug     7.68  1.94   7.64     3.85      11.4
-#>  9 Sep     8.99  2.05   8.97     5.14      13.1
-#> 10 Oct     9.61  2.01   9.63     5.79      13.7
-#> 11 Nov     8.89  2.01   8.87     4.92      12.7
-#> 12 Dec     9.96  2.01   9.86     6.24      13.8
+#>  1 Jan     6.09  2.07   6.12     2.39      10.1
+#>  2 Feb     8.98  2.07   8.99     5.12      12.9
+#>  3 Mar     8.54  2.04   8.54     4.52      12.8
+#>  4 Apr     8.57  1.96   8.61     4.79      12.4
+#>  5 May     7.83  1.95   7.81     4.12      11.7
+#>  6 Jun     7.64  1.98   7.61     3.78      11.6
+#>  7 Jul     9.43  1.99   9.42     5.37      13.5
+#>  8 Aug     6.35  1.94   6.31     2.55      10.1
+#>  9 Sep     7.46  2.05   7.44     3.62      11.6
+#> 10 Oct     6.08  2.00   6.10     2.28      10.1
+#> 11 Nov     7.56  2.01   7.54     3.58      11.4
+#> 12 Dec     7.03  2.01   6.94     3.32      10.8
 #> 
 #> $sampled_pars$wind_speed
 #> # A tibble: 1 × 5
@@ -376,7 +375,7 @@ stoch_crm(
 #> # A tibble: 1 × 5
 #>    mean       sd median pctl_2.5 pctl_97.5
 #>   <dbl>    <dbl>  <dbl>    <dbl>     <dbl>
-#> 1 0.990 0.000986  0.990    0.988     0.992
+#> 1 0.990 0.000985  0.990    0.988     0.992
 #> 
 #> $sampled_pars$avoid_ext
 #> # A tibble: 1 × 5
@@ -388,7 +387,7 @@ stoch_crm(
 #> # A tibble: 1 × 5
 #>     mean      sd median pctl_2.5 pctl_97.5
 #>    <dbl>   <dbl>  <dbl>    <dbl>     <dbl>
-#> 1 0.0605 0.00903 0.0602   0.0441    0.0800
+#> 1 0.0605 0.00904 0.0601   0.0441    0.0800
 #> 
 #> $sampled_pars$gen_fhd
 #> # A tibble: 500 × 6
@@ -398,7 +397,7 @@ stoch_crm(
 #>  2      1 0.136  0.0129  0.138    0.0967    0.152 
 #>  3      2 0.114  0.00855 0.115    0.0863    0.124 
 #>  4      3 0.0950 0.00530 0.0963   0.0769    0.100 
-#>  5      4 0.0794 0.00296 0.0802   0.0686    0.0816
+#>  5      4 0.0794 0.00296 0.0803   0.0686    0.0816
 #>  6      5 0.0664 0.00146 0.0669   0.0606    0.0670
 #>  7      6 0.0556 0.00116 0.0558   0.0530    0.0567
 #>  8      7 0.0465 0.00166 0.0466   0.0439    0.0490

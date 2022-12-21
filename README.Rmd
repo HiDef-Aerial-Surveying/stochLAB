@@ -88,7 +88,7 @@ automatically:
 ## Bug reports
 
 To report any bugs, please log an
-[ISSUE](www.github.com/hidef-aerial-surveying/stochLAB/issues)
+[ISSUE](https://github.com/HiDef-Aerial-Surveying/stochLAB/issues)
 
 ## Input parameters
 
@@ -96,7 +96,7 @@ Many of the input parameters for the `stoch_crm()` function need to be obtained
 from developers (e.g., blade pitch, rotor radius, wind speed, etc...). However,
 there are many parameters around the morphology and biology of birds that are
 built into the `sCRM` package for UK seabirds, which can be found
-[HERE](www.github.com/dmpstats/sCRM). `sCRM` is an R Shiny application that
+[HERE](https://github.com/dmpstats/sCRM). `sCRM` is an R Shiny application that
 wraps up the `stoch_crm()` and `band_crm()` functions. These biological
 parameters can be accessed by installing the `sCRM` package and running
 `sCRM::spp_dflts`, which will bring up a tibble object with all the relevant
