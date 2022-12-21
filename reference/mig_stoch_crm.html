@@ -270,12 +270,12 @@ flux rate is simply the number of birds travelling through the windfarm.</p>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">windavb</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   month     pctg</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1   Jan 94.38124</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2   Feb 92.47973</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3   Mar 97.23552</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4   Apr 91.07721</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5   May 93.08044</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6   Jun 96.20613</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1   Jan 91.27948</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2   Feb 86.96381</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3   Mar 93.82127</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4   Apr 95.48850</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5   May 86.16230</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6   Jun 96.73137</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># maintenance downtime</span></span></span>
 <span class="r-in"><span><span class="va">dwntm</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span></span>
@@ -284,12 +284,12 @@ flux rate is simply the number of birds travelling through the windfarm.</p>
 <span class="r-in"><span>  sd <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">12</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">dwntm</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   month     mean sd</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1   Jan 6.443012  2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2   Feb 7.339325  2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3   Mar 6.040345  2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4   Apr 8.411837  2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5   May 7.772659  2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6   Jun 7.339783  2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1   Jan 6.476203  2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2   Feb 8.364740  2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3   Mar 6.684161  2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4   Apr 8.515016  2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5   May 6.938599  2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6   Jun 7.520676  2</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">mig_stoch_crm</span><span class="op">(</span></span></span>
@@ -332,34 +332,34 @@ flux rate is simply the number of birds travelling through the windfarm.</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ── <span style="font-weight: bold;">Stochastic CRM for Migratory birds</span> ──</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Checking for manditory arguments</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Checking for manditory arguments <span style="color: #B2B2B2;">[12ms]</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Checking for manditory arguments <span style="color: #B2B2B2;">[11ms]</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Data validation</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Data validation <span style="color: #B2B2B2;">[22ms]</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Data validation <span style="color: #B2B2B2;">[20ms]</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Sampling data</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Sampling data <span style="color: #B2B2B2;">[54ms]</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Sampling data <span style="color: #B2B2B2;">[48ms]</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Running simulation...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Running simulation... <span style="color: #B2B2B2;">[701ms]</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Running simulation... <span style="color: #B2B2B2;">[599ms]</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Creating outputs</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Creating outputs <span style="color: #B2B2B2;">[18ms]</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Creating outputs <span style="color: #B2B2B2;">[15ms]</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $collisions</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1,000 × 3</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    PrBMigration PoBMigration OMigration</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>        0.204        0.198      0.201</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>        0.211        0.205      0.207</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>        0.235        0.228      0.231</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>        0.198        0.192      0.194</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>        0.216        0.209      0.212</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>        0.284        0.275      0.278</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>        0.235        0.227      0.230</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>        0.183        0.177      0.179</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>        0.257        0.249      0.252</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>        0.398        0.385      0.390</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>        0.206        0.193      0.201</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>        0.213        0.200      0.208</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>        0.237        0.222      0.232</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>        0.199        0.187      0.195</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>        0.217        0.204      0.213</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>        0.285        0.268      0.279</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>        0.236        0.222      0.231</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>        0.184        0.172      0.179</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>        0.259        0.243      0.253</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>        0.400        0.375      0.391</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 990 more rows</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $flux_rates</span>
