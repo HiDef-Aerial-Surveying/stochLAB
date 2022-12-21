@@ -1,17 +1,17 @@
 ========================================================================= 
-Log Path: /tmp/Rtmpzv7eI4/file18d836408aef/reference/log/scrm_example.log 
-Working Directory: /tmp/Rtmpzv7eI4/file18d836408aef/reference 
+Log Path: /tmp/Rtmp3G8rhA/file187a76d0b903/reference/log/scrm_example.log 
+Working Directory: /tmp/Rtmp3G8rhA/file187a76d0b903/reference 
 User Name: runner 
 R Version: 4.2.2 (2022-10-31) 
-Machine: fv-az392-101 x86_64 
+Machine: fv-az365-737 x86_64 
 Operating System: Linux 5.15.0-1024-azure #30-Ubuntu SMP Wed Nov 16 23:37:59 UTC 2022 
 Base Packages: stats graphics grDevices utils datasets methods base Other Packages: stochLAB_1.1.2 
-Log Start Time: 2022-12-21 18:10:59 
+Log Start Time: 2022-12-21 18:12:21 
 ========================================================================= 
 
 Stochastic CRM run details --------------------------- Number of iterations: 1000 Chosen CRM Options: `1', '2' and '3' Bird density sampling: tnorm Rotation speed and blade pitch sampling: windSpeedReltn Output format: summaries Output period: seasons 
 
 ========================================================================= 
-Log End Time: 2022-12-21 18:11:02 
+Log End Time: 2022-12-21 18:12:24 
 Log Elapsed Time: 0 00:00:02 
 ========================================================================= 
