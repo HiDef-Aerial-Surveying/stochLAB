@@ -1,3 +1,5 @@
+# stochLAB 1.1.2
+
 # stochLAB 1.1.1
 * Add new unit tests for `srr` standards
 * Changed output of `mig_stoch_crm` to be a tibble 
