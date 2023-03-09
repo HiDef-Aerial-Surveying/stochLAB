@@ -1,4 +1,10 @@
 url: https://hidef-aerial-surveying.github.io/stochLAB/
 template:
-  bootstrap: 5
+  package: rotemplate
 
+authors:
+  HiDef:
+    href: "https://www.hidefsurveying.co.uk/"
+    html: "<img src='https://github.com/HiDef-Aerial-Surveying.png' alt='HiDef surveying' width=72>"
+  sidebar:
+    roles: [cre, aut, fnd, cph]
