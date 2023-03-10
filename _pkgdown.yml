@@ -1,6 +1,6 @@
 url: https://hidef-aerial-surveying.github.io/stochLAB/
 template:
-  package: rotemplate
+  bootstrap: 5
 
 authors:
   HiDef:
