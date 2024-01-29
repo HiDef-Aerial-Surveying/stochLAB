@@ -28,8 +28,15 @@ get_collisions_extended(
 at equidistant points within its unit circle. This object should be
 built via the function \code{generate_rotor_grids()}.}
 
-\item{d_y}{a vector with the proportion of birds at height bands within the
-rotor disc}
+\item{d_y}{List containing the following elements:
+\itemize{
+\item{\code{y}, numeric vector with distance from rotor center to vertical equidistant
+points between minimum and maximum rotor heights, expressed as a proportion
+of rotor radius.}
+\item{\code{dy}, numeric vector with the proportion of birds at height bands
+defined by list element \code{y}.}
+}
+Important: use function \code{\link[=get_fhd_rotor]{get_fhd_rotor()}} to derive \code{d_y}.}
 
 \item{rotor_radius}{Numeric value. The radius of the rotor (\eqn{R}), in
 metres.}

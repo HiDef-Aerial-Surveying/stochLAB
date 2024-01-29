@@ -8,8 +8,15 @@ on a flight height distribution}
 get_prop_crh_fhd(d_y)
 }
 \arguments{
-\item{d_y}{Numeric vector with the proportion of birds at height bands across the rotor
-disc}
+\item{d_y}{List containing the following elements:
+\itemize{
+\item{\code{y}, numeric vector with distance from rotor center to vertical equidistant
+points between minimum and maximum rotor heights, expressed as a proportion
+of rotor radius.}
+\item{\code{dy}, numeric vector with the proportion of birds at height bands
+defined by list element \code{y}.}
+}
+Important: use function \code{\link[=get_fhd_rotor]{get_fhd_rotor()}} to derive \code{d_y}.}
 }
 \value{
 The total proportion of birds at collision risk height derived from a flight

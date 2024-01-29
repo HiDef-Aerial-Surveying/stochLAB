@@ -5,8 +5,16 @@
 #'   height (i.e. at rotor height, between bottom and top of the rotor) based on the
 #'   bird's flight height distribution  (\eqn{Q'_{2R}}).
 #'
-#' @param d_y Numeric vector with the proportion of birds at height bands across the rotor
-#'   disc
+#' @param d_y List containing the following elements:
+#' \itemize{
+#'    \item{`y`, numeric vector with distance from rotor center to vertical equidistant
+#'    points between minimum and maximum rotor heights, expressed as a proportion
+#'    of rotor radius.}
+#'    \item{`dy`, numeric vector with the proportion of birds at height bands
+#'    defined by list element `y`.}
+#'   }
+#'   Important: use function [get_fhd_rotor()] to derive `d_y`.
+#'
 #'
 #' @return The total proportion of birds at collision risk height derived from a flight
 #'   height distribution
@@ -32,10 +40,14 @@
 get_prop_crh_fhd <- function(d_y) {
 
   # number of height bands
-  n_bands <- length(d_y)
+  n_bands <- length(d_y$y)
+
+  # width of height slices
+  yinc <- d_y$y[2] - d_y$y[1]
 
   # integration over the rotor's height bands
-  0.05 * (d_y[1]/2 + d_y[n_bands]/2 + sum(d_y[c(2:(n_bands-1))]))
+  dy <- d_y$dy
+  yinc * (dy[1]/2 + dy[n_bands]/2 + sum(dy[c(2:(n_bands-1))]))
 }
 
 

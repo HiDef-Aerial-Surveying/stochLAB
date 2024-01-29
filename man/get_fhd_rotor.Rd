@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_fhd_rotor.R
 \name{get_fhd_rotor}
 \alias{get_fhd_rotor}
-\title{Returns the proportion of birds at height bands along the rotor}
+\title{Returns the proportion of birds at equidistant height points along the rotor}
 \usage{
 get_fhd_rotor(hub_height, fhd, rotor_radius, tidal_offset, yinc = 0.05)
 }
@@ -20,17 +20,23 @@ metres.}
 \item{tidal_offset}{A numeric value, the tidal offset, the difference between
 HAT and mean sea level, in metres.}
 
-\item{yinc}{A numeric value, the increment for height bands between the
+\item{yinc}{A numeric value, the increment for height points between the
 lowest and highest points of the rotor, expressed as a proportion of rotor
 radius (defaults is 0.05).}
 }
 \value{
-A numeric vector, the flight height distribution at collision risk,
-i.e. between minimum and maximum rotor height.
+A list containing two elements:
+\itemize{
+\item{\code{y}, vector with distance from rotor center to vertical equidistant
+points between minimum and maximum rotor heights, expressed as a proportion
+of rotor radius.}
+\item{\code{dy}, vector with the flight height distribution at collision risk,
+i.e. between minimum and maximum rotor height.}
+}
 }
 \description{
 Derive the expected proportion of bird flights at equidistant
-height bands between the lowest and highest points of the rotor. In other
+heights between the lowest and highest points of the rotor. In other
 words, returns the flight height distribution at collision risk
 (\eqn{d(y)}).
 }

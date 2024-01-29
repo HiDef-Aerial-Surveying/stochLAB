@@ -4,8 +4,15 @@
 #' taking into account the distribution of bird flight heights at risk height
 #' (above the minimum and below the  maximum height of the rotor blade)
 #'
-#' @param d_y a vector with the proportion of birds at height bands within the
-#'  rotor disc
+#' @param d_y List containing the following elements:
+#' \itemize{
+#'    \item{`y`, numeric vector with distance from rotor center to vertical equidistant
+#'    points between minimum and maximum rotor heights, expressed as a proportion
+#'    of rotor radius.}
+#'    \item{`dy`, numeric vector with the proportion of birds at height bands
+#'    defined by list element `y`.}
+#'   }
+#'   Important: use function [get_fhd_rotor()] to derive `d_y`.
 #' @inheritParams get_pcoll_grid
 #' @inheritParams get_collisions_basic
 #' @inheritParams get_avg_prob_collision
@@ -97,11 +104,14 @@ get_collisions_extended <- function(rotor_grids,
                                     mth_prop_oper,
                                     lac_factor){
 
-  # number of height bands
+  # number of height bands in rotor mesh
   y_lt <- dim(rotor_grids$r_grid)[1]
 
+  # retrieve yinc, i.e. the width of height bands defining d_y
+  yinc <- d_y$y[2] - d_y$y[1]
+
   # input validation
-  if(y_lt != length(d_y)){
+  if(y_lt != length(d_y$dy)){
     stop("Arguments with inconsistent object sizes: nr of rows of dataset elements
          in list 'rotor_grids' must match lenght of vector 'd_y'")
   }
@@ -126,10 +136,10 @@ get_collisions_extended <- function(rotor_grids,
     risk_up[i] <- get_risk_y(rotor_grids$x_grid[i, ], pcollxy_grid_up[i, ])
   }
 
-  dy_riskup <- d_y * risk_up
+  dy_riskup <- d_y$dy * risk_up
 
-  # (trapezoidal) integration across height bands
-  CollIntUP <- sum(dy_riskup[1]/2, dy_riskup[y_lt]/2, dy_riskup[2:(y_lt - 1)]) * 0.05 * (2/pi)
+  # (trapezoidal) integration over height strips
+  CollIntUP <- sum(dy_riskup[1]/2, dy_riskup[y_lt]/2, dy_riskup[2:(y_lt - 1)]) * yinc * (2/pi)
 
   ## Downwind collision risk ------------------------------------------------------------
   pcollxy_grid_down <-
@@ -151,10 +161,10 @@ get_collisions_extended <- function(rotor_grids,
     risk_down[i] <- get_risk_y(rotor_grids$x_grid[i, ], pcollxy_grid_down[i,])
   }
 
-  dy_riskdown <- d_y * risk_down
+  dy_riskdown <- d_y$dy * risk_down
 
-  # (trapezoidal) integration across height bands
-  CollIntDown <- sum(dy_riskdown[1]/2, dy_riskdown[y_lt]/2, dy_riskdown[2:(y_lt - 1)]) * 0.05 * (2/pi)
+  # (trapezoidal) integration over height strips
+  CollIntDown <- sum(dy_riskdown[1]/2, dy_riskdown[y_lt]/2, dy_riskdown[2:(y_lt - 1)]) * yinc * (2/pi)
 
   ## Collision Integral --------------------------------------------------------
   CollInt <- (prop_upwind * CollIntUP) + ((1-prop_upwind) * CollIntDown)
