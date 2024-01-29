@@ -157,7 +157,7 @@ get_x_grid <- function(xinc = 0.05, yinc = 0.05){
       if(xmax == 1){
         x_grid[i, ] <- seq(0, xmax, by = xinc)
       }else{
-        x <- c(seq(0, floor(xmax/0.05)*0.05, by = xinc), xmax)
+        x <- c(seq(0, floor(xmax/xinc)*xinc, by = xinc), xmax)
         x_grid[i, 1:length(x)] <- x
       }
     }
